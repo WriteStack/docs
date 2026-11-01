@@ -1,0 +1,34 @@
+---
+title: API key
+description: Create, use and revoke a WriteStack API key for MCP clients that don't support OAuth.
+---
+
+Use an API key when your MCP client can't do OAuth. Every request sends it as a bearer token:
+
+```http
+Authorization: Bearer ws_...
+```
+
+Keys start with `ws_`. A key acts as your WriteStack account, so treat it like a password.
+
+## Create a key
+
+1. Open **Settings → MCP** in WriteStack.
+2. Under **API Keys** (below "Or use an API key for agents without OAuth"), click **Generate Key**.
+3. Give it a name (optional) so you know which client uses it, and click **Generate**.
+4. Copy the key from **API Key Created**. You can also copy a ready-made MCP configuration JSON from the same dialog.
+
+The full key is shown only once. If you lose it, revoke it and create a new one.
+
+## Revoke a key
+
+In **Settings → MCP**, click the trash icon next to the key and confirm with **Revoke Key**. Clients using it stop working right away.
+
+## Errors
+
+| Message | Meaning |
+| --- | --- |
+| `Unauthorized: invalid API key.` | The key is wrong, revoked, or missing the `Bearer ` prefix. |
+| `MCP access is not available on your current plan…` | The key is valid, but your plan doesn't include MCP. See [plans and limits](/docs/account/plans-and-limits). |
+
+Prefer [OAuth](/docs/build/connect/oauth) when the client supports it: nothing to copy, and access can be revoked per client.

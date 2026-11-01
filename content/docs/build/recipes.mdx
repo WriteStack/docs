@@ -1,0 +1,76 @@
+---
+title: Recipes
+description: Ready-to-use prompts for AI agents connected to WriteStack, with the tools each one calls, in order.
+---
+
+Each recipe is a prompt a writer can paste into Claude, ChatGPT or Notion once WriteStack is [connected](/docs/build), plus the tool calls a well-behaved agent makes. Use them to test an agent, or as building blocks in your own.
+
+## Draft and queue Notes from a post
+
+> Read my latest post and draft five Notes from it in my voice. Show them to me before saving.
+
+1. `get_writing_style`
+2. The post text or link the writer gives (or `get_article` if it is already a WriteStack article)
+3. Show drafts, then `create_many_notes` with `status: "ready"`
+4. `get_schedule_capacity`
+5. Confirm the manual Sync step, then `schedule_notes` with `userConfirmedManualSync: true`
+6. Remind the writer to click **Sync N scheduled notes to Substack** under **My Notes → Scheduled notes** ([why](/docs/using/concepts/sync))
+
+## Fill next week's queue
+
+> Fill my open slots for next week with my best ready Notes.
+
+1. `get_schedule_capacity`
+2. `get_next_available_slots`
+3. `list_notes` with `status: "ready"`
+4. `schedule_notes` (at most `remaining` Notes)
+
+## Which Notes brought subscribers
+
+> Which of my Notes from the last 30 days brought the most paid subscribers, and what do they have in common?
+
+1. `get_notes_statistics` with a 30-day date range, sorted by subscribers
+2. `get_note` on the top results for full text
+
+## Turn a winner into new drafts
+
+> Take my best Note this month and write three new angles on it.
+
+1. `get_notes_statistics`
+2. `get_writing_style`
+3. `create_many_notes` with `status: "draft"`
+
+## Reply to comments
+
+> Show me comments and mentions from today that I haven't answered.
+
+1. `list_activities` (paginate with `skip`, max `limit` 50)
+
+The agent can draft replies, but posting replies happens in WriteStack or Substack.
+
+## Write an article and push it to Substack
+
+> Write a draft article from these notes for my main newsletter and push it to Substack as a draft.
+
+1. `list_article_newsletters`, then ask which newsletter
+2. `create_article` with that `publicationId`
+3. `push_article_to_substack`
+4. `get_article_substack_status` to show the draft link
+
+Pushing runs through the writer's browser extension. With WriteStack open it usually finishes in seconds.
+
+## Cross-post a Note
+
+> Schedule this Note and also post it to my LinkedIn through Buffer.
+
+1. `list_buffer_channels`, then confirm the channel
+2. `create_note` with `bufferChannelIds`
+3. Schedule as above
+
+## Ask the Coach
+
+> Ask my WriteStack Coach what I should write about this week.
+
+1. `ask_coach` with the question. Pass the returned `thread_id` to continue the same conversation.
+
+This uses the writer's Coach allowance.

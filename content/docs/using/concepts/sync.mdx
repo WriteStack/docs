@@ -1,0 +1,71 @@
+---
+title: Sync
+description: How a scheduled Note gets from WriteStack to Substack, when you need to click the yellow Sync button, and the common reasons a Note didn't post.
+---
+
+Sync is the step where the WriteStack browser extension schedules your Note on Substack. Until a Note is synced, it exists only in your WriteStack queue and will not post. Once it is synced, Substack holds the scheduled Note and publishes it at its time.
+
+## Why it's needed
+
+WriteStack schedules Notes from your own browser, through the extension, using the Substack account you are logged in to there. WriteStack's servers can't do this step for you. So a Note scheduled anywhere the extension isn't running has to be synced later from your computer.
+
+## When it happens on its own
+
+| You schedule a Note from | Synced? |
+| --- | --- |
+| WriteStack on your computer, with the extension installed and Substack logged in | Yes, right away when you click **Add to Queue** or schedule it |
+| The Coach in WriteStack on your computer | Yes, right away |
+| An AI assistant connected through MCP (Claude, ChatGPT, Notion) | No. You sync it. |
+| WriteStack on your phone | No. You sync it from a computer. |
+| A ghostwriter working on your account | No. You sync it from your own computer. |
+
+Editing a scheduled Note also needs a sync. The note editor shows "Not synced (click Sync to Substack or close the editor to sync)" until you click **Sync to Substack** or close the editor.
+
+## The yellow Sync button
+
+When some scheduled Notes are not on Substack yet, a yellow button shows in **My Notes → Scheduled notes** (Queue view):
+
+**Sync N scheduled notes to Substack**
+
+### Steps
+
+1. Open WriteStack on a computer, in the browser where the extension is installed and you're logged in to Substack.
+2. Go to **My Notes → Scheduled notes**.
+3. Click **Sync N scheduled notes to Substack**.
+4. Keep WriteStack open. The button reads "Syncing. Do not close WriteStack" with a counter until it is done. Large batches pause between groups because Substack limits how fast Notes can be scheduled.
+5. When the button disappears, every scheduled Note is on Substack.
+
+You can also sync one Note: in the queue, a Note that isn't synced shows a warning icon ("The schedule doesn't match a schedule on Substack. Click to sync the schedule to Substack."). Click the icon.
+
+The yellow button only shows on wide screens. On a phone or a narrow window you won't see it.
+
+If syncing would take you over your plan's limit, WriteStack asks what to do first. See [Capacity](/docs/using/concepts/capacity).
+
+## After a Note is synced
+
+The Note is a scheduled Note on Substack. Substack publishes it at its time, so WriteStack doesn't need to be open then. After it goes out, WriteStack moves it to **Published notes**.
+
+If you change or delete a scheduled Note directly on Substack, WriteStack's queue no longer matches. The **Last synced on** line above the queue has a **Sync now** link that checks Substack for changes and lets you review them. See [Schedule mismatch](/docs/using/troubleshooting/schedule-mismatch).
+
+## If WriteStack isn't open
+
+Nothing syncs. A Note that isn't synced stays in the WriteStack queue and won't post. If its time passes before you sync, it misses that time, and it no longer shows in the queue.
+
+{/* TODO(orel): How should a writer recover a Note whose time passed before it was synced? It drops out of the queue view (past-scheduled rows are hidden) but keeps status scheduled. Is there a supported way to reschedule it? */}
+
+## Why didn't my Note post?
+
+Check these in order:
+
+| Cause | How to tell | Fix |
+| --- | --- | --- |
+| It was never synced | It was scheduled by an AI assistant, on your phone, or by a ghostwriter, and nobody clicked the yellow button | Open WriteStack on your computer and sync before the posting time |
+| The time passed before syncing | The Note is gone from the queue but not in **Published notes** | Schedule it again, then sync |
+| You edited it and didn't re-sync | The editor showed "Not synced" | Open the Note and click **Sync to Substack** |
+| The extension isn't installed or is off | WriteStack asks you to install the extension when you schedule | [Install the browser extension](/docs/using/setup/browser-extension) |
+| Logged out of Substack, or logged in to a different Substack account | Sync fails | Log in to Substack with the account connected to WriteStack. See [Substack connection problems](/docs/using/troubleshooting/substack-connection). |
+| You hit your scheduling limit | The scheduling limit dialog opened and some Notes moved to Ready | See [Capacity](/docs/using/concepts/capacity) |
+| The Note was changed or deleted on Substack | The queue shows changes from Substack | See [Schedule mismatch](/docs/using/troubleshooting/schedule-mismatch) |
+| The posting time was more than 90 days out | Scheduling was refused: "Substack allows scheduling up to 3 months ahead" | Pick a time within 3 months |
+
+Still stuck? See [Sync errors](/docs/using/troubleshooting/sync-errors) or [contact support](/docs/using/support).

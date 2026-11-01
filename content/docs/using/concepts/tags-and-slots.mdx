@@ -1,0 +1,74 @@
+---
+title: Tags and slots
+description: How WriteStack picks a posting time for a Note, covering weekly slots, open versus reserved versus untagged-only times, OR tag matching, and what happens when no time fits.
+---
+
+A slot is one posting time in your weekly template. Each slot either takes any Note, is reserved for Notes with certain tags, or takes only Notes without tags. When you queue a Note, WriteStack gives it the soonest slot that fits its tags.
+
+## Words used here
+
+| Term | Meaning |
+| --- | --- |
+| Weekly template | Your recurring posting times, for example Mon–Fri at 9:00 and 17:00. Set it on [Weekly template](/docs/using/schedule/weekly-template). |
+| Slot | One time in the template on one day. |
+| Tag | A label on a Note, like "Personal" or "Promo". In the tag picker they are called categories. See [Tags](/docs/using/notes/tags). |
+| Open slot | A slot with no tags, set to **Any note**: "Tagged or untagged notes can land here". |
+| Reserved slot | A slot with one or more tags. It waits for a Note that has one of those tags. |
+| Untagged-only slot | A slot with no tags, set to **Only untagged notes**: "Notes with a tag skip this time". |
+
+## Slot types
+
+You set this per slot under **Prefer notes tagged**. Leave the tags empty and choose who can use the slot, or pick tags to reserve it.
+
+| Slot type | Untagged Note | Tagged Note |
+| --- | --- | --- |
+| Open (**Any note**) | Can land here | Can land here |
+| Reserved for tags | Never lands here | Lands here only if it shares at least one tag |
+| Untagged-only (**Only untagged notes**) | Can land here | Never lands here |
+
+In the queue, a reserved slot is labelled "Reserved for" followed by its tag names, and an untagged-only slot is labelled "Reserved for untagged notes".
+
+## How it works
+
+When you click **Add to Queue** or schedule several Notes at once, each Note takes the first slot, in time order, that it is allowed to use:
+
+1. **Tagged Note.** It takes whichever comes first: an open slot, or a reserved slot that shares one of its tags.
+2. **Untagged Note.** It takes the first open or untagged-only slot. It skips reserved slots.
+3. **Reserved slots stay empty** until a matching Note arrives. A Note with other tags does not fill them.
+
+### OR matching
+
+A slot with several tags is OR, not AND. One shared tag is enough.
+
+| Slot tags | Note tags | Can land? |
+| --- | --- | --- |
+| Personal, Promo | Promo | Yes |
+| Personal, Promo | Personal, Tips | Yes |
+| Personal, Promo | Tips | No |
+| Personal, Promo | none | No |
+
+### Examples
+
+- Your next slot is open at 9:00, and a slot reserved for "Promo" is at 12:00. A Note tagged Promo takes 9:00, because the open slot comes first.
+- Your next slot is reserved for "Promo" at 9:00, and an open slot is at 12:00. A Note tagged Promo takes 9:00.
+- The "Promo" slots are all full. A Note tagged Promo takes the next open slot.
+
+## When no slot fits
+
+| How you scheduled | What happens |
+| --- | --- |
+| **Add to Queue** on one Note | If no open or matching slot is free, the Note takes the next free slot of any kind, including reserved ones. If you have no weekly times at all, you pick a date and time instead. |
+| Several Notes at once | Notes that fit nowhere are listed in a dialog titled "N notes have no matching queue time". Add a matching tag and click **Schedule with tags**, or click **Use next available times** to place them on the next free slots of any kind. |
+| **Set Date and Time** | You choose the time yourself. Tags don't decide anything. |
+
+## Slots with cross-post channels
+
+A slot can also have **Cross-post to** channels if you use [cross-posting](/docs/using/cross-posting). A Note that lands on that slot uses the slot's channels instead of the ones picked on the Note. The Note still posts to Substack.
+
+The slot's channels are applied when a Note is scheduled onto it. Changing a slot's channels later doesn't change Notes already on it.
+
+## See also
+
+- [Weekly template](/docs/using/schedule/weekly-template): add, edit and delete slots.
+- [Tags](/docs/using/notes/tags): create tags and add them to Notes.
+- In the app, the **How does it work** link under a slot's settings shows a short version of this page.

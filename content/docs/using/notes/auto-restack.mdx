@@ -1,0 +1,55 @@
+---
+title: Auto-restack
+description: How to make WriteStack restack your own Note 1 to 168 hours after it publishes, for one Note or as a default for all new Notes, the extension version it needs, and how to turn it off.
+---
+
+Auto-restack restacks your Note on Substack a set number of hours after it publishes, to show it to readers again. You pick a delay from 1 to 168 hours (one week). It needs the WriteStack browser extension 1.4.78 or newer.
+
+## How it works
+
+- The delay starts when the Note is published.
+- The restack is done by the [browser extension](/docs/using/setup/browser-extension). It runs when you next open Substack or WriteStack after the delay, so the time is approximate.
+- The editor shows the expected time, for example "~Tue, Dec 2 at 9:00 PM".
+
+| Setting | Value |
+| --- | --- |
+| Shortest delay | 1 hour |
+| Longest delay | 168 hours |
+| Default delay | 12 hours |
+
+{/* TODO(orel): The editor unlocks the switch at extension 1.4.77, but the MCP docs say 1.4.78 is needed to actually fire. Which is right? Page says 1.4.78. */}
+
+## Turn it on for one Note
+
+1. Open the Note in the editor.
+2. Open **Settings** under the text, then the Substack section.
+3. Turn on **Auto restack**.
+4. Open the arrow next to it and type the hours in **Restack after ~**. Click **Save**.
+
+If the switch is locked and shows **Coming soon**, your extension is too old. Update it, then reload WriteStack.
+
+You can also set auto-restack:
+
+- for every repost of an [evergreen Note](/docs/using/notes/evergreen), under **Automations** in the evergreen dialog,
+- for every Note in a batch, under **Automations** in the batch schedule dialog. See [Manage the queue](/docs/using/schedule/queue#schedule-many-notes-at-once).
+
+## Make it the default for new Notes
+
+1. Go to **Settings → Notes Settings**.
+2. Turn on **Auto restack all notes** ("Default auto restack for all new notes, including batch schedule") and set the hours.
+3. If you already have scheduled Notes, WriteStack asks **Apply auto restack to scheduled notes?** Click **Apply to scheduled notes** to give them the same delay, or **Not now** to leave them.
+
+Applying overwrites any custom hours on those scheduled Notes.
+
+## Turn it off
+
+- **One Note:** open it and turn off **Auto restack** in **Settings**.
+- **The default:** turn off **Auto restack all notes** in **Settings → Notes Settings**. WriteStack asks **Remove auto restack from scheduled notes?** Click **Remove from scheduled notes** to turn it off on them too, or **Not now** to only stop it for new Notes.
+
+## If it doesn't work
+
+| Problem | Fix |
+| --- | --- |
+| Switch shows **Coming soon** | Update the browser extension |
+| Switch shows "Save the note first" | Type something so the Note is saved |
+| The restack came later than expected | It runs the next time Substack or WriteStack is open in a browser with the extension |

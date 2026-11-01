@@ -1,0 +1,46 @@
+---
+title: Tag a Note
+description: How to create tags (called categories in the app), add them to a Note, and how a Note's tags decide which queue times it can take.
+---
+
+Tags are labels on a Note, like "Personal" or "Promo". In the app's tag picker they are called categories. Besides organizing Notes, tags decide which reserved queue times a Note can take.
+
+## Add a tag to a Note
+
+1. Open the Note in the editor.
+2. Click the tag button in the toolbar ("Add a category").
+3. Turn on the switch next to each tag you want. A Note can have several tags.
+
+On a Note card in **My Notes**, the tag icon opens the same picker.
+
+## Create a tag
+
+1. Open the tag picker.
+2. Type a name in **New category...**.
+3. Press Enter or click **Add**.
+
+If no tag matches what you typed, the picker shows "Press Enter or click Add to create a new tag".
+
+## Change a tag's color or delete it
+
+In the tag picker, hover a tag and open its menu. Pick a new color, or click **Delete**.
+
+## How tags affect scheduling
+
+Each time in your [weekly template](/docs/using/schedule/weekly-template) is one of three kinds:
+
+| Time | Who can use it |
+| --- | --- |
+| **Any note** | Tagged and untagged Notes |
+| Reserved for tags | Notes that share at least one of its tags |
+| **Only untagged notes** | Notes with no tags |
+
+When you click **Add to Queue**, a tagged Note takes the first **Any note** time or matching reserved time, whichever is sooner. An untagged Note never takes a reserved time during normal routing. The full rules and examples are on [Tags and slots](/docs/using/concepts/tags-and-slots).
+
+The **Add to Queue** button shows the time it will use. If it is a reserved time, the tag name follows the date.
+
+## Tips
+
+- Changing a Note's tags doesn't move it if it is already scheduled. Tags only matter when the Note is placed.
+- If you create a Note from an empty reserved time in the queue, it starts with that time's tags.
+- In a CSV import, the `tag` column adds one tag per Note. See [Write a Note](/docs/using/notes/drafting#import-notes-from-a-csv-file).

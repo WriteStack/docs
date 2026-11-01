@@ -1,0 +1,47 @@
+---
+title: Notes and the queue
+description: The statuses a WriteStack Note can have (draft, ready, scheduled, published, evergreen), what each tab in My Notes shows, and what the queue is.
+---
+
+Every Note in WriteStack has a status that says where it is on its way to Substack. The queue is the list of Notes that have a posting time.
+
+## Note statuses
+
+**My Notes** has one tab per status. The number in each tab is how many Notes it holds.
+
+| Status | Tab in My Notes | What it means | Live on Substack? |
+| --- | --- | --- | --- |
+| `draft` | **Drafts** | A Note you are still working on. New and generated Notes start here. | No |
+| `ready` | **Ready** | A finished Note waiting for a posting time. | No |
+| `scheduled` | **Scheduled notes** | A Note with a posting time. This is the queue. | Not yet. It posts at its time once it is [synced](/docs/using/concepts/sync). |
+| `published` | **Published notes** | A Note that went out on Substack. | Yes |
+| `evergreen` | **Evergreen** | A Note set to repeat. The tab only shows when you have one. See [Evergreen Notes](/docs/using/notes/evergreen). | Each time it repeats |
+
+The status names in the first column are the values the [MCP server](/docs/build) uses.
+
+Nothing in **Drafts** or **Ready** posts on its own. A Note only goes out once it is scheduled and synced, or when you post it right away (choose **Now** in the note editor, then **Post Now**).
+
+## The queue
+
+The queue is your Notes with a posting time, in time order. You see it in **My Notes → Scheduled notes** with the **Queue** view selected. **Kanban** and **Calendar** show the same Notes in other layouts.
+
+Each day shows the times from your [weekly template](/docs/using/schedule/weekly-template). A time with no Note is an empty slot.
+
+A Note joins the queue when you:
+
+- click **Add to Queue** in the note editor. It takes the next free time that fits its tags. See [Tags and slots](/docs/using/concepts/tags-and-slots).
+- pick **Set Date and Time** and choose an exact time.
+- schedule several Notes at once from **Ready** or **Drafts**.
+
+To move, remove or batch-schedule Notes, see [Manage the queue](/docs/using/schedule/queue).
+
+## Limits
+
+| Rule | Value |
+| --- | --- |
+| Furthest ahead you can schedule | 90 days (Substack allows scheduling up to 3 months ahead) |
+| Scheduled Notes at once | Depends on your plan. See [Capacity](/docs/using/concepts/capacity). |
+
+## The queue is not Substack
+
+The queue is stored in WriteStack. Substack only knows about a scheduled Note once it is synced. When you schedule from WriteStack on your computer, that usually happens right away. Notes scheduled from somewhere else, like an AI assistant or your phone, wait for you to sync. Read [Sync](/docs/using/concepts/sync).

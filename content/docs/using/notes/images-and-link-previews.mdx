@@ -1,0 +1,82 @@
+---
+title: Images, video and link previews
+description: How to add images, GIFs and a video to a WriteStack Note, how the link preview card works (one per Note, the first link by default), and the size and count limits.
+---
+
+A Note can have up to 5 images or videos, of which at most 1 is a video, plus one link preview card. Uploading a video needs the WriteStack browser extension.
+
+## Limits
+
+| Item | Limit |
+| --- | --- |
+| Images and videos per Note | 5 in total |
+| Videos per Note | 1 |
+| Image file size | 15 MB each |
+| Link preview cards per Note | 1 |
+
+GIFs count as images.
+
+## Add images or a video
+
+1. Open the Note in the editor.
+2. Do one of these:
+   - Drag files onto the editor.
+   - Click the box "Drag and drop images, GIFs, or videos, or click to browse".
+   - Click the image icon in the toolbar ("Add image or video").
+   - Click the GIF icon, or type `/` and pick **GIF**, to search GIPHY.
+3. Wait for the upload to finish. Images and the video show below the text, in the order Substack shows them.
+
+If the Note is new and empty, WriteStack saves it first, then uploads.
+
+### Edit or remove an image
+
+Hover an image:
+
+- **Edit image** opens an editor with **Annotate**, **Text**, **Crop** and **Blur**. Click **Save** when done.
+- **Remove image** deletes it from the Note.
+
+## Video
+
+You need the [WriteStack browser extension](/docs/using/setup/browser-extension) installed to upload a video. Without it, the upload stops with "You need to have the extension installed to upload videos".
+
+- Only 1 video per Note. A second one gives "Only 1 video allowed per note".
+- While it uploads, the toolbar shows "Video is uploading...". Keep the editor open.
+- To pick a cover image, click **Cover** on the video. Choose a frame or upload an image in **Choose a cover**. This needs extension 1.5.21 or newer; with an older extension the **Cover** button doesn't show.
+
+## Link previews
+
+A link preview is the card with a title and image that Substack shows under a Note.
+
+### How it works
+
+- When you save a Note with a link, WriteStack adds a preview for the **first** link in the text, if the Note has no preview yet.
+- A Note can have one preview. Adding a second one shows "Only one link preview is allowed per note".
+- The card always shows after any images or video.
+- The preview is created on Substack through the extension. Automatic previews need extension 1.3.98 or newer. If it fails you see "Failed to upload link to Substack. The preview will not appear in Substack".
+
+### Choose which link gets the preview
+
+Hover any link in the editor to see its actions:
+
+| Action | What it does |
+| --- | --- |
+| **Add preview** | Make a card for this link. Remove the current card first if the Note already has one. |
+| **Remove preview** | Remove this link's card. The link stays in the text, and WriteStack won't add the card back on its own. |
+| **Remove link from note text** | Turn the link back into plain text |
+
+You can also remove the card by hovering it and clicking its remove button.
+
+A Note with a poll can't have a link preview.
+
+## Images on cross-posts
+
+If you [cross-post](/docs/using/cross-posting) a Note, each channel uses the Note's images unless you customize that channel's post. A customized channel post accepts images only ("This channel only supports images").
+
+## If it doesn't work
+
+| Message | Fix |
+| --- | --- |
+| "File size must be less than 15MB" | Use a smaller image |
+| "Only 5 images and 1 video allowed" | Remove an image or the video first |
+| "You need to have the extension installed to upload videos" | [Install the extension](/docs/using/setup/browser-extension), then try again |
+| "Video upload failed:" with a reason | Try the upload again. If it keeps failing, [contact support](/docs/using/support). |

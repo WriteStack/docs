@@ -1,0 +1,49 @@
+---
+title: Connect your Substack
+description: How WriteStack links to your Substack profile and publication during onboarding, what it reads, and how to change the publication later.
+---
+
+You connect Substack in two parts. During onboarding you paste your Substack profile URL so WriteStack can read your public profile, posts and Notes. Then the [browser extension](/docs/using/setup/browser-extension) uses the Substack login in your browser to schedule and post Notes for you. WriteStack never asks for your Substack password.
+
+## Steps
+
+1. Log in to Substack in the browser you'll use for WriteStack, with the account that owns your publication.
+2. Find your profile URL: go to [substack.com](https://substack.com/), click **Profile** (bottom left) and copy the URL from the address bar. It looks like `www.substack.com/@your-handle`.
+3. In WriteStack onboarding, paste the URL and click **Continue**.
+4. On **Is this you?**, confirm your author profile and click **Continue**.
+5. On **Select your publication**, pick the newsletter you want to connect and click **Continue**. If you write on only one publication, it's selected for you.
+6. Wait for the analysis to finish. You'll see steps such as "Checking your publication", "Reading some of your posts", "Reading some of your notes" and "Analyzing your writing style".
+7. Finish the rest of onboarding, including **Install the Chrome extension**. You can click **Continue without extension** and install it later, but you need it to post to Substack.
+
+<Callout type="warn">
+Connect the publication of the Substack account you're logged in to. The onboarding screen says it too: "Make sure to connect the publication you're logged into to be able to use all the features." The extension posts as whichever Substack account is logged in in that browser.
+</Callout>
+
+## What WriteStack reads
+
+| Source | What | Used for |
+| --- | --- | --- |
+| Your profile URL (onboarding) | Your public Substack profile, the publications you write for, some of your posts and Notes | Your author profile, writing style and the AI settings that make generated Notes sound like you |
+| The browser extension | Your Substack session in that browser | Scheduling and posting Notes, fetching Notes stats and other Substack actions you start in WriteStack |
+
+## One publication per account
+
+Each WriteStack account connects one publication. **Settings → Publication Settings** shows it as "The newsletter connected to this account". If your Substack profile has no publication, onboarding says "No publications found. You can continue without selecting a publication." and you can continue with just your profile.
+
+## Change the publication
+
+1. Go to **Settings → Publication Settings**.
+2. Click **Change Publication**.
+3. Read the dialog and click **Continue to Onboarding**.
+4. Enter your newsletter URL again and finish the setup. The analysis can take a few minutes.
+
+If no publication is connected, the button reads **Set Up Publication** instead.
+
+## Disconnect
+
+There is no separate disconnect button for Substack. To stop WriteStack from acting on Substack, remove or turn off the browser extension, or log out of Substack in that browser. To remove your data, delete your WriteStack account. See [Account & billing](/docs/account).
+{/* TODO(orel): confirm the account-deletion path and link the right account page once it exists. */}
+
+## If it doesn't work
+
+See [Substack connection problems](/docs/using/troubleshooting/substack-connection).

@@ -1,0 +1,70 @@
+---
+title: Substack connection problems
+description: Fixes for errors when connecting your Substack profile in onboarding, when Notes post from the wrong account, and when the extension can't reach your Substack.
+---
+
+Most connection problems come from the wrong URL, a byline that isn't on your posts, or a different Substack account logged in in your browser. Find your symptom below. For how the connection works, see [Connect your Substack](/docs/using/setup/connect-substack).
+
+## "URL is not valid. Please check and try again."
+
+**Why:** WriteStack couldn't find a Substack profile at that URL. Post links and some custom-domain links don't work here.
+
+**Fix:**
+
+1. Go to [substack.com](https://substack.com/) and click **Profile** (bottom left).
+2. Copy the URL from the address bar. It looks like `www.substack.com/@your-handle`.
+3. Paste it into onboarding and click **Continue**.
+
+## "URL is invalid"
+
+**Why:** The text you pasted isn't a valid URL.
+
+**Fix:** Paste the full profile URL, as in the steps above.
+
+## "It seems like none of your posts include you as an author."
+
+**Why:** Your profile isn't listed as an author on the posts of that publication.
+
+**Fix:** In Substack, add yourself as an author (byline) on your posts, then try again.
+
+## "No publications found"
+
+**Why:** Your Substack profile isn't linked to a publication.
+
+**Fix:** You can click **Continue** without one. WriteStack still works for Notes. If you do have a newsletter, check that you pasted the profile of the account that owns it.
+
+## I connected the wrong publication
+
+**Fix:**
+
+1. Go to **Settings → Publication Settings**.
+2. Click **Change Publication**, then **Continue to Onboarding**.
+3. Enter the right profile URL and pick the right publication.
+
+## Notes post from a different Substack account
+
+**Why:** The extension acts as whatever Substack account is logged in in that browser. WriteStack doesn't check that it matches the publication you connected.
+
+**Fix:**
+
+1. Open [substack.com](https://substack.com/) in the browser where the extension is installed.
+2. Log out, then log in with the account that owns your connected publication.
+3. Refresh WriteStack.
+
+If you manage several Substack accounts, use a separate browser profile for each one.
+
+## Scheduling or syncing fails right after I logged out of Substack
+
+**Why:** The extension needs an active Substack login in the same browser.
+
+**Fix:** Log in to Substack in that browser, refresh WriteStack and try again. For other failures, see [Sync errors](/docs/using/troubleshooting/sync-errors).
+
+## WriteStack asks for access to my domain
+
+**Why:** Your newsletter uses a custom domain. The extension needs your permission to reach it.
+
+**Fix:** Click **Grant access** (or **Allow access to** your domain) and accept the browser prompt. If you see **Update the WriteStack extension** instead, update it first. See [Install the browser extension](/docs/using/setup/browser-extension#check-and-update-your-version).
+
+## Still stuck
+
+[Contact support](/docs/using/support) with your Substack profile URL and the exact error message.

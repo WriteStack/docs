@@ -1,0 +1,58 @@
+---
+title: Claude Code, Cursor and other coding agents
+description: Add the WriteStack MCP server to Claude Code, Cursor, VS Code or any client that reads an MCP config file.
+---
+
+Clients that support remote MCP servers over HTTP connect with OAuth: add the URL and sign in when asked. Clients that only run local servers use `mcp-remote` with an [API key](/docs/build/connect/api-key).
+
+## Claude Code
+
+```bash
+claude mcp add --transport http writestack https://www.writestack.io/api/mcp/mcp
+```
+
+Then run `/mcp` inside Claude Code and choose **writestack** to sign in.
+
+## Cursor, VS Code and other config-file clients
+
+Add the server to the client's MCP config (for Cursor, `~/.cursor/mcp.json`):
+
+```json title="mcp.json"
+{
+  "mcpServers": {
+    "writestack": {
+      "url": "https://www.writestack.io/api/mcp/mcp"
+    }
+  }
+}
+```
+
+The client opens WriteStack the first time a tool is used. Sign in and approve access.
+
+## Clients without remote or OAuth support
+
+Use `mcp-remote` with an API key header. Create the key in **Settings → MCP** (see [API key](/docs/build/connect/api-key)):
+
+```json title="mcp.json"
+{
+  "mcpServers": {
+    "writestack": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://www.writestack.io/api/mcp/mcp",
+        "--header",
+        "Authorization: Bearer ws_your_api_key"
+      ]
+    }
+  }
+}
+```
+
+WriteStack shows this config, with your key filled in, right after you generate a key.
+
+## Notes for coding agents
+
+- Read [agent rules](/docs/build/agent-rules) and the [tool reference](/docs/build/mcp-reference) before scripting against the server.
+- The legacy SSE path (`/api/mcp/mcp/sse`) returns HTTP 405. Use the endpoint above.

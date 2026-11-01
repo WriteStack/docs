@@ -1,0 +1,62 @@
+---
+title: Evergreen Notes
+description: How to make a WriteStack Note evergreen so it reposts every 1 to 4 weeks, how the reposts are scheduled up to 90 days ahead and refilled, and how to edit or remove an evergreen Note.
+---
+
+An evergreen Note reposts on a repeating schedule, every 1, 2, 3 or 4 weeks. WriteStack schedules the reposts for the next 90 days and adds new ones as time moves on.
+
+## Steps
+
+1. Open a Note from **Drafts** or **Ready**. Only draft and ready Notes can be made evergreen.
+2. Open the **When:** menu next to the schedule button and click **Make Evergreen** ("Automatically repost on a recurring schedule").
+3. Pick how often it reposts.
+4. Pick the first post: **Next available** (the next free time in your queue for this Note's tags) or **Pick a date**.
+5. Optional: open **Cross-post to Buffer** to pick channels for every repost, and **Automations** to turn on [auto-restack](/docs/using/notes/auto-restack).
+6. Read the summary under the buttons, for example "Posts every 3 weeks starting Mon, Dec 1 at 9:00 AM. Does not restack."
+7. Click **Make Evergreen**. Keep the dialog open while it shows "Scheduling N/M notes…".
+
+### Frequency options
+
+| Option | Label in the app |
+| --- | --- |
+| 1 week | High cadence |
+| 2 weeks | Balanced |
+| 3 weeks | Suggested (default) |
+| 4 weeks | Low cadence |
+
+## How reposts work
+
+- The Note you made evergreen is the source. It moves to the **Evergreen** tab in **My Notes**. That tab shows only when you have at least one evergreen Note.
+- Each repost is a copy of the source, scheduled at the first date plus every N weeks.
+- WriteStack schedules every repost that falls within the next 90 days, because Substack allows scheduling up to 3 months ahead.
+- As reposts go out, WriteStack adds the next ones so the 90-day window stays filled. This happens through the [browser extension](/docs/using/setup/browser-extension) when WriteStack is open.
+- Reposts show in the queue with "Managed by evergreen schedule". You can't drag them to another time ("Evergreen notes can't be rescheduled").
+
+Like any scheduled Note, reposts need to be on Substack to post. See [Sync](/docs/using/concepts/sync).
+
+The **Evergreen** tab shows each evergreen Note with its cadence ("Every 3 weeks"), the next date, how many reposts are scheduled, and how many times it has posted.
+
+## Edit an evergreen Note
+
+1. Open the source Note from the **Evergreen** tab.
+2. Edit the text. The editor shows "Editing this evergreen note will update all scheduled reposts."
+3. To change the cadence, first date, channels or auto-restack, click **Edit new configuration**, make your changes and click **Update Evergreen**. This replaces the scheduled reposts.
+
+## Remove an evergreen Note
+
+Either:
+
+- In the **Evergreen** tab, click the remove icon and confirm **Remove Evergreen**, or
+- In the source Note, switch the button to **Delete evergreen** and confirm.
+
+This cancels the scheduled reposts on Substack and removes the evergreen schedule. The original Note moves back to **Ready**.
+
+## Limits
+
+| Rule | Value |
+| --- | --- |
+| Frequency | Every 1, 2, 3 or 4 weeks |
+| How far ahead reposts are scheduled | 90 days |
+| Which Notes | Draft or Ready only. A Note can have one evergreen schedule. |
+
+{/* TODO(orel): Is there a per-plan cap on evergreen Notes? I found none. Also: do scheduled reposts count toward the scheduled-notes limit on Capacity? Creating an evergreen skips the limit check, but the refill skips a date when canScheduleNote fails, and reposts are status "scheduled" so they look like they count once synced. */}

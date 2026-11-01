@@ -1,0 +1,16 @@
+{
+  "title": "Build with WriteStack",
+  "description": "MCP server for Claude, ChatGPT, Notion and your own agents",
+  "root": true,
+  "icon": "Bot",
+  "pages": [
+    "index",
+    "agent-rules",
+    "---Connect---",
+    "...connect",
+    "---Reference---",
+    "mcp-reference",
+    "recipes",
+    "api"
+  ]
+}

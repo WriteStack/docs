@@ -1,0 +1,98 @@
+---
+title: Cross-posting with Buffer
+description: How to cross-post Substack Notes from WriteStack to X, LinkedIn, Instagram, Threads, Facebook, Bluesky and more through Buffer, with channels per Note or per schedule time, per-channel text and images, limits, and when cross-posts are sent.
+---
+
+WriteStack can send each Note to your social channels (X, LinkedIn, Instagram, Threads, Facebook, Bluesky and others) through your Buffer account. You pick the channels per Note or per time in your schedule, and WriteStack sends the cross-posts a few minutes after the Note goes live on Substack.
+
+## Before you start
+
+| Requirement | Details |
+| --- | --- |
+| Plan | Standard or Enterprise. Hobbyist doesn't include cross-posting. See [Plans and limits](/docs/account/plans-and-limits). |
+| Buffer | A Buffer account with your social channels already added in Buffer. If you don't have one, WriteStack shows a **Create a Buffer account** link. |
+
+## Connect Buffer
+
+1. Go to **Settings → Cross Post**.
+2. Click **Connect with Buffer** and approve access in Buffer. You come back to Settings with "Buffer account connected successfully!".
+3. If you have more than one Buffer organization, pick it under **Organization**.
+4. Your channels show under **Available Channels**. Click the link button on each one you want to use to activate it. Active ones move to **Active Channels**.
+
+Only active channels appear when you write a Note. WriteStack refreshes your Buffer channels on its own; click **Refresh** after you add a channel in Buffer to see it right away.
+
+{/* TODO(orel): Per-plan limits on active channels (maxConnectedChannelsPerPlan) exist only on the native-social-publishing branch, not on main. Add a "Channels per plan" row once they ship. */}
+
+## Choose channels for a Note
+
+1. Open a Note in the note editor.
+2. Under **Also post to (optional)**, click each channel you want. Selected channels are highlighted.
+3. Click **Preview** to see the clean text and media each channel will get.
+4. Schedule the Note as usual.
+
+A Note can go to at most 20 channels. On a Note that is already scheduled, adding or removing a channel updates its cross-posts right away.
+
+## Different text or images per channel
+
+Once you select channels, each one gets its own row in the editor showing "Same as your note".
+
+1. Click a channel's row to open its editor.
+2. Change the text, or add images for that channel only. The row now shows **Customized**.
+3. To undo, reset that channel's post to the Note.
+
+Per-channel media is images only. After a cross-post goes out, its row shows **Sent**.
+
+## Channels per schedule time
+
+A time in your weekly schedule can have its own channels. Every Note that lands in that time goes to those channels instead of the ones picked on the Note.
+
+1. Open your posting schedule (see [Weekly template](/docs/using/schedule/weekly-template)).
+2. Expand a time and pick channels under **Cross-post to**.
+
+This section only shows once Buffer is connected and at least one channel is active.
+
+## When cross-posts are sent
+
+- A few minutes after the Note's scheduled time, WriteStack checks that the Note is live on Substack, then sends it to each channel through Buffer. Buffer posts it right away, not into your Buffer queue.
+- If the Note isn't found on Substack, nothing is cross-posted. Make sure the Note actually published; see [Sync](/docs/using/concepts/sync).
+- If a channel fails, you get an email, "Your note didn't reach some Buffer channels", with the reason for each one.
+
+## Platform limits
+
+WriteStack checks your Note against each platform's rules before you schedule.
+
+| Platform | Character limit | Media |
+| --- | --- | --- |
+| X | 280 (no limit for paid X plans) | Optional |
+| LinkedIn | 3,000 | Optional |
+| Instagram | 2,200 | Required |
+| Facebook | 5,000 | Optional |
+| Threads | 500 | Optional |
+| Bluesky | 300 | Optional |
+| TikTok | 2,200 | Video required |
+
+- **Over the character limit**: you get a warning and can still schedule. Shorten the channel's text with a per-channel post.
+- **Missing required media or an unsupported video**: that channel can't take the post. WriteStack offers to remove those channels and schedule the rest.
+- Videos are also checked against each platform's size, length and format rules. The warning links to Buffer's video requirements.
+
+## Instagram rules
+
+- Every Instagram post needs an image or video.
+- Feed images must have an aspect ratio between 4:5 (portrait) and 1.91:1 (landscape). Outside that range you can still schedule, but Buffer uses **Notify Me**: it sends you a reminder and you finish the post in the Instagram app. See [Buffer's aspect ratio guide](https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges).
+- Videos go out as Reels: 3 seconds to 15 minutes, up to 300 MB, MP4 or MOV.
+
+## Disconnect Buffer
+
+Go to **Settings → Cross Post → Disconnect** and do both steps:
+
+1. **Open Buffer to disconnect** and remove WriteStack under Apps & extras. This revokes WriteStack's access.
+2. **Disconnect in WriteStack** to clear your saved connection and channels.
+
+To stop using one channel, deactivate it instead.
+
+## If it doesn't work
+
+- **"No channels found"**: add social channels in Buffer first, then click **Refresh**.
+- **A channel is missing in the editor**: activate it under **Settings → Cross Post**.
+- **"You can cross-post to at most 20 Buffer channels."**: remove some channels from the Note.
+- **Instagram post didn't publish**: check the image ratio and the Notify Me reminder in the Buffer app.

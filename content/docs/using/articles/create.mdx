@@ -1,0 +1,84 @@
+---
+title: Create an article
+description: How to create a long-form article draft in WriteStack (with the Coach or an AI agent over MCP), which newsletters it can go to, the Markdown formatting it supports, images and the planned date.
+---
+
+An article is a long-form draft that WriteStack stores for one of your Substack newsletters. You create one by asking [the Coach](/docs/using/coach/what-it-does) to write a post, or from an AI agent connected over MCP. It stays in WriteStack until you [push it to Substack as a draft](/docs/using/articles/substack-sync).
+
+{/* TODO(orel): The Articles page (/articles: "New article" button, calendar, editor, "Article settings", "Article schedule") is adminOnly + comingSoon in src/types/navbar.ts, so non-admin writers see a "Coming soon" page there. This page only documents the paths that are live (Coach and MCP). The "Open in Articles" button on Coach post cards is shown to every writer with the articles flag and leads to that Coming soon page. Add the Articles page steps here when it ships. */}
+
+## Before you start
+
+- **A connected Substack account.** Articles go to the newsletters linked to your Substack profile. If none is found, the Coach shows "Connect a publication to save this post." See [Connect Substack](/docs/using/setup/connect-substack).
+- **The newsletter must be enabled for Articles.** Every newsletter on your Substack profile is enabled unless you hid it from Articles. An AI agent can only create, push or schedule on enabled newsletters.
+
+{/* TODO(orel): The only place to hide or show a newsletter ("Show this newsletter in Articles" in Article settings) is on the Articles page, which is not live yet. */}
+
+## With the Coach
+
+Ask the Coach to write a post, for example: "Write a post about why I moved my newsletter to weekly." It writes the draft as a **Post** card and saves it as an article automatically. You can edit it, pick the newsletter, and ask the Coach to push it to Substack.
+
+The full flow is on [How the Coach writes articles](/docs/using/articles/coach-articles).
+
+## With an AI agent (MCP)
+
+An agent connected to WriteStack over MCP (Claude, ChatGPT, Claude Code and others) can create articles. See [Build with WriteStack](/docs/build).
+
+1. The agent calls [`list_article_newsletters`](/docs/build/mcp-reference/list_article_newsletters) and asks you which newsletter to use.
+2. It calls [`create_article`](/docs/build/mcp-reference/create_article) with a title or topic, an optional subtitle, a Markdown body, optional image URLs and an optional planned date.
+3. The article is saved in WriteStack only. Nothing is sent to Substack until it is pushed.
+
+If you give no title or topic, the article is called "Untitled article".
+
+## Formatting
+
+Article bodies are GitHub-flavored Markdown. These formats are supported and synced to Substack:
+
+| Format | Markdown |
+| --- | --- |
+| Headings | `#` to `######` |
+| Bold, italic, strikethrough | `**bold**`, `*italic*`, `~~strike~~` |
+| Inline code | `` `code` `` |
+| Links | `[text](https://...)` |
+| Images | `![alt](https://...)` |
+| Bullet and numbered lists | `-` and `1.` |
+| Blockquote | `> quote` |
+| Pullquote | `:::pullquote` ... `:::` |
+| Callout | `:::callout` ... `:::` |
+| Paywall | a line with only `:::paywall:::` |
+
+Everything after the `:::paywall:::` line is behind the Substack paywall: only paid subscribers see it.
+
+Voice and video embeds are not supported.
+
+## Images
+
+- Images in the Markdown body are fetched and stored by WriteStack.
+- An agent can also pass up to 20 image URLs. Each one is fetched, stored, and added to the end of the body.
+- Use full `https://` URLs. URLs that are invalid or can't be reached are skipped.
+- Images are uploaded to Substack when the article is pushed.
+
+The Coach's **Post draft** editor has no image button. To add images to a Coach draft, ask an MCP agent to add them, or add them on Substack after you push.
+
+## Planned date
+
+A planned date is the day you plan to publish. It is saved with the article, and agents read it back as `plannedForDate`. Leave it out for an undated draft.
+
+A planned date does not schedule anything on Substack. To schedule, see [Schedule on Substack](/docs/using/articles/substack-sync#schedule-on-substack).
+
+## Limits
+
+| Item | Limit |
+| --- | --- |
+| Image URLs passed by an agent per call | 20 |
+| Articles returned by `list_articles` per call | 20 by default |
+| MCP access (agents) | Standard and Enterprise. See [plans and limits](/docs/account/plans-and-limits) |
+
+## If it doesn't work
+
+| Message | What it means |
+| --- | --- |
+| "Connect a publication to save this post." | WriteStack found no Substack newsletter for your account. [Connect Substack](/docs/using/setup/connect-substack). |
+| "No newsletters are enabled for Articles." | Every newsletter is hidden from Articles. |
+| "That newsletter is not enabled for Articles." | The agent picked a newsletter that is hidden or not on your profile. Ask it to list newsletters again. |
+| "Articles are not enabled on this account." | Your account doesn't have Articles. Check your [plan](/docs/account/plans-and-limits) or [contact support](/docs/using/support). |

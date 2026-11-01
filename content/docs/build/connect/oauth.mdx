@@ -1,0 +1,28 @@
+---
+title: OAuth for MCP clients
+description: OAuth 2.1 endpoints, scopes and metadata for building an MCP client that connects to WriteStack.
+---
+
+WriteStack's MCP server is an OAuth 2.1 protected resource. Clients discover everything from the metadata documents, register dynamically, and use the authorization code flow with PKCE. Most MCP clients do all of this for you.
+
+| | |
+| --- | --- |
+| Flow | Authorization code with PKCE (`S256`) |
+| Authorize | `https://www.writestack.io/oauth/authorize` |
+| Token | `https://www.writestack.io/api/oauth/token` |
+| Dynamic client registration | `https://www.writestack.io/api/oauth/register` |
+| Authorization server metadata | `https://www.writestack.io/.well-known/oauth-authorization-server` |
+| Protected resource metadata | `https://www.writestack.io/.well-known/oauth-protected-resource` |
+| Scopes | `mcp`, `offline_access` |
+| Grant types | `authorization_code`, `refresh_token` |
+| Client authentication | Public clients, no secret (`token_endpoint_auth_method: none`) |
+
+## Flow
+
+1. Call the MCP endpoint without a token. The server answers `401` and points to the protected resource metadata.
+2. Read the authorization server metadata and register your client at the registration endpoint.
+3. Send the writer to the authorize URL with a PKCE `code_challenge`. They sign in to WriteStack and approve.
+4. Exchange the code at the token endpoint. Request `offline_access` to get a refresh token.
+5. Call `https://www.writestack.io/api/mcp/mcp` with `Authorization: Bearer <access_token>`.
+
+Tokens act as the writer who approved them. Plan access still applies: an account without MCP gets an error that points to Settings.

@@ -1,0 +1,56 @@
+---
+title: Build with WriteStack
+description: What the WriteStack MCP server is, what an AI agent can do with it, and where to start.
+---
+
+WriteStack runs a remote [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server. Connect Claude, ChatGPT, Notion or your own agent to it, and the agent can draft, schedule and read Notes, work with articles, read statistics and talk to the Coach, always as the writer who signed in.
+
+| | |
+| --- | --- |
+| Endpoint | `https://www.writestack.io/api/mcp/mcp` |
+| Transport | Streamable HTTP |
+| Auth | OAuth 2.1 (PKCE) or a bearer API key |
+| Acts as | The signed-in WriteStack user, never another account |
+| Tools | 28. See the [tool reference](/docs/build/mcp-reference) |
+
+## Start here
+
+<Steps>
+<Step>
+**Connect a client.** [Claude](/docs/build/connect/claude), [ChatGPT](/docs/build/connect/chatgpt), [Notion](/docs/build/connect/notion), [Claude Code and Cursor](/docs/build/connect/claude-code), or any client with an [API key](/docs/build/connect/api-key).
+</Step>
+<Step>
+**Read the [agent rules](/docs/build/agent-rules).** They explain what the server will not do. The most important one: Notes scheduled over MCP reach Substack only after the writer clicks Sync in WriteStack.
+</Step>
+<Step>
+**Ask in plain language.** For example: "Draft three Notes about my last post and queue them." The client picks the tools. See [recipes](/docs/build/recipes) for more.
+</Step>
+</Steps>
+
+## What an agent can do
+
+| Area | Examples | Tools |
+| --- | --- | --- |
+| Notes | Draft in the writer's voice, tag, attach images, edit | `get_writing_style`, `create_note`, `create_many_notes`, `update_note` |
+| Schedule | Check capacity, queue on the weekly template or at exact times | `get_schedule_capacity`, `schedule_notes`, `schedule_notes_with_custom_dates` |
+| Articles | Draft, edit, push to Substack as a draft, schedule on Substack | `create_article`, `update_article`, `push_article_to_substack`, `schedule_article_on_substack` |
+| Statistics | Which Notes brought subscribers, newsletter open rates | `get_notes_statistics`, `get_posts_statistics` |
+| Activity | Comments and mentions to reply to | `list_activities` |
+| Cross-posting | Send a Note to Buffer channels after it publishes | `list_buffer_channels` |
+| Coach | Ask the WriteStack Coach a question | `ask_coach` |
+
+## Who can use it
+
+MCP is included on eligible WriteStack plans. A call from an account without access returns: *"MCP access is not available on your current plan. Upgrade at https://writestack.io/settings to unlock MCP integration."* See [plans and limits](/docs/account/plans-and-limits).
+
+## Agent entry points
+
+| Resource | URL |
+| --- | --- |
+| Docs index for LLMs | [/llms.txt](/llms.txt) |
+| All docs in one file | [/llms-full.txt](/llms-full.txt) |
+| Any page as Markdown | Add `.md` to the URL, or send `Accept: text/markdown` |
+| All MCP tools with JSON Schemas | [/mcp-tools.json](/mcp-tools.json) |
+| App overview for LLMs | [writestack.io/llms.txt](https://www.writestack.io/llms.txt) |
+
+A REST API is not available yet. See [API](/docs/build/api).

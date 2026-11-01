@@ -1,0 +1,69 @@
+---
+title: Coach limits
+description: How much you can use the WriteStack Coach (Quill) on each plan, when the weekly allowance resets, what happens when it runs out, other message and routine limits, and what the Coach can't do.
+---
+
+Every paid plan includes a weekly Coach allowance: Hobbyist is the 1x base, Standard gets 5x and Enterprise 20x. The allowance resets every Monday at 00:00 UTC. When it runs out, the Coach stops replying until the reset or until you upgrade.
+
+## Allowance per plan
+
+| Plan | Weekly Coach usage | Routines |
+| --- | --- | --- |
+| Hobbyist | 1x | Not included |
+| Standard | 5x | Up to 3 |
+| Enterprise | 20x | Up to 10 |
+
+Usage depends on the work, not on a message count. A long chat, a post draft, reading many stats or making an image uses more than a short question. You never see a number, only a notice when you are close.
+
+The Coach needs a paid plan. Plan details are on [Plans and limits](/docs/account/plans-and-limits).
+
+## What uses the allowance
+
+- Messages in the Coach.
+- Questions an AI agent sends through [`ask_coach`](/docs/build/mcp-reference/ask_coach).
+- [Routine](/docs/using/coach/what-it-does#routines) runs.
+- Images the Coach makes.
+
+## When you are close or out
+
+| When | What you see |
+| --- | --- |
+| About 80% used | "You're close to this week's Coach allowance. It resets …" above the message box. |
+| 100% used | "You've used this week's Coach allowance. It resets …". The Coach doesn't reply to new messages. |
+
+On Hobbyist and Standard the notice adds a link: **Upgrade to Standard for 5x usage** or **Upgrade to Enterprise for 20x usage**. It opens the pricing page. See [Change your plan](/docs/account/change-plan).
+
+A routine that runs while the allowance is used up is paused: "Your weekly Coach allowance is used up, so this routine is paused until it resets."
+
+## Other limits
+
+| Limit | Value |
+| --- | --- |
+| Message length | 40,000 characters |
+| Images attached to one message | 4 |
+| Images the Coach makes per message | 1 |
+| Messages per minute | A short per-minute cap. The message says the limit and how many seconds to wait. |
+| Replies at once in one chat | 1. Wait for "The Coach is still working on your last message." to clear, or click **Stop**. |
+| Routine paused when unused | After 30 days without opening it |
+
+Rarely, the Coach is busy for everyone: "The Coach is at capacity for today." It resets at midnight UTC, shown in your time.
+
+{/* TODO(orel): requestsPerMinute (default 10) and the routine caps (3 / 10) come from the admin-editable Coach config. Confirm the live values before adding exact numbers for messages per minute. */}
+
+## Routines
+
+- Standard can keep up to 3 routines and Enterprise up to 10. At the cap, the card says "You can have 3 routines. Pause or delete one first." (or 10).
+- A routine runs at most once a day.
+- A routine that hasn't been opened in 30 days is paused. One that fails several runs in a row is paused too. Click **Resume** under **Routines**.
+- Weekly reviews of note stats need the Chrome extension to have synced your stats.
+
+## What the Coach can't do
+
+- **Publish.** It can't publish a note or a post, on Substack or anywhere else.
+- **Schedule articles.** It can push a post to Substack as a draft, but not schedule, unschedule or publish it. An AI agent over MCP can schedule. See [Schedule on Substack](/docs/using/articles/substack-sync#schedule-on-substack).
+- **Delete notes.** It can save, schedule, tag and move notes between draft and ready.
+- **Schedule without the extension.** Scheduling and evergreen notes need the [Chrome extension](/docs/using/setup/browser-extension) on a computer.
+- **Read stats your plan doesn't include.** Notes statistics and Posts Statistics need Standard or Enterprise.
+- **Copy other writers.** It can show top notes from the Inspiration feed, but it won't look up a named writer to draft in their pattern.
+- **Add images to articles.** Post drafts have no image button. See [Images](/docs/using/articles/create#images).
+- **Act from a routine or `ask_coach`.** Those can only save drafts or write reports.

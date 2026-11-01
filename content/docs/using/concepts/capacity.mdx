@@ -1,0 +1,41 @@
+---
+title: Capacity
+description: How many Notes you can have scheduled at once on each WriteStack plan, which Notes count toward the limit, and what happens when you reach it.
+---
+
+Your plan sets how many Notes can be scheduled at the same time. A slot frees up each time a scheduled Note publishes, so you can keep queueing as Notes go out.
+
+## Limits per plan
+
+| Plan | Notes scheduled at a time |
+| --- | --- |
+| Hobbyist | 20 |
+| Standard | 100 |
+| Enterprise | Unlimited |
+
+The **Unlimited Schedules** add-on removes the limit on any plan. It is a one-time payment. Prices and how to buy it are on [Plans and limits](/docs/account/plans-and-limits).
+
+{/* TODO(orel): Some older accounts may have a different stored limit (maxScheduledNotes on the account, and the pre-Dec-2025 plan table had Standard as unlimited). Should we mention that existing subscribers may keep an older limit? */}
+
+## What counts
+
+A Note counts toward the limit when all of these are true:
+
+- its status is scheduled,
+- its posting time is in the future,
+- it is [synced](/docs/using/concepts/sync) to Substack.
+
+These don't count: drafts, Ready Notes, published Notes, and scheduled Notes that are not synced to Substack yet. Moving a Note that is already scheduled to another time doesn't use a new slot.
+
+## When you reach the limit
+
+| Where | What you see | What to do |
+| --- | --- | --- |
+| Scheduling a Note in WriteStack | A dialog titled **Schedule Limit Reached**: "You have reached your limit of N active schedules." | Wait for a scheduled Note to publish, remove one from the queue, upgrade, or buy **Unlimited Schedules**. |
+| Syncing Notes that were scheduled elsewhere (for example by an AI assistant) | A dialog titled **You've reached your scheduling limit**. It shows how many Notes fit and how many don't. | Click the button to sync the ones that fit and move the rest to Ready. Click **Not now** to leave them as they are. |
+
+When you sync past the limit, WriteStack syncs the earliest Notes first. The rest move to **Ready**. Nothing is deleted. Schedule them again once space frees up.
+
+## For AI assistants
+
+An assistant connected through MCP can read your remaining capacity with `get_schedule_capacity` and should never schedule more than that. See [Build with WriteStack](/docs/build).

@@ -1,0 +1,3231 @@
+{
+  "server": "https://www.writestack.io/api/mcp/mcp",
+  "tools": [
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Ask Coach"
+      },
+      "description": "Talk to the WriteStack Coach (Quill), the user's Substack growth coach. It knows their notes, posts, stats, memory, and playbooks. Pass thread_id back to continue the same conversation. The reply is also saved as a Coach chat the user can open at thread_url. This spends the user's Coach allowance.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "description": "What to ask the Coach, in the user's words, plus any context they gave you.",
+            "maxLength": 40000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "thread_id": {
+            "description": "thread_id from an earlier ask_coach result. Pass it to continue that conversation. Leave it out to start a new chat.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "type": "object"
+      },
+      "name": "ask_coach",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "reply": {
+            "type": "string"
+          },
+          "thread_id": {
+            "type": "string"
+          },
+          "thread_url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "reply",
+          "thread_id",
+          "thread_url"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": true,
+        "readOnlyHint": false,
+        "title": "Create Article"
+      },
+      "description": "Create a WriteStack article draft. BEFORE calling, call list_article_newsletters and ASK the user which newsletter this article belongs to, then pass that publicationId. Only enabled newsletters are accepted — never guess or pick a default. Also pass title or topic, optional subtitle, markdown body, imageUrl (remote images fetched to S3 and inserted), and an optional plannedForDate target date (omit for an undated draft). Images in bodyMarkdown are also fetched to S3. GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Voice and video embeds are not supported.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "bodyMarkdown": {
+            "description": "GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Voice and video embeds are not supported.",
+            "type": "string"
+          },
+          "imageUrl": {
+            "description": "Optional remote image URLs to insert into the article. WriteStack fetches each URL, stores the image on S3, and appends it to the markdown body. Markdown/HTML images already in bodyMarkdown are ingested the same way. Max 20. Pass full https:// URLs. Invalid or unreachable URLs are skipped. Images are uploaded to Substack when the article is opened or saved with the Chrome extension, and again when pushing the draft.",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 20,
+            "type": "array"
+          },
+          "plannedForDate": {
+            "description": "Optional ISO target date to place the article on the calendar. Omit for an undated draft.",
+            "type": "string"
+          },
+          "publicationId": {
+            "description": "Enabled newsletter publicationId. BEFORE creating or pushing an article, call list_article_newsletters and ASK the user which newsletter to use. Never guess or pick a default. Only IDs returned by that tool are accepted — newsletters the user hid from Articles are rejected.",
+            "type": "number"
+          },
+          "subtitle": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "create_article",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articleId": {
+            "type": "string"
+          },
+          "contentVersion": {
+            "type": "number"
+          },
+          "images": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "s3Url": {
+                  "type": "string"
+                },
+                "sourceUrl": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "s3Url"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "articleId",
+          "status",
+          "message"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": true,
+        "readOnlyHint": false,
+        "title": "Create Many Notes"
+      },
+      "description": "Create multiple notes at once. Each note's content body must be in Markdown format. Each note can have its own status, tags, auto-restack delay (autoRestackAfterHours), link-preview choice (includePreviews), optional imageUrl (remote image URLs, max 5 per note — fetched and stored like CSV import), Buffer channels (bufferChannelIds), and per-channel Buffer posts (bufferChannelPosts). If any content includes a link, ask the user if they'd like link previews before calling this tool; pass includePreviews: true only for notes where they confirm. You SHOULD ask the user which tags to apply before calling this — use list_tags first to show available tags if needed. Tags also control which reserved queue times the notes can take when later scheduled (OR match; untagged notes only use open or untagged-only times). When generating new note content, call get_writing_style first unless the user already pasted complete style instructions. Call list_buffer_channels first if setting Buffer channels or per-channel posts.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "notes": {
+            "description": "Array of notes to create (1–50)",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "autoRestackAfterHours": {
+                  "anyOf": [
+                    {
+                      "maximum": 168,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Pass null or omit to disable auto-restack on the note. Requires the WriteStack browser extension v1.4.78 or higher to actually fire."
+                },
+                "bufferChannelIds": {
+                  "description": "Optional array of Buffer channel IDs to cross-post this new note to once it publishes on Substack. Call list_buffer_channels first to get the valid IDs — only IDs returned by that tool are accepted. Maximum 20 channels per note — requests with more are rejected. Channel IDs from bufferChannelPosts are merged in automatically. Omit or pass an empty array to skip Buffer cross-posting unless you also pass bufferChannelPosts. Requires a connected Buffer account. Platform limits still apply: Instagram requires an image or video, and Instagram feed images must be between 4:5 and 1.91:1 aspect ratio for automatic posting (otherwise Buffer falls back to Notify Me). See https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "bufferChannelPosts": {
+                  "description": "Optional per-channel Buffer post overrides when a channel should have different text or images than the Substack note. Call list_buffer_channels first. Each item needs bufferChannelId and, unless reset is true, a plain-text body (max 5000). Those channel IDs are also selected on the note (merged with bufferChannelIds, still max 20). imageUrl attaches images to that channel only — they are not added to the Substack note. Omit imageUrl to keep existing channel images; pass [] to clear them. includePreviews adds a link card from the first URL in that channel's body (max 1). reset: true deletes the override so the channel falls back to the note. Removing a channel from bufferChannelIds does not delete a saved override. Platform limits still apply: Instagram requires an image or video, and Instagram feed images must be between 4:5 and 1.91:1 aspect ratio for automatic posting (otherwise Buffer falls back to Notify Me). See https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges",
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "body": {
+                        "description": "Plain-text override for this channel (max 5000). Required unless reset is true. This is what Buffer publishes for this channel instead of the Substack note.",
+                        "maxLength": 5000,
+                        "type": "string"
+                      },
+                      "bufferChannelId": {
+                        "description": "Buffer channel ID from list_buffer_channels",
+                        "type": "string"
+                      },
+                      "imageUrl": {
+                        "description": "Remote image URLs for this channel only (max 5). WriteStack fetches and stores them. They are not added to the Substack note. Omit to keep existing channel images; pass [] to clear them.",
+                        "items": {
+                          "type": "string"
+                        },
+                        "maxItems": 5,
+                        "type": "array"
+                      },
+                      "includePreviews": {
+                        "description": "If true, attach a rich link-preview card from the first URL in this channel's body. Max 1 preview per channel.",
+                        "type": "boolean"
+                      },
+                      "reset": {
+                        "description": "If true, delete this channel's custom post so it falls back to the Substack note. The channel stays selected.",
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "bufferChannelId"
+                    ],
+                    "type": "object"
+                  },
+                  "maxItems": 20,
+                  "type": "array"
+                },
+                "content": {
+                  "description": "The note body text",
+                  "type": "string"
+                },
+                "imageUrl": {
+                  "description": "Optional remote image URLs to attach to the note (same as CSV import image_url). WriteStack fetches each URL and stores the image. Max 5. Pass full https:// URLs. Invalid or unreachable URLs are skipped.",
+                  "items": {
+                    "type": "string"
+                  },
+                  "maxItems": 5,
+                  "type": "array"
+                },
+                "includePreviews": {
+                  "description": "If the note's content contains a link (full https:// URL or bare domain like writestack.io), ask the user whether they want a rich link-preview card (image, title, description) attached before creating/updating the note - do not assume yes. If they confirm, pass includePreviews: true. Prefer writing links as full https:// URLs in the content so previews resolve reliably. Only one preview can be attached per note; if there are multiple links, the first link in the content is used.",
+                  "type": "boolean"
+                },
+                "status": {
+                  "default": "draft",
+                  "description": "Note status",
+                  "enum": [
+                    "draft",
+                    "ready"
+                  ],
+                  "type": "string"
+                },
+                "tags": {
+                  "description": "Category/tag names to assign. Tags also decide which reserved queue times this note can take: a note matches a reserved slot if it shares ANY of the slot's tags. Untagged notes only use open or untagged-only times. Call list_tags first to show available names.",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "content"
+              ],
+              "type": "object"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "notes"
+        ],
+        "type": "object"
+      },
+      "name": "create_many_notes",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "created": {
+            "type": "number"
+          },
+          "errors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "failed": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string"
+          },
+          "notes": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "attachments": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "url",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "bufferChannelIds": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "bufferChannelPosts": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "attachments": {
+                        "items": {
+                          "$ref": "#/properties/notes/items/properties/attachments/items"
+                        },
+                        "type": "array"
+                      },
+                      "body": {
+                        "type": "string"
+                      },
+                      "bufferChannelId": {
+                        "type": "string"
+                      },
+                      "reset": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "bufferChannelId",
+                      "body",
+                      "attachments"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "id": {
+                  "type": "string"
+                },
+                "linkPreview": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "added": {
+                      "type": "boolean"
+                    },
+                    "reason": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "added"
+                  ],
+                  "type": "object"
+                },
+                "preview": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "status",
+                "preview"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "requested": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "requested",
+          "created",
+          "failed",
+          "notes",
+          "message"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": true,
+        "readOnlyHint": false,
+        "title": "Create Note"
+      },
+      "description": "Create a new note draft or ready note. The content body must be in Markdown format. When generating new note content (not when the user already provided the full body), call get_writing_style first unless they pasted complete style instructions. If the content includes a link (https:// URL or bare domain like example.com), ask the user if they'd like a link preview before calling this tool; pass includePreviews: true only if they confirm. Prefer full https:// URLs in the content. To attach images, pass imageUrl as an array of remote image URLs (max 5) — WriteStack fetches and stores them like CSV import. You can also enable auto-restack by passing autoRestackAfterHours (1–168 hours) — the note will automatically be restacked that many hours after it's published. To cross-post to Buffer, call list_buffer_channels first and pass bufferChannelIds and/or bufferChannelPosts (per-channel text and images). Tags you assign also decide which reserved queue times this note can take later (OR match; untagged notes only use open or untagged-only times). Very important: New line MUST be with double newlines (\n\n).",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "autoRestackAfterHours": {
+            "anyOf": [
+              {
+                "maximum": 168,
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Pass null or omit to disable auto-restack on the note. Requires the WriteStack browser extension v1.4.78 or higher to actually fire."
+          },
+          "bufferChannelIds": {
+            "description": "Optional array of Buffer channel IDs to cross-post this new note to once it publishes on Substack. Call list_buffer_channels first to get the valid IDs — only IDs returned by that tool are accepted. Maximum 20 channels per note — requests with more are rejected. Channel IDs from bufferChannelPosts are merged in automatically. Omit or pass an empty array to skip Buffer cross-posting unless you also pass bufferChannelPosts. Requires a connected Buffer account. Platform limits still apply: Instagram requires an image or video, and Instagram feed images must be between 4:5 and 1.91:1 aspect ratio for automatic posting (otherwise Buffer falls back to Notify Me). See https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "bufferChannelPosts": {
+            "description": "Optional per-channel Buffer post overrides when a channel should have different text or images than the Substack note. Call list_buffer_channels first. Each item needs bufferChannelId and, unless reset is true, a plain-text body (max 5000). Those channel IDs are also selected on the note (merged with bufferChannelIds, still max 20). imageUrl attaches images to that channel only — they are not added to the Substack note. Omit imageUrl to keep existing channel images; pass [] to clear them. includePreviews adds a link card from the first URL in that channel's body (max 1). reset: true deletes the override so the channel falls back to the note. Removing a channel from bufferChannelIds does not delete a saved override. Platform limits still apply: Instagram requires an image or video, and Instagram feed images must be between 4:5 and 1.91:1 aspect ratio for automatic posting (otherwise Buffer falls back to Notify Me). See https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "body": {
+                  "description": "Plain-text override for this channel (max 5000). Required unless reset is true. This is what Buffer publishes for this channel instead of the Substack note.",
+                  "maxLength": 5000,
+                  "type": "string"
+                },
+                "bufferChannelId": {
+                  "description": "Buffer channel ID from list_buffer_channels",
+                  "type": "string"
+                },
+                "imageUrl": {
+                  "description": "Remote image URLs for this channel only (max 5). WriteStack fetches and stores them. They are not added to the Substack note. Omit to keep existing channel images; pass [] to clear them.",
+                  "items": {
+                    "type": "string"
+                  },
+                  "maxItems": 5,
+                  "type": "array"
+                },
+                "includePreviews": {
+                  "description": "If true, attach a rich link-preview card from the first URL in this channel's body. Max 1 preview per channel.",
+                  "type": "boolean"
+                },
+                "reset": {
+                  "description": "If true, delete this channel's custom post so it falls back to the Substack note. The channel stays selected.",
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "bufferChannelId"
+              ],
+              "type": "object"
+            },
+            "maxItems": 20,
+            "type": "array"
+          },
+          "content": {
+            "description": "The note body text",
+            "type": "string"
+          },
+          "imageUrl": {
+            "description": "Optional remote image URLs to attach to the note (same as CSV import image_url). WriteStack fetches each URL and stores the image. Max 5. Pass full https:// URLs. Invalid or unreachable URLs are skipped.",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 5,
+            "type": "array"
+          },
+          "includePreviews": {
+            "description": "If the note's content contains a link (full https:// URL or bare domain like writestack.io), ask the user whether they want a rich link-preview card (image, title, description) attached before creating/updating the note - do not assume yes. If they confirm, pass includePreviews: true. Prefer writing links as full https:// URLs in the content so previews resolve reliably. Only one preview can be attached per note; if there are multiple links, the first link in the content is used.",
+            "type": "boolean"
+          },
+          "status": {
+            "default": "draft",
+            "description": "Note status",
+            "enum": [
+              "draft",
+              "ready"
+            ],
+            "type": "string"
+          },
+          "tags": {
+            "description": "Category/tag names to assign. Tags also decide which reserved queue times this note can take: a note matches a reserved slot if it shares ANY of the slot's tags. Untagged notes only use open or untagged-only times. Call list_tags first to show available names.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "content"
+        ],
+        "type": "object"
+      },
+      "name": "create_note",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "attachments": {
+            "items": {
+              "$ref": "#/properties/bufferChannelPosts/items/properties/attachments/items"
+            },
+            "type": "array"
+          },
+          "autoRestackAfterHours": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "bufferChannelIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "bufferChannelPosts": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "attachments": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "url",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "body": {
+                  "type": "string"
+                },
+                "bufferChannelId": {
+                  "type": "string"
+                },
+                "reset": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "bufferChannelId",
+                "body",
+                "attachments"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "linkPreview": {
+            "additionalProperties": false,
+            "properties": {
+              "added": {
+                "type": "boolean"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "added"
+            ],
+            "type": "object"
+          },
+          "message": {
+            "type": "string"
+          },
+          "noteId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "noteId",
+          "status",
+          "autoRestackAfterHours",
+          "message"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Get Article"
+      },
+      "description": "Get one WriteStack article by ID, including markdown body, publicationId, contentVersion, and Substack draft/schedule status. The markdown may include headings, bold/italic/strike/code, lists, blockquotes, :::pullquote, :::callout, and :::paywall. ALWAYS call this immediately before update_article and pass the returned contentVersion as baseVersion — the user may have edited the article in WriteStack since you last saw it.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articleId": {
+            "description": "WriteStack article ID",
+            "type": "string"
+          }
+        },
+        "required": [
+          "articleId"
+        ],
+        "type": "object"
+      },
+      "name": "get_article",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "bodyMarkdown": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "contentVersion": {
+            "type": "number"
+          },
+          "id": {
+            "type": "string"
+          },
+          "images": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "s3Url": {
+                  "type": "string"
+                },
+                "substackUrl": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "s3Url",
+                "substackUrl"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "plannedForDate": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "publicationId": {
+            "type": "number"
+          },
+          "publishAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "substackDraftUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "substackScheduledAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "substackSyncStatus": {
+            "type": "string"
+          },
+          "subtitle": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "topic",
+          "subtitle",
+          "status",
+          "publicationId",
+          "bodyMarkdown",
+          "plannedForDate"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Get Article Substack Status"
+      },
+      "description": "Get the Substack sync status for an article: draft URL, scheduled time, and last error if any.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articleId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "articleId"
+        ],
+        "type": "object"
+      },
+      "name": "get_article_substack_status",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articleId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "queued": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string"
+          },
+          "substackDraftUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "substackScheduledAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "articleId",
+          "status",
+          "message"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Get Feature Suggestion Link"
+      },
+      "description": "Return the link to the WriteStack features board, where the user can post a product or feature idea for others to vote on. This tool only returns the link: it does not submit, store, or send the idea anywhere, and you cannot submit suggestions on the user's behalf. Use when the user asks for functionality that is not currently possible in the MCP or app, then tell them to post their idea at https://writestack.io/features.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "context": {
+            "description": "Optional extra context about why this is needed",
+            "type": "string"
+          },
+          "suggestion": {
+            "description": "Short summary of the feature the user wants. It is not submitted anywhere; the user posts it on the features board themselves.",
+            "minLength": 5,
+            "type": "string"
+          }
+        },
+        "required": [
+          "suggestion"
+        ],
+        "type": "object"
+      },
+      "name": "get_feature_suggestion_link",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "success",
+          "message"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Get Next Available Slots"
+      },
+      "description": "Get the next N available posting slots based on your schedule template and already-scheduled notes. Pass tagNames to preview as if scheduling a note with those tags (first open or matching reserved lane; tagged previews skip untagged-only times). Omit tagNames to list the next free times in chronological order, including reserved and untagged-only times that are currently empty — do not assume an untagged note can use reserved times, or that a tagged note can use untagged-only times. Each result includes source (lane | open | any), the slot's tags, and untaggedNotesOnly. Call this before schedule_notes to preview when notes would be scheduled. Queue routing: each weekly time can reserve tags, accept only untagged notes, or stay open for any note, and may also set default Buffer channels. A time with tags is a reserved lane — it stays empty until a note shares ANY of those tags (OR). A time marked untaggedNotesOnly (and with no tags) accepts only notes with no tags; tagged notes never take those times, including Add to Queue leftovers. Untagged notes never take reserved lanes. When filling the next template times (schedule_notes), a tagged note takes the first open (any-note) time or matching reserved lane, whichever comes first. An untagged note takes the first open or untagged-only time. If a time has Buffer channels, those replace the note's channels when the note lands there (apply-on-schedule only). Substack still always posts. Call get_schedule to see each slot's tags, untaggedNotesOnly, and bufferChannels.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "count": {
+            "description": "Number of available slots to return (1–100)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "number"
+          },
+          "tagNames": {
+            "description": "Optional tag names to preview as if scheduling a note with those tags. Uses the first open (any-note) time or matching reserved lane, whichever comes first. Tagged previews skip untagged-only times. Several slot tags are OR — one shared tag is enough. Omit to list the next free times in chronological order, including reserved and untagged-only times that are currently empty — do not assume an untagged note can use reserved times, or that a tagged note can use untagged-only times. Call list_tags first if you need valid names.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "count"
+        ],
+        "type": "object"
+      },
+      "name": "get_next_available_slots",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "count": {
+            "type": "number"
+          },
+          "slots": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "date": {
+                  "type": "string"
+                },
+                "formatted": {
+                  "type": "string"
+                },
+                "source": {
+                  "enum": [
+                    "lane",
+                    "open",
+                    "any"
+                  ],
+                  "type": "string"
+                },
+                "tags": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "untaggedNotesOnly": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "date",
+                "formatted"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "timezone": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "slots",
+          "count",
+          "timezone"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Get Note"
+      },
+      "description": "Get a single note by ID with its full content, including auto-restack configuration (autoRestackAfterHours), Buffer cross-post channels (bufferChannelIds), and any per-channel Buffer post overrides (bufferChannelPosts: custom text and attachments for a channel).",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "noteId": {
+            "description": "The note ID",
+            "type": "string"
+          }
+        },
+        "required": [
+          "noteId"
+        ],
+        "type": "object"
+      },
+      "name": "get_note",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "attachments": {
+            "items": {
+              "$ref": "#/properties/bufferChannelPosts/items/properties/attachments/items"
+            },
+            "type": "array"
+          },
+          "autoRestackAfterHours": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "body": {
+            "type": "string"
+          },
+          "bodyJson": {
+            "anyOf": [
+              {},
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "bufferChannelIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "bufferChannelPosts": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "attachments": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "url",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "body": {
+                  "type": "string"
+                },
+                "bufferChannelId": {
+                  "type": "string"
+                },
+                "reset": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "bufferChannelId",
+                "body",
+                "attachments"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "createdAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "format": "date-time",
+                "type": "string"
+              }
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "scheduledAt": {
+            "anyOf": [
+              {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "format": "date-time",
+                    "type": "string"
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "format": "date-time",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "body",
+          "status",
+          "tags",
+          "scheduledAt",
+          "autoRestackAfterHours",
+          "bufferChannelIds",
+          "bufferChannelPosts",
+          "createdAt",
+          "updatedAt",
+          "attachments"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Get Notes Statistics"
+      },
+      "description": "Analyze the user's published Substack notes analytics: returns a paginated batch of notes with engagement metrics (impressions, clicks, reactions, comments, restacks, profile visits, shares, free/paid subscribers) and an audience split (subscribers, followers, strangers) when Substack stored one. audience is null when that note has no split. Not looked up by note IDs. Use when they ask to review note performance, compare top notes, find what drove subscribers, or summarize stats over a period. Filter by dateRange (or custom startDate/endDate), sort by orderBy/orderDirection, optionally search note text, and paginate with page/limit; check hasMore for the next page. Requires advanced statistics and a valid WriteStack extension key; on failure, read the error field for next steps.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "dateRange": {
+            "default": "last_30_days",
+            "description": "Time period for statistics. Use 'custom' together with startDate/endDate for an explicit range.",
+            "enum": [
+              "last_7_days",
+              "last_30_days",
+              "last_90_days",
+              "last_12_months",
+              "all_time",
+              "custom"
+            ],
+            "type": "string"
+          },
+          "endDate": {
+            "description": "ISO 8601 end date for a custom range (sets dateRange to 'custom').",
+            "format": "date-time",
+            "type": "string"
+          },
+          "limit": {
+            "default": 20,
+            "description": "Max notes to return (default 20, max 50)",
+            "maximum": 50,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "orderBy": {
+            "default": "totalImpressions",
+            "description": "Metric to order notes by",
+            "enum": [
+              "date",
+              "reactionCount",
+              "commentsCount",
+              "restacks",
+              "totalClicks",
+              "totalFollows",
+              "totalPaidSubscriptions",
+              "totalFreeSubscriptions",
+              "totalImpressions",
+              "totalProfileVisits",
+              "totalLinkClicks",
+              "totalShares"
+            ],
+            "type": "string"
+          },
+          "orderDirection": {
+            "default": "desc",
+            "description": "Sort direction",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "type": "string"
+          },
+          "page": {
+            "default": 1,
+            "description": "Page number for pagination (1-based)",
+            "minimum": 1,
+            "type": "integer"
+          },
+          "search": {
+            "description": "Optional free-text filter over the note body",
+            "type": "string"
+          },
+          "startDate": {
+            "description": "ISO 8601 start date for a custom range (sets dateRange to 'custom').",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "get_notes_statistics",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "count": {
+            "type": "number"
+          },
+          "dateRange": {
+            "type": "string"
+          },
+          "error": {
+            "type": "string"
+          },
+          "hasMore": {
+            "type": "boolean"
+          },
+          "limit": {
+            "type": "number"
+          },
+          "notes": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "audience": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "followers": {
+                          "type": "number"
+                        },
+                        "strangers": {
+                          "type": "number"
+                        },
+                        "subscribers": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "subscribers",
+                        "followers",
+                        "strangers"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "commentsCount": {
+                  "type": "number"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "date": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "format": "date-time",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "id": {
+                  "type": "string"
+                },
+                "reactionCount": {
+                  "type": "number"
+                },
+                "restacks": {
+                  "type": "number"
+                },
+                "totalClicks": {
+                  "type": "number"
+                },
+                "totalFollows": {
+                  "type": "number"
+                },
+                "totalFreeSubscriptions": {
+                  "type": "number"
+                },
+                "totalImpressions": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "totalLinkClicks": {
+                  "type": "number"
+                },
+                "totalPaidSubscriptions": {
+                  "type": "number"
+                },
+                "totalProfileVisits": {
+                  "type": "number"
+                },
+                "totalShares": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "id",
+                "content",
+                "date",
+                "reactionCount",
+                "commentsCount",
+                "restacks",
+                "totalImpressions",
+                "totalClicks",
+                "totalLinkClicks",
+                "totalProfileVisits",
+                "totalShares",
+                "totalFollows",
+                "totalFreeSubscriptions",
+                "totalPaidSubscriptions",
+                "audience"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "orderBy": {
+            "type": "string"
+          },
+          "orderDirection": {
+            "type": "string"
+          },
+          "page": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "notes",
+          "count",
+          "page",
+          "limit",
+          "hasMore"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Get Posts Statistics"
+      },
+      "description": "Read this writer's Substack post statistics for every newsletter selected on Posts Statistics, in one call. Returns views, unique email opens, Substack's reported open rate, emails sent and delivered, email traffic share, email-attributed views, likes, comments, restacks, shares, clicks, and signups, plus each newsletter's subscriber split and ARR. Open rate is unique opens divided by emails delivered. Use the returned openRate. Do not recompute it, and do not treat emailTrafficShare as the open rate: that share is the portion of views that came from email, including repeat views. Defaults to the last 30 days, highest views first. Omit publicationId unless they named one newsletter. Requires the posts statistics feature and WriteStack extension 1.5.25 or newer. On failure, follow the error text.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "dateRange": {
+            "default": "last_30_days",
+            "description": "Time period. Use custom with startDate and endDate.",
+            "enum": [
+              "last_7_days",
+              "last_30_days",
+              "last_90_days",
+              "last_12_months",
+              "all_time",
+              "custom"
+            ],
+            "type": "string"
+          },
+          "endDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "limit": {
+            "default": 15,
+            "description": "How many posts to return, highest views first (default 15, max 30).",
+            "maximum": 30,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "publicationId": {
+            "description": "Limit to one newsletter by its Substack publication id. Omit to include every newsletter selected on Posts Statistics.",
+            "type": "integer"
+          },
+          "startDate": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "get_posts_statistics",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "dateRange": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          },
+          "extensionVersion": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "postCount": {
+            "type": "number"
+          },
+          "posts": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "clicks": {
+                  "type": "number"
+                },
+                "comments": {
+                  "type": "number"
+                },
+                "delivered": {
+                  "type": "number"
+                },
+                "emailTrafficShare": {
+                  "$ref": "#/properties/summary/properties/openRate"
+                },
+                "emailViews": {
+                  "$ref": "#/properties/summary/properties/openRate"
+                },
+                "engagementRate": {
+                  "$ref": "#/properties/summary/properties/openRate"
+                },
+                "likes": {
+                  "type": "number"
+                },
+                "openRate": {
+                  "$ref": "#/properties/summary/properties/openRate"
+                },
+                "postDate": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "postId": {
+                  "type": "number"
+                },
+                "publicationId": {
+                  "type": "number"
+                },
+                "restacks": {
+                  "type": "number"
+                },
+                "sent": {
+                  "type": "number"
+                },
+                "shares": {
+                  "type": "number"
+                },
+                "signups": {
+                  "type": "number"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "uniqueOpens": {
+                  "type": "number"
+                },
+                "url": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "views": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "postId",
+                "publicationId",
+                "title",
+                "url",
+                "postDate",
+                "views",
+                "uniqueOpens",
+                "openRate",
+                "sent",
+                "delivered",
+                "emailTrafficShare",
+                "emailViews",
+                "likes",
+                "comments",
+                "restacks",
+                "shares",
+                "clicks",
+                "signups",
+                "engagementRate"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "publications": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "arr": {
+                  "$ref": "#/properties/summary/properties/openRate"
+                },
+                "comps": {
+                  "type": "number"
+                },
+                "delivered": {
+                  "type": "number"
+                },
+                "emailTrafficShare": {
+                  "$ref": "#/properties/summary/properties/openRate"
+                },
+                "emailViews": {
+                  "type": "number"
+                },
+                "free": {
+                  "type": "number"
+                },
+                "freeTrials": {
+                  "type": "number"
+                },
+                "gifts": {
+                  "type": "number"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "openRate": {
+                  "$ref": "#/properties/summary/properties/openRate"
+                },
+                "paid": {
+                  "type": "number"
+                },
+                "paying": {
+                  "type": "number"
+                },
+                "postCount": {
+                  "type": "number"
+                },
+                "publicationId": {
+                  "type": "number"
+                },
+                "sent": {
+                  "type": "number"
+                },
+                "totalSubscribers": {
+                  "type": "number"
+                },
+                "uniqueOpens": {
+                  "$ref": "#/properties/summary/properties/openRate"
+                },
+                "views": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "publicationId",
+                "name",
+                "totalSubscribers",
+                "paying",
+                "freeTrials",
+                "gifts",
+                "comps",
+                "paid",
+                "free",
+                "arr",
+                "postCount",
+                "openRate",
+                "uniqueOpens",
+                "views",
+                "emailViews",
+                "emailTrafficShare",
+                "sent",
+                "delivered"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "summary": {
+            "additionalProperties": false,
+            "properties": {
+              "delivered": {
+                "type": "number"
+              },
+              "deliveryRate": {
+                "$ref": "#/properties/summary/properties/openRate"
+              },
+              "emailTrafficShare": {
+                "$ref": "#/properties/summary/properties/openRate"
+              },
+              "emailViews": {
+                "type": "number"
+              },
+              "openRate": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "sent": {
+                "type": "number"
+              },
+              "uniqueOpens": {
+                "$ref": "#/properties/summary/properties/openRate"
+              },
+              "views": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "openRate",
+              "uniqueOpens",
+              "views",
+              "emailViews",
+              "emailTrafficShare",
+              "sent",
+              "delivered",
+              "deliveryRate"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "extensionVersion",
+          "dateRange",
+          "startDate",
+          "endDate",
+          "postCount",
+          "summary",
+          "publications",
+          "posts"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Get Queue"
+      },
+      "description": "Get the scheduled notes queue (notes with assigned schedule times). Use skip for pagination. Check hasMore in the response to know if more results exist.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "limit": {
+            "default": 20,
+            "description": "Max notes to return (default 20, max 50)",
+            "type": "number"
+          },
+          "skip": {
+            "default": 0,
+            "description": "Offset for pagination",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "name": "get_queue",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "count": {
+            "type": "number"
+          },
+          "hasMore": {
+            "type": "boolean"
+          },
+          "queue": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                },
+                "scheduledAt": {
+                  "anyOf": [
+                    {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "format": "date-time",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "tags": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "id",
+                "content",
+                "scheduledAt",
+                "tags"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "skip": {
+            "type": "number"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "queue",
+          "count",
+          "total",
+          "skip",
+          "hasMore"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Get Schedule"
+      },
+      "description": "Get your recurring schedule template (weekly time slots). Each slot may list reserved tags (a reserved lane), untaggedNotesOnly (only notes with no tags), and default Buffer cross-post channels. Queue routing: each weekly time can reserve tags, accept only untagged notes, or stay open for any note, and may also set default Buffer channels. A time with tags is a reserved lane — it stays empty until a note shares ANY of those tags (OR). A time marked untaggedNotesOnly (and with no tags) accepts only notes with no tags; tagged notes never take those times, including Add to Queue leftovers. Untagged notes never take reserved lanes. When filling the next template times (schedule_notes), a tagged note takes the first open (any-note) time or matching reserved lane, whichever comes first. An untagged note takes the first open or untagged-only time. If a time has Buffer channels, those replace the note's channels when the note lands there (apply-on-schedule only). Substack still always posts. Call get_schedule to see each slot's tags, untaggedNotesOnly, and bufferChannels.",
+      "inputSchema": {
+        "properties": {},
+        "type": "object"
+      },
+      "name": "get_schedule",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "slots": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "bufferChannels": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "service": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "service"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "days": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "id": {
+                  "type": "string"
+                },
+                "tags": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "time": {
+                  "type": "string"
+                },
+                "timezone": {
+                  "type": "string"
+                },
+                "untaggedNotesOnly": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "time",
+                "days",
+                "timezone"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Get Schedule Capacity"
+      },
+      "description": "Check how many more notes the user is allowed to schedule on their current plan. Returns maxScheduledNotes (the plan limit), currentScheduledCount, remaining (how many more they may schedule right now), and unlimited (true = the user has the Unlimited Schedules addon and there is no limit). ALWAYS call this before schedule_notes or schedule_notes_with_custom_dates, and NEVER schedule more notes than `remaining` unless unlimited is true.",
+      "inputSchema": {
+        "properties": {},
+        "type": "object"
+      },
+      "name": "get_schedule_capacity",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "currentScheduledCount": {
+            "type": "number"
+          },
+          "maxScheduledNotes": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string"
+          },
+          "remaining": {
+            "type": "number"
+          },
+          "unlimited": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "maxScheduledNotes",
+          "currentScheduledCount",
+          "remaining",
+          "unlimited",
+          "message"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Get Writing Style"
+      },
+      "description": "Return the user's saved note style, topics, and onboarding context from WriteStack (user metadata and linked publication analysis). Before drafting or generating new note bodies (e.g. for create_note or create_many_notes), call this tool first and align the output with these fields together with your other knowledge of the user.",
+      "inputSchema": {
+        "properties": {},
+        "type": "object"
+      },
+      "name": "get_writing_style",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "publication": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "generatedDescription": {
+                    "$ref": "#/properties/userMetadata/properties/notesDescription"
+                  },
+                  "topics": {
+                    "$ref": "#/properties/userMetadata/properties/notesDescription"
+                  },
+                  "writingStyle": {
+                    "$ref": "#/properties/userMetadata/properties/notesDescription"
+                  }
+                },
+                "required": [
+                  "generatedDescription",
+                  "writingStyle",
+                  "topics"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "userMetadata": {
+            "additionalProperties": false,
+            "properties": {
+              "iAmA": {
+                "$ref": "#/properties/userMetadata/properties/notesDescription"
+              },
+              "noteTopics": {
+                "$ref": "#/properties/userMetadata/properties/notesDescription"
+              },
+              "noteWritingStyle": {
+                "$ref": "#/properties/userMetadata/properties/notesDescription"
+              },
+              "notesDescription": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "usuallyPostAbout": {
+                "$ref": "#/properties/userMetadata/properties/notesDescription"
+              }
+            },
+            "required": [
+              "notesDescription",
+              "noteWritingStyle",
+              "noteTopics",
+              "iAmA",
+              "usuallyPostAbout"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "userMetadata",
+          "publication"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "List Activities"
+      },
+      "description": "List activity on the user's Substack (same rules as the WriteStack activity feed): non-dismissed items, excluding the user's own author, optional filter (all / comments / mentions). Results are deduped by thread, include ancestor rows when needed, and each item includes merged attachments plus reaction/restack/comment counts. Use skip and limit for pagination (max 50 per page). totalDeduped is the thread count before slicing; hasMore indicates more pages.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "filter": {
+            "default": "all",
+            "description": "Filter activities: all, comments, or mentions",
+            "enum": [
+              "all",
+              "comments",
+              "mentions"
+            ],
+            "type": "string"
+          },
+          "limit": {
+            "default": 15,
+            "description": "Max activities to return (default 20, max 50)",
+            "type": "number"
+          },
+          "skip": {
+            "default": 0,
+            "description": "Offset for pagination",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "name": "list_activities",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "activities": {
+            "items": {
+              "additionalProperties": {},
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "count": {
+            "type": "number"
+          },
+          "error": {
+            "type": "string"
+          },
+          "hasMore": {
+            "type": "boolean"
+          },
+          "limit": {
+            "type": "number"
+          },
+          "skip": {
+            "type": "number"
+          },
+          "totalDeduped": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "activities",
+          "count",
+          "totalDeduped",
+          "skip",
+          "limit",
+          "hasMore"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "List Article Newsletters"
+      },
+      "description": "List the newsletters the user has enabled for Articles (the ones shown in WriteStack Articles; hidden newsletters are omitted). Returns publicationId, title, url, and isPrimary. BEFORE creating or pushing an article, call this tool, show the user these newsletters, and ASK which one to use. Never guess. Only these publicationIds are accepted.",
+      "inputSchema": {
+        "properties": {},
+        "type": "object"
+      },
+      "name": "list_article_newsletters",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "count": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string"
+          },
+          "newsletters": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "isPrimary": {
+                  "type": "boolean"
+                },
+                "publicationId": {
+                  "type": "number"
+                },
+                "title": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "publicationId",
+                "title",
+                "url",
+                "isPrimary"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "newsletters",
+          "count"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "List Articles"
+      },
+      "description": "List WriteStack articles from newsletters the user has enabled in Articles, optionally filtered by status or publicationId. Call list_article_newsletters first if you need valid publication IDs. Returns title, topic, status, target date (plannedForDate, null for undated drafts), publicationId, and Substack sync fields.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "limit": {
+            "default": 20,
+            "type": "number"
+          },
+          "publicationId": {
+            "description": "Enabled newsletter publicationId. BEFORE creating or pushing an article, call list_article_newsletters and ASK the user which newsletter to use. Never guess or pick a default. Only IDs returned by that tool are accepted — newsletters the user hid from Articles are rejected.",
+            "type": "number"
+          },
+          "skip": {
+            "default": 0,
+            "type": "number"
+          },
+          "status": {
+            "enum": [
+              "planned",
+              "generating",
+              "draft",
+              "reviewed",
+              "failed"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "list_articles",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articles": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "plannedForDate": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "publicationId": {
+                  "type": "number"
+                },
+                "publishAt": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "status": {
+                  "type": "string"
+                },
+                "substackDraftUrl": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "substackSyncStatus": {
+                  "type": "string"
+                },
+                "subtitle": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "title": {
+                  "type": "string"
+                },
+                "topic": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "topic",
+                "subtitle",
+                "status",
+                "plannedForDate",
+                "publicationId"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "count": {
+            "type": "number"
+          },
+          "hasMore": {
+            "type": "boolean"
+          },
+          "skip": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "articles",
+          "count",
+          "skip",
+          "hasMore"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "List Buffer Channels"
+      },
+      "description": "List the user's connected Buffer channels (social accounts like LinkedIn, X/Twitter, Threads, etc.) available for cross-posting. Returns each channel's id, name, and service. Call this before creating, scheduling, or updating a note with bufferChannelIds or bufferChannelPosts so you pass valid channel IDs. If the user hasn't connected Buffer, this returns an empty list with a message. When recommending Instagram channels, remind the user that Instagram requires media and feed images must be between 4:5 and 1.91:1 for automatic Buffer publishing (see https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges); otherwise Buffer uses Notify Me.",
+      "inputSchema": {
+        "properties": {},
+        "type": "object"
+      },
+      "name": "list_buffer_channels",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "channels": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "service"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "count": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "channels",
+          "count"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "List Notes"
+      },
+      "description": "List your notes, optionally filtered by status or tag. Status evergreen is the source notes set to repeat; it is not a tag. Use skip for pagination. Check hasMore in the response to know if more results exist.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "limit": {
+            "default": 20,
+            "description": "Max notes to return (default 20, max 50)",
+            "type": "number"
+          },
+          "skip": {
+            "default": 0,
+            "description": "Offset for pagination",
+            "type": "number"
+          },
+          "status": {
+            "description": "Filter by note status. evergreen means source notes set to repeat. It is a status, not a tag.",
+            "enum": [
+              "draft",
+              "ready",
+              "scheduled",
+              "published",
+              "evergreen"
+            ],
+            "type": "string"
+          },
+          "tag": {
+            "description": "Filter by category/tag name",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "list_notes",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "count": {
+            "type": "number"
+          },
+          "hasMore": {
+            "type": "boolean"
+          },
+          "notes": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "autoRestackAfterHours": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "content": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "format": "date-time",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "id": {
+                  "type": "string"
+                },
+                "scheduledAt": {
+                  "anyOf": [
+                    {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "format": "date-time",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "status": {
+                  "type": "string"
+                },
+                "tags": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "updatedAt": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "format": "date-time",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "content",
+                "status",
+                "tags",
+                "scheduledAt",
+                "autoRestackAfterHours",
+                "createdAt",
+                "updatedAt"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "skip": {
+            "type": "number"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "notes",
+          "count",
+          "total",
+          "skip",
+          "hasMore"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "List Tags"
+      },
+      "description": "List all your note categories/tags. Use these names when assigning tags on create/update, and when previewing reserved queue lanes with get_next_available_slots (tagNames).",
+      "inputSchema": {
+        "properties": {},
+        "type": "object"
+      },
+      "name": "list_tags",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "tags": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "color": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "color"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "tags"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": true,
+        "readOnlyHint": false,
+        "title": "Push Article To Substack"
+      },
+      "description": "Push or update a WriteStack article as a Substack draft through the user's Chrome extension. BEFORE calling this tool, you MUST call list_article_newsletters and ASK the user which newsletter to push the article to. Never assume. Pass the chosen publicationId — only enabled newsletters are accepted. If WriteStack is open, this usually finishes in seconds. Otherwise it is queued and syncs the next time WriteStack is open with the extension. Pushing an article that already has a Substack draft updates (overwrites) that draft.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articleId": {
+            "type": "string"
+          },
+          "publicationId": {
+            "description": "Enabled newsletter publicationId. BEFORE creating or pushing an article, call list_article_newsletters and ASK the user which newsletter to use. Never guess or pick a default. Only IDs returned by that tool are accepted — newsletters the user hid from Articles are rejected.",
+            "type": "number"
+          }
+        },
+        "required": [
+          "articleId",
+          "publicationId"
+        ],
+        "type": "object"
+      },
+      "name": "push_article_to_substack",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articleId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "queued": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string"
+          },
+          "substackDraftUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "substackScheduledAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "articleId",
+          "status",
+          "message"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": true,
+        "readOnlyHint": false,
+        "title": "Schedule Article On Substack"
+      },
+      "description": "Schedule a WriteStack article on Substack. BEFORE calling, call list_article_newsletters and ASK the user which newsletter to schedule on, then pass that publicationId. Only enabled newsletters are accepted. Pass publishAt (ISO 8601), or omit it to use the newsletter's next free article slot (the weekly slots set with Article schedule on the Articles page). Also pushes the draft if it is not synced yet.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articleId": {
+            "type": "string"
+          },
+          "audience": {
+            "type": "string"
+          },
+          "emailAudience": {
+            "type": "string"
+          },
+          "publicationId": {
+            "description": "Enabled newsletter publicationId. BEFORE creating or pushing an article, call list_article_newsletters and ASK the user which newsletter to use. Never guess or pick a default. Only IDs returned by that tool are accepted — newsletters the user hid from Articles are rejected.",
+            "type": "number"
+          },
+          "publishAt": {
+            "description": "ISO 8601 publish time. Omit to use the newsletter's next free article slot.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "articleId",
+          "publicationId"
+        ],
+        "type": "object"
+      },
+      "name": "schedule_article_on_substack",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articleId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "queued": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string"
+          },
+          "substackDraftUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "substackScheduledAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "articleId",
+          "status",
+          "message"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Schedule Notes"
+      },
+      "description": "Schedule notes to the user's next available posting slots based on their recurring schedule template. Each note is routed by its own tags: first open or matching reserved lane. Untagged notes only use open or untagged-only slots. You can also set or update each note's autoRestackAfterHours at the same time (1–168 hours; null clears it). To also cross-post the notes to Buffer channels when they publish, pass bufferChannelIds (call list_buffer_channels first to get valid IDs) — the same channels are applied to every note in the batch, except a slot with its own Buffer channels replaces those for the note that lands there. Queue routing: each weekly time can reserve tags, accept only untagged notes, or stay open for any note, and may also set default Buffer channels. A time with tags is a reserved lane — it stays empty until a note shares ANY of those tags (OR). A time marked untaggedNotesOnly (and with no tags) accepts only notes with no tags; tagged notes never take those times, including Add to Queue leftovers. Untagged notes never take reserved lanes. When filling the next template times (schedule_notes), a tagged note takes the first open (any-note) time or matching reserved lane, whichever comes first. An untagged note takes the first open or untagged-only time. If a time has Buffer channels, those replace the note's channels when the note lands there (apply-on-schedule only). Substack still always posts. Call get_schedule to see each slot's tags, untaggedNotesOnly, and bufferChannels. You MAY create notes without asking. CRITICAL: Scheduling in WriteStack does NOT push notes to Substack. After scheduling, the user must open WriteStack and click the yellow Sync/Warning button so the Chrome extension syncs them — you cannot do this for them. BEFORE calling this tool, you MUST ask the user to confirm they understand they need to sync manually afterward, then pass userConfirmedManualSync: true. Never set that flag unless they explicitly confirmed in this conversation. IMPORTANT: Call get_schedule_capacity first. NEVER, under any circumstances, schedule more than the reported `remaining` (unless unlimited=true). If the user asks to schedule more than `remaining`, schedule only the first `remaining` notes, leave the rest as ready/drafts, and tell the user how many were scheduled and why the rest were not. Scheduling sets the notes' status to scheduled and assigns posting times; this integration cannot unschedule them, so the user would have to undo it in WriteStack.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "autoRestackAfterHours": {
+            "anyOf": [
+              {
+                "maximum": 168,
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Pass null or omit to disable auto-restack on the note. Requires the WriteStack browser extension v1.4.78 or higher to actually fire. When provided here, the same value is applied to every note in this batch. To set different values per note, call update_note for each one after scheduling."
+          },
+          "bufferChannelIds": {
+            "description": "Optional array of Buffer channel IDs to cross-post this note to once it publishes on Substack. Call list_buffer_channels first to get the valid IDs — only IDs returned by that tool are accepted. Maximum 20 channels per note — requests with more are rejected. When set, WriteStack will also post the note to these Buffer channels (e.g. LinkedIn, X/Twitter, Threads) shortly after it goes live. Pass an empty array or omit to leave cross-posting unchanged; pass the channels you want to keep, since this replaces any previously set channels. Requires a connected Buffer account. Platform limits still apply: Instagram requires an image or video, and Instagram feed images must be between 4:5 and 1.91:1 aspect ratio for automatic posting (otherwise Buffer falls back to Notify Me). See https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges When provided here, the same channels are applied to every note in this batch, unless the slot the note lands on has its own Buffer channels — those replace the batch value for that note.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "noteIds": {
+            "description": "Array of note IDs to schedule, in order",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "userConfirmedManualSync": {
+            "description": "Must be true. Only set this after the user has explicitly confirmed they understand they must manually sync these notes in WriteStack (yellow Sync/Warning button) after scheduling, because this MCP cannot push them to Substack. Do not assume confirmation.",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "noteIds",
+          "userConfirmedManualSync"
+        ],
+        "type": "object"
+      },
+      "name": "schedule_notes",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "assignments": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "autoRestackAfterHours": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "bufferChannelIds": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "bufferChannelsOverridden": {
+                  "type": "boolean"
+                },
+                "noteId": {
+                  "type": "string"
+                },
+                "notePreview": {
+                  "type": "string"
+                },
+                "scheduledAt": {
+                  "type": "string"
+                },
+                "source": {
+                  "enum": [
+                    "lane",
+                    "open",
+                    "any"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "noteId",
+                "scheduledAt",
+                "notePreview"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "autoRestackAfterHours": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "requestedCount": {
+            "type": "number"
+          },
+          "scheduledCount": {
+            "type": "number"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "scheduledCount",
+          "requestedCount",
+          "assignments",
+          "message"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Schedule Notes With Custom Dates"
+      },
+      "description": "Schedule notes at user-provided custom dates/times (one date per note). ONLY use this tool if: (1) the user explicitly requests specific dates/times for their notes, OR (2) the user has no recurring schedule template set up (schedule_notes returned an error about a missing template). In all other cases, prefer schedule_notes with the recurring template instead — that tool honors reserved tag lanes. Custom dates skip lane preference because you pick the time; if the chosen time matches a slot that has Buffer channels, those still replace the note's channels. All dates must be in the future. Pass dates as ISO 8601 strings (e.g. 2026-05-01T14:30:00Z). You can also set or update each note's autoRestackAfterHours at the same time (1–168 hours; null clears it), and cross-post each note to Buffer channels by passing per-note bufferChannelIds (call list_buffer_channels first to get valid IDs). You MAY create notes without asking. CRITICAL: Scheduling in WriteStack does NOT push notes to Substack. After scheduling, the user must open WriteStack and click the yellow Sync/Warning button so the Chrome extension syncs them — you cannot do this for them. BEFORE calling this tool, you MUST ask the user to confirm they understand they need to sync manually afterward, then pass userConfirmedManualSync: true. Never set that flag unless they explicitly confirmed in this conversation. IMPORTANT: Call get_schedule_capacity first. NEVER, under any circumstances, schedule more than the reported `remaining` (unless unlimited=true). If the user asks to schedule more than `remaining`, schedule only the first `remaining` notes, leave the rest as ready/drafts, and tell the user how many were scheduled and why the rest were not. Scheduling sets the notes' status to scheduled and assigns posting times; this integration cannot unschedule them, so the user would have to undo it in WriteStack.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "notes": {
+            "description": "Array of (noteId, scheduledAt, autoRestackAfterHours?, bufferChannelIds?) entries (1–50). Each entry can independently set its own auto-restack delay and Buffer cross-post channels.",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "autoRestackAfterHours": {
+                  "anyOf": [
+                    {
+                      "maximum": 168,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Pass null or omit to disable auto-restack on the note. Requires the WriteStack browser extension v1.4.78 or higher to actually fire."
+                },
+                "bufferChannelIds": {
+                  "description": "Optional array of Buffer channel IDs to cross-post this note to once it publishes on Substack. Call list_buffer_channels first to get the valid IDs — only IDs returned by that tool are accepted. Maximum 20 channels per note — requests with more are rejected. When set, WriteStack will also post the note to these Buffer channels (e.g. LinkedIn, X/Twitter, Threads) shortly after it goes live. Pass an empty array or omit to leave cross-posting unchanged; pass the channels you want to keep, since this replaces any previously set channels. Requires a connected Buffer account. Platform limits still apply: Instagram requires an image or video, and Instagram feed images must be between 4:5 and 1.91:1 aspect ratio for automatic posting (otherwise Buffer falls back to Notify Me). See https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "noteId": {
+                  "description": "The note ID to schedule",
+                  "type": "string"
+                },
+                "scheduledAt": {
+                  "description": "ISO 8601 datetime string (e.g. 2026-05-01T14:30:00Z). Must be in the future.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "noteId",
+                "scheduledAt"
+              ],
+              "type": "object"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "type": "array"
+          },
+          "userConfirmedManualSync": {
+            "description": "Must be true. Only set this after the user has explicitly confirmed they understand they must manually sync these notes in WriteStack (yellow Sync/Warning button) after scheduling, because this MCP cannot push them to Substack. Do not assume confirmation.",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "notes",
+          "userConfirmedManualSync"
+        ],
+        "type": "object"
+      },
+      "name": "schedule_notes_with_custom_dates",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "assignments": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "autoRestackAfterHours": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "bufferChannelIds": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "bufferChannelsOverridden": {
+                  "type": "boolean"
+                },
+                "noteId": {
+                  "type": "string"
+                },
+                "notePreview": {
+                  "type": "string"
+                },
+                "scheduledAt": {
+                  "type": "string"
+                },
+                "source": {
+                  "enum": [
+                    "lane",
+                    "open",
+                    "any"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "noteId",
+                "scheduledAt",
+                "notePreview"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "message": {
+            "type": "string"
+          },
+          "requestedCount": {
+            "type": "number"
+          },
+          "scheduledCount": {
+            "type": "number"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "scheduledCount",
+          "requestedCount",
+          "assignments",
+          "message"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": true,
+        "readOnlyHint": false,
+        "title": "Unschedule Article On Substack"
+      },
+      "description": "Remove a WriteStack article from the Substack schedule. The draft stays on Substack.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articleId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "articleId"
+        ],
+        "type": "object"
+      },
+      "name": "unschedule_article_on_substack",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articleId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "queued": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string"
+          },
+          "substackDraftUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "substackScheduledAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "articleId",
+          "status",
+          "message"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": true,
+        "readOnlyHint": false,
+        "title": "Update Article"
+      },
+      "description": "Update an article's title, subtitle, markdown body, imageUrl (remote images fetched to S3 and appended), or Substack settings (audience, comments, SEO, slug, social title, publishAt). This saves locally only — it does not push to Substack. Pass baseVersion from get_article; a version conflict means you must re-read the article. Images in bodyMarkdown are fetched to S3. Body markdown supports the same Substack-safe formats as create_article (headings, bold/italic/strike/code, lists, quotes, pullquotes, callouts, paywall, links, images). BEFORE calling this tool, you MUST call get_article for the same articleId and base the update on that fresh copy — the user may have edited the article in WriteStack. Never update from a stale draft you wrote earlier in the conversation. Replaces the article's current content and settings with the values you pass; there is no undo through this integration.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articleId": {
+            "type": "string"
+          },
+          "audience": {
+            "type": "string"
+          },
+          "baseVersion": {
+            "description": "contentVersion from get_article. Pass it to avoid overwriting newer edits.",
+            "type": "integer"
+          },
+          "bodyMarkdown": {
+            "description": "GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Voice and video embeds are not supported.",
+            "type": "string"
+          },
+          "commentPermissions": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "description": "Optional remote image URLs to insert into the article. WriteStack fetches each URL, stores the image on S3, and appends it to the markdown body. Markdown/HTML images already in bodyMarkdown are ingested the same way. Max 20. Pass full https:// URLs. Invalid or unreachable URLs are skipped. Images are uploaded to Substack when the article is opened or saved with the Chrome extension, and again when pushing the draft.",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 20,
+            "type": "array"
+          },
+          "publishAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "seoDescription": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "seoTitle": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "slug": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "socialTitle": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "subtitle": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "articleId"
+        ],
+        "type": "object"
+      },
+      "name": "update_article",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articleId": {
+            "type": "string"
+          },
+          "contentVersion": {
+            "type": "number"
+          },
+          "images": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "s3Url": {
+                  "type": "string"
+                },
+                "sourceUrl": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "s3Url"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "articleId",
+          "status",
+          "message"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": true,
+        "readOnlyHint": false,
+        "title": "Update Note"
+      },
+      "description": "Update an existing note's content, status, tags, auto-restack delay (autoRestackAfterHours), Buffer cross-post channels (bufferChannelIds), per-channel Buffer posts (bufferChannelPosts), or link preview (includePreviews). The content body must be in Markdown format. If the resulting content includes a link, ask the user if they'd like a link preview before calling this tool; pass includePreviews: true only if they confirm. Pass autoRestackAfterHours: null to disable auto-restack on a note that previously had it. To set Buffer channels, call list_buffer_channels first and pass bufferChannelIds (empty array clears them). To give a channel different text or images than the Substack note, pass bufferChannelPosts. Changing tags changes which reserved queue times the note can take if it is scheduled later. Overwrites the current value of each field you pass; this integration has no undo, so call get_note first and confirm with the user before replacing existing content.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "autoRestackAfterHours": {
+            "anyOf": [
+              {
+                "maximum": 168,
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Pass null or omit to disable auto-restack on the note. Requires the WriteStack browser extension v1.4.78 or higher to actually fire."
+          },
+          "bufferChannelIds": {
+            "description": "Optional array of Buffer channel IDs to cross-post this note to once it publishes on Substack. Call list_buffer_channels first to get the valid IDs — only IDs returned by that tool are accepted. Maximum 20 channels per note — requests with more are rejected. Omit to leave cross-posting unchanged; pass an empty array to clear/disable Buffer cross-posting; pass the channel IDs you want (this replaces any previously set channels). Channel IDs from bufferChannelPosts are merged in automatically. Requires a connected Buffer account. Platform limits still apply: Instagram requires an image or video, and Instagram feed images must be between 4:5 and 1.91:1 aspect ratio for automatic posting (otherwise Buffer falls back to Notify Me). See https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "bufferChannelPosts": {
+            "description": "Optional per-channel Buffer post overrides when a channel should have different text or images than the Substack note. Call list_buffer_channels first. Each item needs bufferChannelId and, unless reset is true, a plain-text body (max 5000). Those channel IDs are also selected on the note (merged with bufferChannelIds, still max 20). imageUrl attaches images to that channel only — they are not added to the Substack note. Omit imageUrl to keep existing channel images; pass [] to clear them. includePreviews adds a link card from the first URL in that channel's body (max 1). reset: true deletes the override so the channel falls back to the note. Removing a channel from bufferChannelIds does not delete a saved override. Platform limits still apply: Instagram requires an image or video, and Instagram feed images must be between 4:5 and 1.91:1 aspect ratio for automatic posting (otherwise Buffer falls back to Notify Me). See https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "body": {
+                  "description": "Plain-text override for this channel (max 5000). Required unless reset is true. This is what Buffer publishes for this channel instead of the Substack note.",
+                  "maxLength": 5000,
+                  "type": "string"
+                },
+                "bufferChannelId": {
+                  "description": "Buffer channel ID from list_buffer_channels",
+                  "type": "string"
+                },
+                "imageUrl": {
+                  "description": "Remote image URLs for this channel only (max 5). WriteStack fetches and stores them. They are not added to the Substack note. Omit to keep existing channel images; pass [] to clear them.",
+                  "items": {
+                    "type": "string"
+                  },
+                  "maxItems": 5,
+                  "type": "array"
+                },
+                "includePreviews": {
+                  "description": "If true, attach a rich link-preview card from the first URL in this channel's body. Max 1 preview per channel.",
+                  "type": "boolean"
+                },
+                "reset": {
+                  "description": "If true, delete this channel's custom post so it falls back to the Substack note. The channel stays selected.",
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "bufferChannelId"
+              ],
+              "type": "object"
+            },
+            "maxItems": 20,
+            "type": "array"
+          },
+          "content": {
+            "description": "New note body text",
+            "type": "string"
+          },
+          "contentJson": {
+            "description": "New note body JSON, as a tiptap JSON string. Not a must, recommended only for fixes where updating the content doesn't work. Read a few jsonBody examples of published notes first to get an idea of the format.",
+            "type": "string"
+          },
+          "includePreviews": {
+            "description": "If the note's content contains a link (full https:// URL or bare domain like writestack.io), ask the user whether they want a rich link-preview card (image, title, description) attached before creating/updating the note - do not assume yes. If they confirm, pass includePreviews: true. Prefer writing links as full https:// URLs in the content so previews resolve reliably. Only one preview can be attached per note; if there are multiple links, the first link in the content is used.",
+            "type": "boolean"
+          },
+          "noteId": {
+            "description": "The note ID to update",
+            "type": "string"
+          },
+          "status": {
+            "description": "New note status",
+            "enum": [
+              "draft",
+              "ready"
+            ],
+            "type": "string"
+          },
+          "tags": {
+            "description": "Replace all tags with these category names. Tags also decide which reserved queue times this note can take: a note matches a reserved slot if it shares ANY of the slot's tags. Untagged notes only use open or untagged-only times. Call list_tags first to show available names.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "noteId"
+        ],
+        "type": "object"
+      },
+      "name": "update_note",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "bufferChannelIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "bufferChannelPosts": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "attachments": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "url",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "body": {
+                  "type": "string"
+                },
+                "bufferChannelId": {
+                  "type": "string"
+                },
+                "reset": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "bufferChannelId",
+                "body",
+                "attachments"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "linkPreview": {
+            "additionalProperties": false,
+            "properties": {
+              "added": {
+                "type": "boolean"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "added"
+            ],
+            "type": "object"
+          },
+          "message": {
+            "type": "string"
+          },
+          "noteId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "noteId",
+          "message"
+        ],
+        "type": "object"
+      }
+    }
+  ]
+}

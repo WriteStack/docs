@@ -1,0 +1,68 @@
+---
+title: Agent rules
+description: The rules every AI agent must follow when calling the WriteStack MCP server, including the manual Sync step, capacity checks and read-before-write.
+---
+
+These rules are also in the tool descriptions the server sends, so a well-behaved client already sees them. They are here in one place so you can check an agent's behaviour, or put them in a system prompt.
+
+## 1. Scheduling over MCP does not reach Substack on its own
+
+When a writer schedules inside WriteStack with the browser extension installed, the Note is synced to Substack right away. **An MCP client can't do that:** it only stores Notes in the writer's WriteStack queue. The writer then opens WriteStack, goes to **My Notes → Scheduled notes**, and clicks the yellow **Sync N scheduled notes to Substack** button so the extension pushes them to Substack. See [Sync](/docs/using/concepts/sync).
+
+- Before calling `schedule_notes` or `schedule_notes_with_custom_dates`, tell the writer this and ask them to confirm.
+- Pass `userConfirmedManualSync: true` only after they say yes. Without it, the server refuses and asks you to confirm first.
+- After scheduling, remind them to click Sync.
+
+## 2. Check capacity before scheduling
+
+Call `get_schedule_capacity` first. Schedule at most `remaining` Notes unless `unlimited` is `true`. The rest stay as drafts or ready Notes. If the limit is reached, the server schedules nothing and says so.
+
+## 3. Write in the writer's voice
+
+Before drafting new Note text, call `get_writing_style`, unless the writer already pasted full style instructions. Note bodies are Markdown, and a line break is a blank line (two newlines).
+
+## 4. Never invent ids or names
+
+Read them from the matching list tool:
+
+| Value | Get it from |
+| --- | --- |
+| Tag names | `list_tags` |
+| Buffer channel ids | `list_buffer_channels` (max 20 per Note) |
+| Newsletter `publicationId` | `list_article_newsletters`, then ask the writer which one |
+| Note ids | `list_notes`, `get_queue` |
+| Article ids | `list_articles` |
+
+## 5. Ask before optional extras
+
+- **Link previews:** if a Note contains a link, ask before attaching a preview card. Pass `includePreviews: true` only after a yes. One preview per Note, from the first link.
+- **Cross-posting:** ask before adding Buffer channels.
+- **Newsletter:** never pick a default newsletter for an article.
+
+## 6. Read before you write
+
+`update_note` and `update_article` replace the fields you send, and there is no undo.
+
+- Read the Note or article first, show the writer the change, then write.
+- For articles, call `get_article` right before `update_article` and pass its `contentVersion` as `baseVersion`. A version conflict means the writer edited it in the meantime: read it again.
+- Pushing an article that already has a Substack draft updates that draft. If the draft was changed on Substack since the last push, the push stops with a conflict instead of overwriting. Tell the writer and let them decide.
+
+## 7. What the server cannot do
+
+- Sync Notes to Substack (the writer clicks the Sync button in WriteStack).
+- Unschedule Notes (the writer does that in WriteStack).
+- Act on any account other than the signed-in writer's.
+
+If the writer asks for something no tool covers, call `get_feature_suggestion_link` and give them the link to suggest it.
+
+## Copy into a system prompt
+
+```text
+You are connected to the writer's WriteStack account over MCP.
+- Scheduling only queues Notes in WriteStack. Before scheduling, tell the writer they must open WriteStack (My Notes → Scheduled notes) and click the yellow "Sync N scheduled notes to Substack" button afterwards, and only pass userConfirmedManualSync: true after they confirm.
+- Call get_schedule_capacity before scheduling and never schedule more than `remaining` unless `unlimited` is true.
+- Call get_writing_style before drafting Note text. Use blank lines between paragraphs.
+- Never invent tag names, channel ids, note ids or publication ids; read them from the list tools.
+- Ask before adding link previews, Buffer channels, or choosing a newsletter.
+- Read a note or article before updating it; updates overwrite and cannot be undone.
+```

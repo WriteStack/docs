@@ -1,0 +1,30 @@
+---
+title: Connect Claude
+description: Add WriteStack as a custom connector in Claude (web or desktop) and sign in with OAuth. No API key needed.
+---
+
+Claude connects with OAuth: you paste the endpoint, sign in to WriteStack, and approve access.
+
+## Steps
+
+1. In Claude, open **Settings → Connectors** and choose **Add custom connector**.
+2. Name it `WriteStack` and paste the endpoint:
+   ```text
+   https://www.writestack.io/api/mcp/mcp
+   ```
+3. Click **Connect**. Claude opens WriteStack. Sign in and approve access.
+4. In a chat, turn on the WriteStack connector from the tools menu and ask, for example: "What's in my WriteStack queue this week?"
+
+A connector added on Claude web also works in Claude Desktop with the same account.
+
+Claude's menus change from time to time. If a step looks different, follow the [step-by-step guide with screenshots](https://blogs.writestack.io/?post=2-guides-4-add-mcp-connector).
+
+## If it doesn't work
+
+| Problem | Fix |
+| --- | --- |
+| "MCP access is not available on your current plan" | Your plan doesn't include MCP. See [plans and limits](/docs/account/plans-and-limits). |
+| Sign-in window closes and nothing connects | Log in to [writestack.io](https://www.writestack.io) in the same browser first, then connect again. |
+| Notes were scheduled but didn't post | Expected for Notes scheduled over MCP. Open WriteStack, go to **My Notes → Scheduled notes** and click **Sync N scheduled notes to Substack**. See [Sync](/docs/using/concepts/sync). |
+
+Next: [agent rules](/docs/build/agent-rules) and [recipes](/docs/build/recipes).

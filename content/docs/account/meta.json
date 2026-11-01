@@ -1,0 +1,7 @@
+{
+  "title": "Account & billing",
+  "description": "Plans, limits, trial, upgrades, cancelling, refunds",
+  "root": true,
+  "icon": "CreditCard",
+  "pages": ["index", "plans-and-limits", "trial", "change-plan", "cancel", "invoices", "refunds", "affiliates"]
+}

@@ -1,0 +1,34 @@
+---
+title: Invoices and payment method
+description: How to download WriteStack invoices and receipts, update your card, and change the billing email, name, address or tax ID.
+---
+
+Download invoices in **Settings → Subscription → Billing & Invoices → Billing History**. To update your card or billing details, click **Manage your subscription** on the same page. It opens the Stripe billing portal.
+
+## Download an invoice
+
+1. Go to **Settings → Subscription → Billing & Invoices**.
+2. Scroll to **Billing History**.
+3. Click **Download** next to the payment you need.
+
+After each successful payment, WriteStack also emails you a payment confirmation with a **View my invoice** button.
+
+## Update your payment method or billing details
+
+1. Go to **Settings → Subscription → Billing & Invoices**.
+2. Click **Manage your subscription**. The Stripe billing portal opens.
+3. In the portal you can:
+   - update your card,
+   - see your invoice history,
+   - change billing name, email, address, phone and tax ID,
+   - change or cancel your plan.
+
+{/* TODO(orel): Portal features listed come from the config the code creates (getBillingPortalConfigurationId). If prod uses the STRIPE_BILLING_PORTAL_CONFIG_PLAN config instead, confirm it enables the same features. */}
+
+Changing the billing email in the portal changes where Stripe sends billing emails. It does not change your WriteStack login email.
+
+{/* TODO(orel): Payment confirmation emails go to the WriteStack account email (user.email), while Stripe receipts go to the Stripe customer email. Confirm whether Stripe's own receipt emails are enabled. */}
+
+## If a payment fails
+
+Your plan becomes past due. Open **Manage your subscription**, update your card and pay the open invoice. If the portal doesn't open, email support@writestack.io.

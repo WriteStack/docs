@@ -1,0 +1,61 @@
+---
+title: What needs your approval
+description: Which Coach (Quill) actions run as soon as you ask, which wait for you to confirm or choose on a card, which the Coach never does, and how to approve, decline or undo them.
+---
+
+The Coach only changes your notes or articles when you ask it to. Your request is the approval for that action: there is no extra approve button. Repeating jobs, pushing an edit to a draft already on Substack, and close choices wait for you on a card. The Coach never publishes anything.
+
+## Runs when you ask
+
+These run as soon as you ask for them in the chat. The result appears as a status line under the reply, for example **Scheduled** or **Saved**, with a list of the notes it touched.
+
+| You ask to | What the Coach does |
+| --- | --- |
+| Save notes | Saves them as draft or ready. Ready is not the queue. |
+| Change a note's status | Moves notes to draft or ready. |
+| Schedule notes | Saves the notes and puts them on your queue, in the next open slots unless you named a time. |
+| Make a note evergreen | Turns it into an evergreen note. |
+| Tag notes | Adds or removes tags. |
+| Edit an article | Saves a new title, subtitle or body in WriteStack. |
+| Push an article to Substack | Sends it to Substack as a draft. |
+| Remember something | Saves a fact to [Memory](/docs/using/coach/what-it-does#memory). |
+| Make an image | Makes or edits one image in the reply. |
+
+Notes that are already scheduled, evergreen or published are left as they are, and the status line says **Already scheduled**, **Already evergreen** or **Already published**. A scheduled note only moves back to draft or ready when you name that note and ask.
+
+Scheduling and evergreen need the browser extension and a computer. Without them you see "The WriteStack extension is needed" or "Run this from a computer". How scheduled notes reach Substack is explained in [Sync](/docs/using/concepts/sync).
+
+## Happens on its own
+
+| What | Why |
+| --- | --- |
+| Reading your notes, posts, stats, queue, Memory and Library | Reading changes nothing. |
+| Saving a post the Coach wrote as an article draft in WriteStack | So you can edit it. It is not sent to Substack. See [How the Coach writes articles](/docs/using/articles/coach-articles). |
+| Saving facts you stated in a chat to Memory | Only while **Use memory** is on. |
+
+Notes the Coach writes are not saved on their own. Each one is a **Note** card until you ask the Coach to save or schedule it, or open the card and save it in the note editor.
+
+## Waits for you on a card
+
+| Card | When it shows | What to do |
+| --- | --- | --- |
+| Routine card | You ask for something every day or every week | Check **When**, **Timezone**, **Does** and **Delivery**, then click **Confirm**. Nothing is saved until you do. |
+| Question card | Two or more options are close, for example which newsletter to push to | Pick an option, or type your own under **Something else**, then send. Or **Skip**. |
+| Push an edited draft | You asked for an edit to an article that is already on Substack | Pick the newsletter to push to, or **Don't push yet**. |
+| Select articles | The Coach couldn't find a post you named | Mark the posts, then confirm. |
+
+## Never
+
+- Publish a note or a post.
+- Schedule, unschedule or publish an article on Substack.
+- Delete a note.
+- Change an article's Substack settings (audience, comments, SEO, slug).
+
+Chats started from an AI agent through [`ask_coach`](/docs/build/mcp-reference/ask_coach), and [routine](/docs/using/coach/what-it-does#routines) runs, can only save drafts. They can't schedule, push or publish.
+
+## Decline or undo
+
+- **Before it runs:** don't ask, or tell the Coach to stop. Click **Stop** to end a reply that is still running.
+- **On a card:** don't click **Confirm**, choose **Don't push yet**, or **Skip** the question.
+- **After it runs:** open the note from the status line and change it in the note editor, or ask the Coach to move it back to draft. Remove a routine under **Routines**.
+- **Pushed drafts:** a push only creates or updates a Substack draft. Delete or edit it on Substack if you don't want it.

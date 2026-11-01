@@ -1,0 +1,74 @@
+---
+title: How the Coach writes articles
+description: How the Coach (Quill) drafts a post, saves it as a WriteStack article, edits existing drafts and pushes them to Substack, and which steps wait for the writer.
+---
+
+Ask the Coach to write a post and it drafts one in a **Post** card, then saves it as an article draft in WriteStack on its own. It only sends a draft to Substack when you ask, and it never schedules or publishes an article.
+
+## Write a post
+
+1. Open **Coach** and ask, for example: "Write a post about the three mistakes I made in my first year."
+2. The Coach follows its post-writing playbook and matches your style and length from your published posts.
+3. The draft appears as a **Post** card. Its status moves from **Writing** to **Saving draft** to **Draft saved**.
+
+The draft is saved on your primary newsletter. If you have more than one newsletter, pick another one from the newsletter menu on the card. Once a draft is on Substack, its newsletter can't change: "This draft is already on Substack, so its newsletter stays put."
+
+The card shows the word count and read time, and has two buttons:
+
+| Button | What it does |
+| --- | --- |
+| **Edit post** | Opens the **Post draft** panel. |
+| **Copy** | Copies the title, subtitle and body as plain text. |
+
+## Edit the draft yourself
+
+**Edit post** opens the **Post draft** panel, with the title, subtitle and body and a formatting toolbar. Changes save on their own. The status at the top reads **Saving**, then **Saved**. If it reads **Couldn't save · Retry**, click it to try again.
+
+The panel has no image button. See [Images](/docs/using/articles/create#images).
+
+## Ask the Coach to edit a draft
+
+Ask, for example: "Make the intro shorter in that draft." The Coach:
+
+1. Reads the current version of the draft, including your own edits.
+2. Saves the change in WriteStack. A change to the body replaces the whole body.
+3. If the draft is already on Substack, asks whether to push the change. With more than one newsletter, it asks which one, with a last option **Don't push yet**.
+
+It pushes only after you choose. The Coach can edit the title, subtitle and body. It can't change Substack settings like audience, SEO or slug.
+
+If you edited the draft at the same time, the Coach's save is refused and it reads the draft again, so it doesn't overwrite your edit.
+
+## Push the draft to Substack
+
+Ask, for example: "Push it to Substack."
+
+- The Coach pushes the draft saved in this chat, or the one you quoted.
+- With more than one newsletter and none named, it asks "Which newsletter should I push it to?". Pick one on the question card.
+- If the draft is already on another newsletter, it pushes a copy to the one you picked. The original stays where it was.
+- It only pushes drafts with a body.
+
+The push needs the browser extension and an open WriteStack tab. Requirements, statuses and errors are on [Push an article to Substack](/docs/using/articles/substack-sync).
+
+## What waits for you
+
+| Step | Who does it |
+| --- | --- |
+| Draft the post | The Coach, when you ask for a post |
+| Save it as an article in WriteStack | The Coach, automatically |
+| Edit the draft | You, or the Coach when you ask |
+| Push it to Substack as a draft | The Coach, only when you ask |
+| Push an edit to a draft that is on Substack | The Coach asks first |
+| Schedule or publish on Substack | You, on Substack. The Coach can't. |
+
+An AI agent connected over MCP can schedule articles. See [Schedule on Substack](/docs/using/articles/substack-sync#schedule-on-substack).
+
+## If it doesn't work
+
+| What you see | Fix |
+| --- | --- |
+| "Connect a publication to save this post." | WriteStack found no Substack newsletter for your account. [Connect Substack](/docs/using/setup/connect-substack). |
+| **Not saved** on the card | The draft couldn't be saved as an article. Use **Copy** to keep the text. |
+| "Save this draft before choosing a newsletter." | Wait for **Draft saved**, then pick the newsletter. |
+| "That newsletter isn't available for articles." | That newsletter is hidden from Articles or no longer on your profile. |
+
+{/* TODO(orel): The card and the Post draft panel also show "Open in Articles" to writers with the articles flag, but /articles is comingSoon for non-admins. Hide the button or ship the page before pointing writers to it. */}

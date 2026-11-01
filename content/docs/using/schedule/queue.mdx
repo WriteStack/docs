@@ -1,0 +1,120 @@
+---
+title: Manage the queue
+description: How to add Notes to the WriteStack queue at the next available time or a custom time, reschedule them (change the time or day), unschedule or cancel them, edit them after scheduling, schedule many Notes at once, and what to do with Notes that have no matching queue time.
+---
+
+The queue is your scheduled Notes in time order, in **My Notes → Scheduled notes** with the **Queue** view. Add a Note with **Add to Queue** for the next free time, or pick an exact time. Scheduling works on a computer, not on a phone.
+
+With the [browser extension](/docs/using/setup/browser-extension) installed, a Note you add to the queue is scheduled on Substack right away, and Substack publishes it at its time. Notes scheduled without the extension need a sync. See [Sync](/docs/using/concepts/sync).
+
+## Add one Note at the next available time
+
+1. Open the Note in the editor.
+2. Make sure the menu next to the schedule button reads **When: Next Available**.
+3. Click **Add to Queue**. The button shows the date and time it will use, and the tag name if it is a time reserved for that tag.
+
+The Note takes the first free time in your [weekly template](/docs/using/schedule/weekly-template) that fits its tags. See [Tags and slots](/docs/using/concepts/tags-and-slots).
+
+If no open or matching time is free, the Note takes the next free time of any kind, including reserved times. If you have no weekly times at all, WriteStack asks you to pick a date and time instead.
+
+From a Note card in **Drafts** or **Ready** you can also use the calendar icon, or **Add to queue** in the card menu on a phone.
+
+## Add a Note at a custom time
+
+1. Open the Note in the editor.
+2. In the **When:** menu, pick **Set Date and Time**.
+3. Click **Select and schedule**.
+4. Pick the day and time, then click **Schedule to** followed by the time.
+
+Tags don't matter for a custom time. If the time matches a weekly time that has cross-post channels, those channels still apply.
+
+## Put a Note on a specific empty time
+
+1. In the queue, click an empty time ("Add a note").
+2. Pick one:
+   - **Write a new note**: "Start a blank note in this time". If the time is reserved for tags, the new Note starts with them.
+   - **Choose from Ready/Drafts…**: "Schedule a note you already wrote". Click **Schedule here** next to a Note.
+
+If a Note doesn't fit that time, the picker says so, for example "This time is reserved for Promo".
+
+## Other options in the When menu
+
+| Option | What it does |
+| --- | --- |
+| **Next Available** | Next free time that fits the Note's tags |
+| **Now** | Posts right away. The button reads **Post Now**. |
+| **Set Date and Time** | You pick the exact time |
+| **Make Evergreen** | Reposts on a schedule. See [Evergreen Notes](/docs/using/notes/evergreen). |
+| **Sync to Substack** | Only on a scheduled Note. Pushes your edits to Substack. |
+
+## Move a scheduled Note
+
+To reschedule a Note, meaning change the day or time it posts:
+
+- **Drag it** in the queue onto an empty time, or onto another Note to take that Note's time.
+- **Open it** and use **Set Date and Time** to pick a new time.
+
+If you drop it on a time with cross-post channels, the Note takes those channels. You can't move a Note into the past ("Can't schedule in the past"), and evergreen reposts can't be moved.
+
+## Unschedule a Note
+
+To cancel a scheduled Note without deleting it, unschedule it. Unscheduling takes a Note out of the queue and off the Substack schedule. It isn't deleted.
+
+- **In the queue:** click the unschedule icon on the Note. It moves to **Drafts**.
+- **In the editor:** click **Unschedule note**, then **Move to ready** or **Move to drafts**.
+- **Several at once:** click **Select** in **Scheduled notes**, pick Notes, then **Unschedule (N)** → **Move to Drafts** or **Move to Ready**.
+
+Unscheduling isn't available on a phone.
+
+## Edit a scheduled Note
+
+To change the text, images or tags of a Note that's already scheduled, open it and edit. Until the change reaches Substack, the editor shows "Not synced (click Sync to Substack or close the editor to sync)". Click **Sync to Substack** or close the editor.
+
+## Schedule many Notes at once
+
+1. Go to **My Notes → More actions → Batch schedule**. Or, in **Drafts** or **Ready**, click **Select**, pick Notes, then **Batch → Batch schedule**.
+2. Choose **Drafts** or **Ready**, then queue all of them or click **Select Notes** to pick some.
+3. Optional: open **Cross-post to Buffer** or **Automations** to set channels or [auto-restack](/docs/using/notes/auto-restack) for every Note in the batch.
+4. Click **Review Schedule**. The button shows how many Notes fit your plan, for example "Review Schedule (12/20 notes)".
+5. Check the dates. **Shuffle List** mixes the order. **Smart Shuffle** "Shuffles, then spreads notes so each batch mixes all your tags."
+6. Click **Start Schedule** and keep the tab open.
+
+Each Note takes the next free time that fits its tags, as with **Add to Queue**. Click **Stop** to stop partway.
+
+| Limit | Value |
+| --- | --- |
+| Speed | Substack allows at most 50 new schedules per 3 minutes. Bigger batches pause between groups of 50 and show a countdown. |
+| How many | Up to the number of free places in your plan. See [Capacity](/docs/using/concepts/capacity). |
+| How far ahead | 3 months |
+
+Batch scheduling isn't available on a phone.
+
+## Notes with no matching queue time
+
+When you schedule several Notes, some may fit nowhere. This usually means they have no tags and every free time is reserved for tags, or their tags don't match any time.
+
+WriteStack then shows a dialog titled "N notes have no matching queue time", listing those Notes. Choose:
+
+| Button | What happens |
+| --- | --- |
+| **Schedule with tags** | Add a matching tag to each Note in the list first, then click. They go to the matching reserved times. |
+| **Use next available times** | Places them on the next free times of any kind, including reserved ones. |
+| **Go back** | Nothing is scheduled. |
+
+If the tags you added still don't match, you see "Those tags still don't match a queue time. Add a matching tag or use the next available times."
+
+## Limits
+
+| Rule | Value |
+| --- | --- |
+| Latest posting time | 3 months ahead ("Substack allows scheduling up to 3 months ahead") |
+| Scheduled Notes at a time | Depends on your plan. See [Capacity](/docs/using/concepts/capacity). |
+| Scheduling on a phone | Not available. "To schedule the note, open WriteStack on a computer." |
+
+## If it doesn't work
+
+| Problem | See |
+| --- | --- |
+| A Note didn't post | [Sync](/docs/using/concepts/sync#why-didnt-my-note-post) |
+| The queue doesn't match Substack | [Schedule mismatch](/docs/using/troubleshooting/schedule-mismatch) |
+| "Schedule Limit Reached" | [Capacity](/docs/using/concepts/capacity) |

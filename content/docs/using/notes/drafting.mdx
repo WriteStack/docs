@@ -1,0 +1,136 @@
+---
+title: Write a Note
+description: How to write a Substack Note in the WriteStack editor, including formatting, line breaks, AI help in your own voice, Draft and Ready statuses, importing Notes from a CSV file, and copying a Note.
+---
+
+Write a Note in **My Notes → New note**. The editor saves as you type, and the Note starts as a draft. Nothing reaches Substack until you schedule it or post it.
+
+## Steps
+
+1. Go to **My Notes** and click **New note**.
+2. Write your Note. The line under the editor shows where it is saved, for example "Saved in drafts".
+3. When it is finished, click **Move to Ready**.
+4. Schedule it with the **When:** menu and **Add to Queue**. See [Manage the queue](/docs/using/schedule/queue).
+
+You can also press **Cmd+S** (Mac) or **Ctrl+S** (Windows) to save.
+
+## Formatting
+
+Select text to open the formatting bar.
+
+| Button | What it does |
+| --- | --- |
+| Bold, Italic, Strikethrough | Text styles |
+| Code | Inline code |
+| Bulleted list, Numbered list | Lists |
+| Quote | Block quote |
+
+Other shortcuts in the editor:
+
+| Type | What happens |
+| --- | --- |
+| A link | It becomes a link. The first link can get a preview card. See [Images and link previews](/docs/using/notes/images-and-link-previews). |
+| `@` and a name | Mention a Substack writer. Needs the [browser extension](/docs/using/setup/browser-extension). |
+| `/` | Opens **Emoji** and **GIF** |
+
+The counter in the editor's toolbar shows how many words the Note has.
+
+## Line breaks
+
+Each line break is a new paragraph. Pressing Enter starts a new paragraph, and pasted text with single line breaks is split into paragraphs too. This matches how Substack shows Notes, with space between paragraphs.
+
+## AI help in your voice
+
+WriteStack can write and rewrite Notes using your saved writing style. Set your style in **Settings → AI Settings**. See [Writing style](/docs/using/concepts/writing-style). AI actions use credits.
+
+### AI Assistant (one Note)
+
+1. Open a Note and click **AI Assistant** at the top of the editor.
+2. Pick an action. It works on the whole Note.
+
+| Group | Actions |
+| --- | --- |
+| Rewrite | **New version**, **Better hook**, **Fit my style** ("Use AI to make it sound like you") |
+| Expand & trim | **Keep writing**, **Concise** |
+| Tone | **Human-like**, **Engaging**, **Humorous**, **Positive**, **Creative**, **Sarcastic**, **Inspirational** |
+
+3. Read the result. Click **Insert** to replace the Note's text with it, or **Retry** for another version.
+
+### Templates
+
+Click **Templates** at the top of the editor to browse Note templates. Open one and click **Generate Note** to write a Note from it, or copy its guide.
+
+### Notes generator (many Notes)
+
+1. In **My Notes**, click **Notes generator**.
+2. Under **Source**, pick **My articles**, **My style**, **Upload** or **Voice**.
+3. Pick the number of notes and click **Generate N notes**.
+
+Generated Notes land in **Drafts**. Nothing is published.
+
+## Statuses
+
+| Status | Tab | How a Note gets there |
+| --- | --- | --- |
+| Draft | **Drafts** | New, generated and imported Notes without a time |
+| Ready | **Ready** | **Move to Ready** in the editor, or **Move to ready** on the Note card |
+| Scheduled | **Scheduled notes** | You add it to the queue |
+| Published | **Published notes** | It went out on Substack |
+
+To move a Note back, click **Move to Draft** in the editor or **Move to drafts** on the card. Statuses are explained in [Notes and the queue](/docs/using/concepts/notes-and-the-queue).
+
+To change many Notes at once, click **Select** in **Drafts** or **Ready**, pick Notes, then use **Batch** (**Batch schedule** or **Move to Ready** / **Move to Drafts**) or **Delete**.
+
+## Import Notes from a CSV file
+
+Use this to bring in Notes you wrote elsewhere.
+
+1. In **My Notes**, click **More actions → Import notes**.
+2. Click **Download CSV Template** to get `import-template.csv`, and fill it in.
+3. Drop the file under **2. Upload your CSV file**, or click **Upload file**.
+4. Click **Review import**, check the dates and images, then click **Import N Notes**.
+
+### Columns
+
+| Column | Required | What goes in it |
+| --- | --- | --- |
+| `body` | Yes | The Note text. If there is no `body` header, the first column is used. |
+| `image_url` | No | Image links, separated by commas. Up to 5 per Note. |
+| `schedule_time` | No | When to post. Leave empty to import as a draft. |
+| `tag` (or `category`) | No | One tag name. A tag that doesn't exist yet is created. |
+
+Headers are not case-sensitive. Commas, semicolons, `|` and tabs all work as separators. Put a body in double quotes if it contains commas or line breaks.
+
+### Dates in `schedule_time`
+
+| You write | WriteStack reads it as |
+| --- | --- |
+| `2026-12-01 15:00` | 15:00 in your account timezone |
+| `2026-12-01` | 09:00 in your account timezone |
+| `2026-12-01T15:00:00+02:00` or ending in `Z` | Exactly that time |
+
+Your account timezone is shown in the dialog. Change it in **Settings → Account Information**.
+
+Rows with a `schedule_time` are scheduled. Rows without one become drafts. A time in the past, or more than 3 months ahead, stops the import and the dialog lists the rows to fix.
+
+### Limits
+
+| Limit | Value |
+| --- | --- |
+| File size | About 200 KB |
+| Images per Note | 5 (extra links are skipped with a warning) |
+| Size of each imported image | 10 MB |
+
+If an image link can't be fetched, the Note is still imported without that image and the dialog lists the affected rows.
+
+Scheduled rows count toward your plan's limit like any other scheduled Note. See [Capacity](/docs/using/concepts/capacity).
+
+## Copy a Note
+
+There is no duplicate button. To reuse a Note's text, open it, click the copy icon ("Copy note to clipboard"), then click **New note** and paste.
+
+{/* TODO(orel): Is a "Duplicate note" action planned or available somewhere I missed? I found none in the note card, editor or Kanban. */}
+
+## On a phone
+
+You can write and save Notes on a phone. To schedule one, open WriteStack on a computer. The editor shows: "To schedule the note, open WriteStack on a computer."

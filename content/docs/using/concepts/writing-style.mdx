@@ -1,0 +1,50 @@
+---
+title: Writing style
+description: What WriteStack saves about your voice, where to see and edit it (Settings → AI Settings), and how Note drafting, the Coach and AI assistants use it.
+---
+
+Your writing style is what WriteStack knows about how you write: who you are, what you write about, and how your Notes usually sound. WriteStack builds it from your publication and your Notes, and every AI draft uses it so the text sounds like you.
+
+## What it's made of
+
+| Part | Where it comes from | Can you edit it? |
+| --- | --- | --- |
+| **Generated Description** | WriteStack's analysis of your publication: what you do and your writing style | Yes |
+| **Personal Prompt** | Instructions you write yourself, like words to avoid or how to format | Yes |
+| **Preferred Topics** | The topics you write about | Yes |
+| Notes style | How your Notes are usually built and the themes they cover, learned from your top Notes | No |
+| **What the AI learned** | Patterns from your recent Notes, plus writing rules from your edits and reactions | No, it updates on its own |
+
+## Where to see and edit it
+
+1. Go to **Settings → AI Settings**.
+2. Edit **Generated Description**, **Personal Prompt** or **Preferred Topics**.
+3. Click **Save Preferences**.
+
+Tips from the app:
+
+- **Generated Description**: "Avoid changing the structure of the description to ensure high quality content generation."
+- **Personal Prompt** is used alongside the generated description. Click **Browse Prompt Library** for ready-made instructions you can add.
+
+You need a connected publication to see these fields. Without one, AI Settings shows "No publication connected". See [Connect your Substack](/docs/using/setup/connect-substack).
+
+## What the AI learned
+
+Below your preferences, **What the AI learned** shows "Patterns from your notes that the next generation follows". It studies your Notes from the last 180 days and lists:
+
+| Pattern | Examples |
+| --- | --- |
+| Opener | Question, Confession, Contrarian, Number |
+| Length | Micro, Short, Sweet spot, Story, Long |
+| Ending | Fork in the road, Statement, Generic question, Link |
+| Topics | Your topics and how they perform compared to usual |
+
+Writing rules appear after five edits, likes, dislikes or skipped drafts. Before that, the card says so.
+
+## How it's used
+
+- **Drafting Notes.** When WriteStack generates Notes for you, it writes from your description, your Personal Prompt and your Notes style. See [Draft a Note](/docs/using/notes/drafting).
+- **The Coach.** Quill reads your writing style before drafting in your voice. See [The Coach](/docs/using/concepts/the-coach).
+- **AI assistants.** A client connected through MCP can read it with `get_writing_style` and should do so before writing Notes for you. See [Build with WriteStack](/docs/build).
+
+If drafts don't sound like you, start with the **Personal Prompt**. It is the part you control most directly.

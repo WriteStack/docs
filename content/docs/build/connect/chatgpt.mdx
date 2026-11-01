@@ -1,0 +1,26 @@
+---
+title: Connect ChatGPT
+description: Add WriteStack to ChatGPT as a custom MCP connector and sign in with OAuth.
+---
+
+ChatGPT connects with OAuth. Custom connectors in ChatGPT need developer mode turned on for your account or workspace.
+
+## Steps
+
+1. In ChatGPT, open **Settings → Apps & Connectors** and turn on **Developer mode** under **Advanced settings**.
+2. Choose **Create** to add a connector. Name it `WriteStack` and paste the endpoint:
+   ```text
+   https://www.writestack.io/api/mcp/mcp
+   ```
+3. Set authentication to **OAuth** and save. ChatGPT opens WriteStack. Sign in and approve access.
+4. In a new chat, pick the WriteStack connector and ask, for example: "Draft three Notes about my latest post."
+
+ChatGPT's menus and plan requirements change often. If a step looks different, follow the [step-by-step guide with screenshots](https://guides.writestack.io/?post=2-guides-add-mcp-gpt).
+
+## If it doesn't work
+
+| Problem | Fix |
+| --- | --- |
+| No option to add a custom connector | Your ChatGPT plan or workspace doesn't allow developer mode. Ask your workspace admin, or use [Claude](/docs/build/connect/claude). |
+| "MCP access is not available on your current plan" | Your WriteStack plan doesn't include MCP. See [plans and limits](/docs/account/plans-and-limits). |
+| Notes were scheduled but didn't post | Open WriteStack, go to **My Notes → Scheduled notes** and click **Sync N scheduled notes to Substack**. See [Sync](/docs/using/concepts/sync). |

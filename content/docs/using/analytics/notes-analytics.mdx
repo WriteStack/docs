@@ -1,0 +1,86 @@
+---
+title: Notes analytics
+description: What the Statistics and Notes Performance pages show for your Substack Notes (impressions, interactions, free and paid subscribers, audience and surface mix), where the data comes from, and how to filter it by date.
+---
+
+WriteStack shows how your published Substack Notes perform on two pages: **Statistics** (totals and trends for a date range) and **Notes Performance** (every Note, one card each, sortable by any metric). Both read the numbers Substack reports for your Notes, collected by the WriteStack browser extension.
+
+## Who can use it
+
+| Plan | What you see |
+| --- | --- |
+| Hobbyist | A preview with sample data and an upgrade prompt |
+| Standard | Full Notes analytics |
+| Enterprise | Full Notes analytics |
+
+See [Plans and limits](/docs/account/plans-and-limits).
+
+## Where the data comes from
+
+- The [WriteStack extension](/docs/using/setup/browser-extension) reads your Notes statistics from Substack and sends them to WriteStack. Without it, both pages ask you to install it.
+- The extension refreshes your Notes data at most every 8 hours. The page header shows **Last updated** with the time of the last refresh.
+- The numbers are Substack's own. WriteStack stores the breakdowns exactly as Substack names them, so a label like "Unconnected" comes from Substack.
+- If you just joined, the first fetch can take a few minutes. Notes Performance shows "I'm fetching your Notes right now" until it finishes.
+
+## Statistics page
+
+Open **Statistics** in the sidebar. The page title is **Notes Statistics**.
+
+### Date range and interval
+
+- **Date range:** Last 7 days, Last 30 days (default), Last 90 days, Last 12 months, All time, or Custom.
+- **Interval** for the charts: Daily, Weekly, Monthly, or Yearly.
+- Most numbers show a trend badge that compares the range with the previous period of the same length. "No data in the previous period" means there is nothing to compare with.
+
+### Sections
+
+| Section | What it shows |
+| --- | --- |
+| **What notes drove** | Link clicks, Free subs, Paid subs and ARR attributed. These are the outcomes Substack attributes to your Notes. |
+| **Impressions** | People who saw your Notes in the range, as a chart, plus Notes published, Avg per note and Best note (impressions of your top Note). |
+| **Interaction mix** | Each interaction type Substack reports, such as likes, replies, restacks, link clicks, profile visits and shares. |
+| **Surface mix** | Where your reach came from, for example Feed or Profile. |
+| **Audience mix** | Who you reached: Subscribers, Followers, or Unconnected (people with no link to you yet). |
+| **Link clicks** | Which links in your Notes got clicked. Substack reports clicks per Note, so a Note with several links is grouped separately. |
+| **Hourly Breakdown** | A grid of your followers' activity by hour. Stronger color means more likes, restacks and comments. |
+
+### Things you can click
+
+- **A point on the Impressions chart** lists the Notes published in that period, sorted by impressions.
+- **An interaction tile** opens a detailed view with its total, share of all interactions, and peak period, and the Notes behind it.
+- **A link** in Link clicks lists the Notes that included it.
+- **Add annotation** pins a note to a point on the chart, for example "Started posting twice a day". Use it to remember what you changed.
+- **Share** turns the Impressions section into a screenshot and creates a Note with it.
+
+## Notes Performance page
+
+Open **Notes Performance** in the sidebar. Every published Note shows as a card with its likes, replies and restacks, plus the metric you sort by.
+
+### Filters
+
+| Control | Options |
+| --- | --- |
+| Sort by | Reach: Impressions, Profile Visits, Clicks. Growth: Free Subs, Paid Subs. Engagement: Likes, Comments, Restacks. Time: Date. |
+| Direction | Descending or Ascending |
+| Date range | Last 7 days, Last 30 days, Last 90 days, Last 12 months, All time (default), Custom |
+| Category | **All categories** or one of your [tags](/docs/using/notes/tags) |
+| Search | **Search notes...** matches the Note text |
+
+The default view sorts by **Free Subs**, high to low, over **All time**. That puts the Notes that brought you the most subscribers first. See [Find your best Notes](/docs/using/analytics/best-notes).
+
+### On each card
+
+- **Full breakdown** shows every metric Substack reports for that Note, including its surface and audience breakdowns.
+- **View on Substack** opens the Note.
+- Click the card to open the Note in the note editor.
+- A badge appears when the same or a similar Note was posted in the last 4 weeks or is scheduled again.
+
+Switch between the grid and a list with the view toggle. The page loads 30 Notes at a time; click **Load More** for the rest.
+
+## If it doesn't work
+
+- **"Install the WriteStack extension"**: install it and sign in to Substack in the same browser. See [Browser extension](/docs/using/setup/browser-extension).
+- **"Make sure you are logged in to the correct account"**: the Substack account in your browser is not the one connected to WriteStack.
+- **"Stats are still computing"**: Substack has not returned engagement data yet. Check back in a few minutes.
+- **"No notes found"**: WriteStack is still fetching your Notes. Click **Refresh now** after a few minutes, or **Contact support**.
+- A section says "will appear once Substack returns data": Substack has no data for that breakdown in the selected range. Try a longer range.

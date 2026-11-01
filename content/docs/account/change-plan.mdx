@@ -1,0 +1,45 @@
+---
+title: Change your plan
+description: How to upgrade or downgrade your WriteStack plan, switch between monthly and annual billing, and what happens to billing and limits when you do.
+---
+
+Change plan from **Settings → Subscription → Billing & Invoices → Update plan**. Most changes apply right away and Stripe charges or credits the difference for the rest of your billing period.
+
+## Steps
+
+1. Go to **Settings → Subscription → Billing & Invoices**.
+2. Click **Update plan**.
+3. Choose **Monthly** or **Annual** at the top.
+4. Click **Update plan** on the plan you want. Your current plan shows **Your plan**.
+
+You see **Subscription updated successfully!** when it's done.
+
+## How billing changes
+
+| Change | When it applies | Billing |
+| --- | --- | --- |
+| Any change during the free trial | Right away | No charge. Your trial keeps its end date. |
+| Upgrade or downgrade between plans | Right away | Prorated. Stripe invoices the difference right away. |
+| Monthly → annual (same plan) | Right away | Prorated. Stripe invoices the difference right away. |
+| Annual → monthly (same plan) | At the end of your current annual period | You keep annual until it ends, then monthly billing starts. |
+| Any change while a payment is overdue | Right away | You pay the new plan's price now. You may be sent to a Stripe payment page. |
+
+{/* TODO(orel): Confirm how a downgrade's prorated amount appears to the customer (credit on next invoice vs refund). Code uses proration_behavior "always_invoice". */}
+
+## What happens to things over the new limit
+
+Limits switch to the new plan when the change applies. Nothing you already have is deleted.
+
+- **Queued Notes:** Notes already in your queue stay scheduled. You can't queue new ones until you're under the new limit.
+- **Cross-post channels:** channels already turned on stay on, and posts already scheduled still go out. You can't turn on another channel until you're under the new limit. Turn one off to free a spot.
+- **Coach, AI credits, follows and daily DMs** use the new plan's limits.
+
+See [Plans and limits](/docs/account/plans-and-limits) for the numbers.
+
+{/* TODO(orel): Plan changes only ADD feature flags (updateUserFeatureFlags merges old + new), so a downgrade may keep higher-tier features. Decide whether to document that or fix it; the page currently says nothing about losing features. */}
+
+## If it doesn't work
+
+- **"Your card was declined":** click **Manage your subscription** in **Settings → Subscription → Billing & Invoices**, update your card, then try again. See [Invoices and payment method](/docs/account/invoices).
+- **Open invoice error:** pay the open invoice from **Manage your subscription**, then change plan again.
+- Still stuck? Email support@writestack.io.

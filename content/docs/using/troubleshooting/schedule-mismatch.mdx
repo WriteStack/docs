@@ -1,0 +1,83 @@
+---
+title: Notes post at the wrong time
+description: Why a Note posts at an unexpected time or lands in a different queue slot than you expected, and how to fix time zones, tag routing, unmatched notes and queue edits.
+---
+
+Times in WriteStack use your account time zone, and each Note picks a slot by its tags. Most surprises come from one of those two rules, or from a change made on Substack. Find your symptom below. For how slots and tags work, see [Tags and slots](/docs/using/concepts/tags-and-slots).
+
+## Times are off by a few hours
+
+**Why:** WriteStack shows and schedules every time in your account time zone, not your device's. If you travel or your account was set up with another zone, the times won't match your clock.
+
+**Fix:**
+
+1. Go to **Settings → Account Information** and check **Timezone**. You can also change it at the bottom of the **Edit queue** dialog.
+2. Pick your time zone. You'll see "Timezone updated successfully".
+3. Open **Edit queue** and check your slots (next section).
+
+## My slot times changed after I changed time zone
+
+**Why:** When you change time zone, WriteStack converts your weekly slots so they stay at the same moment. A 9:00 AM New York slot becomes 3:00 PM if you switch to Paris. Notes that are already scheduled keep their exact time.
+
+**Fix:** If you moved and want the same local times as before, open **Edit queue** and set each slot back to the time you want. When a slot has future Notes, choose **Update slot + move notes** to move them too.
+{/* TODO(orel): slot conversion changes the hour only, not the weekday. A slot that crosses midnight (for example 11 PM New York → 5 AM Paris) seems to keep its old day. Confirm and document, or fix. */}
+
+## A Note took an earlier slot than the tagged slot I set up
+
+**Why:** A tagged Note takes the first free time it's allowed to use. That can be an open **Any note** slot that comes before the slot reserved for its tag.
+
+**Fix:** To force a tag into specific times, make the other slots **Only untagged notes** in **Edit queue**, or move the Note by hand in the queue.
+
+## Untagged Notes skip some slots
+
+**Why:** A slot with tags is reserved. It waits for a Note with one of those tags. A slot set to **Only untagged notes** works the other way: Notes with a tag skip it.
+
+**Fix:** Tag the Note, or change the slot's rule in **Edit queue**. With no tags on a slot, choose **Tagged or untagged notes can land here** to let any Note use it.
+
+## "N notes have no matching queue time"
+
+**Why:** These Notes don't match any reserved slot, and there's no open or untagged-only time left for them. This happens when every slot is reserved for tags.
+
+**Fix:** In the dialog, either:
+
+- add a matching tag to each Note, then click **Schedule with tags**, or
+- click **Use next available times** to place them on the next free times, including reserved ones.
+
+## A slot posted to the wrong cross-post channels
+
+**Why:** If a slot has cross-post channels, they replace the channels picked on the Note when it lands there. Changing a slot's channels later doesn't change Notes already on it. See [Cross-posting](/docs/using/cross-posting).
+
+**Fix:** Open the Note and set its channels again, or reschedule it onto the slot after you've changed the slot.
+
+## I changed a slot, but my Notes stayed at the old time
+
+**Why:** When you edit or delete a slot that has future Notes, WriteStack asks what to do with them. **Update slot only** and **Delete slot only** leave the Notes where they are.
+
+**Fix:** Move the Notes by hand, or edit the slot again and pick **Update slot + move notes** (or **Delete slot + reschedule notes**).
+
+## Times end in odd minutes like 9:07
+
+**Why:** **Make my schedule more natural** shifts slot minutes slightly so posts look less robotic.
+
+**Fix:** Edit the slots in **Edit queue** to the exact times you want.
+
+## My queue doesn't match Substack
+
+**Why:** A scheduled Note was edited, deleted or added directly on Substack. Next to "Last synced on" you'll see "N changes from Substack".
+
+**Fix:**
+
+1. Click "N changes from Substack" (or **Sync now** to check again).
+2. In **Review Substack sync**, choose for each change, for example **Keep WriteStack** or **Use Substack**, then apply.
+
+If you rescheduled a Note in WriteStack without the extension, Substack still has the old time until you sync it. See [Sync errors](/docs/using/troubleshooting/sync-errors).
+
+## Imported Notes landed at the wrong time
+
+**Why:** When you import Notes, times without an offset (like `2026-12-01 15:00`) are read in your account time zone. Times ending in `Z` or with an offset like `+02:00` are used as written.
+
+**Fix:** Check your account time zone before importing, or add an offset to each time.
+
+## Still stuck
+
+[Contact support](/docs/using/support). Include the Note, the time you expected, the time it posted and your account time zone.

@@ -1,0 +1,88 @@
+---
+title: Weekly template
+description: How to build your weekly posting template in WriteStack, including adding and editing times, picking days, reserving a time for tags or for untagged Notes, default cross-post channels on a time, and setting your timezone.
+---
+
+Your weekly template is the set of times you post every week, for example 9:00 and 17:00 Monday to Friday. **Add to Queue** places Notes on these times. Each time is called a slot.
+
+## Open the template
+
+Either:
+
+- **My Notes → More actions → Edit schedule queue**, or
+- **My Notes → Scheduled notes → Edit queue**.
+
+The dialog is called **Create a posting schedule** when you have no times yet, and **Edit your posting schedule** after that.
+
+## Start with a suggested schedule
+
+If you have no times yet:
+
+1. Click **Create suggested schedule**.
+2. Enter **How many notes per day?**
+3. Click **Create schedule**. WriteStack picks the times for you.
+
+You can change any of them afterwards.
+
+## Add a time
+
+1. Click **Add a new slot**.
+2. Set the hour and minutes. Your timezone shows under the picker.
+3. Click **Save slot**. If that time already exists, the button reads **Time used**.
+
+A new time is on all seven days. Untick the days you don't want.
+
+## Edit a time
+
+| To | Do this |
+| --- | --- |
+| Change the time | Click the time, type the new one, press Enter |
+| Change the days | Tick or untick **MON** to **SUN** in its row |
+| Delete it | Click the trash icon ("Delete slot (It won't delete your schedules)") |
+
+If future Notes are scheduled at that time, WriteStack asks first:
+
+| You changed | Dialog | Choices |
+| --- | --- | --- |
+| The time | **Move scheduled notes too?** | **Update slot only** or **Update slot + move notes** |
+| Deleted it | **Delete slot with scheduled notes?** | **Delete slot only** or **Delete slot + reschedule notes** (moves them to the next free times) |
+
+## Reserve a time for tags
+
+1. Click the arrow next to a time to open its settings.
+2. Under **Prefer notes tagged**, pick one or more tags.
+
+The time now waits for a Note with any of those tags. Untagged Notes skip it. In the template and the queue, the time shows its tag colors.
+
+## Untagged-only times
+
+1. Open the time's settings and leave **Prefer notes tagged** empty.
+2. Choose who can use it:
+   - **Any note**: "Tagged or untagged notes can land here".
+   - **Only untagged notes**: "Notes with a tag skip this time".
+
+The routing rules and examples are on [Tags and slots](/docs/using/concepts/tags-and-slots). In the app, **How does it work** under a time's settings shows a short version.
+
+If no time is open to every Note, the dialog warns you, for example: "Every time is reserved for tags. Untagged notes will have no open slot to land in."
+
+## Default cross-post channels on a time
+
+If you [cross-post with Buffer](/docs/using/cross-posting), a time's settings also show **Cross-post to**.
+
+1. Open the time's settings.
+2. Under **Cross-post to**, pick channels.
+
+A Note that lands on this time uses these channels instead of the ones picked on the Note. It still posts to Substack. The channels are applied when a Note is scheduled onto the time. Changing them later doesn't change Notes already there.
+
+## Timezone
+
+Your template uses your account timezone. It shows at the bottom of the dialog as **Timezone:** followed by its name.
+
+To change it, click it there, or go to **Settings → Account Information → Timezone**. WriteStack converts your existing times to the new timezone, so each time keeps posting at the same moment.
+
+{/* TODO(orel): Changing timezone converts each slot's hour/minute but not its days. A slot that crosses midnight in the new timezone may land on the wrong weekday. Worth a warning? */}
+
+## See also
+
+- [Manage the queue](/docs/using/schedule/queue): put Notes on these times.
+- [Tag a Note](/docs/using/notes/tags).

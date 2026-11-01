@@ -1,0 +1,49 @@
+---
+title: Plans and limits
+description: What each WriteStack plan (Hobbyist, Standard, Enterprise) includes, with limits for queued Notes, Coach usage, AI credits, cross-post channels and statistics.
+---
+
+{/* Source: WriteStack src/lib/plans-consts.ts. Keep in sync. */}
+
+WriteStack has three paid plans: **Hobbyist**, **Standard** and **Enterprise**. Every plan starts with a [free trial](/docs/account/trial) and can be billed monthly or annually.
+
+{/* TODO(orel): Prices are not listed here on purpose. The code has two different price sets (plans-consts `plans` / landing copy: 23.99/19.99, 32.99/24.99, 99.99/79.99 vs `pricePerPlan`: 16.99/12.99, 39.99/32.99, 59.99/49.99) and the real charge comes from Stripe. Confirm the live prices and add a price row if you want one. */}
+
+## Limits
+
+| | Hobbyist | Standard | Enterprise |
+| --- | --- | --- | --- |
+| Notes queued at a time | 20 | 100 | Unlimited |
+| Evergreen Notes | Included | Included | Included |
+| The Coach (weekly usage) | 1x | 5x | 20x |
+| AI credits per month | 50 | 150 | Unlimited |
+| Follow creators | Up to 10 | Up to 20 | Up to 80 |
+| Auto-DM new subscribers | Not included | 30 DMs/day | 50 DMs/day |
+| Cross-posting | Not included | Up to 10 active channels | Up to 100 active channels |
+| Notes statistics | Basic | Advanced Notes statistics | Advanced Notes statistics |
+| Posts Statistics | Not included | Included | Included |
+| Activity Center | Not included | Included | Included |
+| Claude MCP | Not included | Included | Included |
+| Advanced search through millions of Notes | Not included | Not included | Included |
+
+{/* TODO(orel): Cross-post channel limits (maxConnectedChannelsPerPlan, 5/10/100) only exist on the native-social-publishing branch, not on main. Confirm they are live before publishing. Hobbyist has a limit of 5 in code but no `buffer` feature flag, so it is shown as "Not included". */}
+{/* TODO(orel): "Notes statistics: Basic" for Hobbyist is inferred from advancedStatistics being Standard+. Confirm what Hobbyist sees. */}
+
+## How the limits work
+
+- **Notes queued at a time** counts Notes scheduled but not yet published. When a scheduled Note is published, you can queue another one. See [Notes and the queue](/docs/using/concepts/notes-and-the-queue).
+- **Evergreen Notes** have no separate plan limit. See [Evergreen Notes](/docs/using/notes/evergreen).
+- **The Coach** usage resets every Monday. Hobbyist is the 1x base; Standard gets 5 times that and Enterprise 20 times. See [Coach limits](/docs/using/coach/limits).
+- **AI credits** are used by AI features such as generating Notes. They are allocated per billing period. You can buy extra credits under **Settings → Subscription → Credits**.
+- **Cross-posting** counts channels that are turned on. Turning a channel off frees its spot. See [Cross-posting](/docs/using/cross-posting).
+- **Auto-DM new subscribers** sends a welcome DM when someone subscribes. The daily limit counts all your newsletters together.
+
+## Monthly or annual
+
+Every plan can be billed monthly or annually. Annual billing costs less per month and is charged once a year. To switch, see [Change your plan](/docs/account/change-plan).
+
+## If you hit a limit
+
+- Upgrade under **Settings → Subscription → Billing & Invoices → Update plan**. See [Change your plan](/docs/account/change-plan).
+- For queued Notes, wait for scheduled Notes to publish, or remove some from the queue.
+- For cross-post channels, turn off a channel you don't use.

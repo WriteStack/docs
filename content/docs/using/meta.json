@@ -1,0 +1,31 @@
+{
+  "title": "Using WriteStack",
+  "description": "Schedule Notes, sync to Substack, articles, Coach, analytics",
+  "root": true,
+  "icon": "PenLine",
+  "pages": [
+    "index",
+    "quickstart",
+    "---Concepts---",
+    "...concepts",
+    "---Setup---",
+    "...setup",
+    "---Notes---",
+    "...notes",
+    "---Schedule---",
+    "...schedule",
+    "---Articles---",
+    "...articles",
+    "---Coach---",
+    "...coach",
+    "---Analytics---",
+    "...analytics",
+    "---More---",
+    "activity-center",
+    "cross-posting",
+    "ghostwriter",
+    "---Help---",
+    "...troubleshooting",
+    "support"
+  ]
+}

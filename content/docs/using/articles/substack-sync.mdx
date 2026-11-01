@@ -1,0 +1,96 @@
+---
+title: Push an article to Substack
+description: How a WriteStack article becomes a Substack draft, how to schedule and unschedule it on Substack, which Substack settings sync, what the browser extension needs, and what each sync status and error means.
+---
+
+Pushing sends a WriteStack article to Substack as a **draft**. It never publishes. The push runs through the WriteStack browser extension in an open WriteStack tab, so it finishes in seconds when WriteStack is open and waits otherwise.
+
+For how WriteStack and Substack stay in step in general, see [Sync](/docs/using/concepts/sync).
+
+{/* TODO(orel): The Articles page and its Substack panel (push, schedule, unschedule, settings, conflict view, "Grant access" for custom domains) are adminOnly + comingSoon in src/types/navbar.ts. This page only documents the Coach and MCP paths. Add the in-app buttons when Articles ships. */}
+
+## What you need
+
+- The [WriteStack browser extension](/docs/using/setup/browser-extension), version 1.5.28 or newer.
+- You are logged into Substack in the same Chrome.
+- WriteStack is open in a Chrome tab. Any WriteStack page works.
+- The newsletter is enabled for Articles. See [Create an article](/docs/using/articles/create#before-you-start).
+
+{/* TODO(orel): 1.5.28 is the "substack-drafts" gate in src/types/useExtension.type.ts. The code comment says to confirm it against the extension release. Confirm 1.5.28 is published in the Chrome and Firefox stores. */}
+
+## Push a draft
+
+**From the Coach:** ask, for example, "Push this to Substack." If you have more than one newsletter and didn't name one, the Coach asks "Which newsletter should I push it to?". See [How the Coach writes articles](/docs/using/articles/coach-articles).
+
+**From an AI agent (MCP):** the agent calls [`push_article_to_substack`](/docs/build/mcp-reference/push_article_to_substack) with the newsletter you chose.
+
+What happens:
+
+1. WriteStack queues a sync job for the article.
+2. An open WriteStack tab with the extension picks it up and writes the draft on Substack.
+3. The first push creates the Substack draft. Later pushes update the same draft.
+
+A push replaces the title, subtitle, body and settings of the Substack draft with the WriteStack version. If the Substack draft was edited after the last push, WriteStack stops with a **conflict** instead of overwriting it.
+
+An article that already has a Substack draft stays on that newsletter. An agent can't push it to a different one. If you ask the Coach to push it to another newsletter, it pushes a copy there and the original stays where it was.
+
+## Schedule on Substack
+
+Scheduling sets the article to publish on Substack at a set time. Only an AI agent can do this today, with [`schedule_article_on_substack`](/docs/build/mcp-reference/schedule_article_on_substack). The Coach can't schedule articles.
+
+- The agent passes a publish time, or leaves it out to use the newsletter's next free article slot.
+- If the article isn't on Substack yet, it is pushed as a draft first, then scheduled.
+- The agent can also set the post audience and email audience.
+
+{/* TODO(orel): Without a publish time, scheduling uses "Article schedule" slots, which are set on the Articles page (not live yet). With no slots it fails with "This newsletter has no article slots yet. Add one with Article schedule on the Articles page." Until Articles ships, agents should always pass a time. */}
+
+## Unschedule
+
+[`unschedule_article_on_substack`](/docs/build/mcp-reference/unschedule_article_on_substack) removes the article from the Substack schedule. The draft stays on Substack. The article must have been pushed first.
+
+## Substack settings
+
+An agent can change these with [`update_article`](/docs/build/mcp-reference/update_article). They are saved in WriteStack and sent to Substack on the next push.
+
+| Setting | Default when not set |
+| --- | --- |
+| Audience | Everyone |
+| Who can comment | Everyone |
+| SEO title and SEO description | Substack's own |
+| Slug (the post's URL) | Substack's own |
+| Social title | The article title |
+| Publish time | None |
+
+If the slug is already used by another post on Substack, the draft keeps its current slug and you get a warning.
+
+The Coach edits only the title, subtitle and body.
+
+## Status
+
+An agent can read the status with [`get_article_substack_status`](/docs/build/mcp-reference/get_article_substack_status). The Coach checks it when you ask whether a draft is on Substack.
+
+| Status | Meaning |
+| --- | --- |
+| `idle` | Not pushed yet. |
+| `pending` | Queued. It runs the next time WriteStack is open in Chrome with the extension. |
+| `syncing` | An open WriteStack tab is pushing it right now. |
+| `synced` | The draft (and schedule, if any) is on Substack. |
+| `blocked` | The extension can't run it yet. See the table below. |
+| `conflict` | The Substack draft has edits made after the last push. Nothing was overwritten. |
+| `failed` | The push failed. The error text says why. |
+
+## If it doesn't work
+
+| Message | Fix |
+| --- | --- |
+| "Sync is waiting for WriteStack to be open with the Chrome extension. It is not on Substack yet." | Open WriteStack in a browser with the extension installed. The push runs on its own. |
+| "Sync is blocked until the WriteStack Chrome extension is installed." | [Install or update the extension](/docs/using/setup/browser-extension). |
+| "Sync is blocked until you log into Substack in Chrome." | Log into Substack in the same Chrome, then open WriteStack. |
+| "Sync is blocked until the extension is granted access to this custom domain." | Your newsletter uses a custom domain. The extension needs permission for it. |
+| "Substack has edits made after the last WriteStack update. Open the article to resolve." | Someone edited the draft on Substack. Copy those edits into WriteStack, or keep editing on Substack. |
+| "This article is already drafted on a different Substack newsletter." | Push it to that newsletter, or create a new article for the other one. |
+| "That draft is empty, so it was not pushed." | The Coach only pushes drafts with a body. |
+
+{/* TODO(orel): Custom-domain access and conflict resolution are only offered in the Articles page UI ("Grant access", conflict view), which is not live. Say where a writer without the Articles page should grant host access and resolve a conflict. */}
+
+More fixes: [Sync errors](/docs/using/troubleshooting/sync-errors).

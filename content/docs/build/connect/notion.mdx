@@ -1,0 +1,22 @@
+---
+title: Connect Notion
+description: Connect WriteStack to Notion AI as a custom MCP connection so Notion AI can read and schedule your Notes.
+---
+
+Notion AI connects to WriteStack with OAuth through a custom MCP connection.
+
+## Steps
+
+1. In Notion AI, open the connections settings and add a custom MCP server.
+2. Paste the endpoint:
+   ```text
+   https://www.writestack.io/api/mcp/mcp
+   ```
+3. Notion opens WriteStack. Sign in and approve access.
+4. Ask Notion AI, for example: "Turn this page into five Substack Notes and save them as drafts in WriteStack."
+
+For screenshots of each step, follow the [Notion setup guide](https://blogs.writestack.io/?post=2-guides-add-mcp-connector-notion).
+
+{/* TODO(orel): confirm the exact Notion menu path (it changes between Notion releases). */}
+
+Scheduled Notes still need a Sync from WriteStack before they reach Substack. See [Sync](/docs/using/concepts/sync).

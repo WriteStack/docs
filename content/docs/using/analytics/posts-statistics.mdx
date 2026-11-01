@@ -1,0 +1,78 @@
+---
+title: Posts Statistics
+description: What WriteStack's Posts Statistics page shows for your Substack newsletter posts (subscribers, ARR, open rate, email traffic, delivery, views, likes, free and paid subs per post), how open rate differs from email traffic, and the extension version it needs.
+---
+
+**Posts Statistics** shows how your Substack newsletter posts perform: subscriber counts and ARR, email open and delivery rates, interactions, and a ranked table of your posts. The numbers come from Substack and are collected by the WriteStack browser extension.
+
+{/* TODO(orel): On main, Posts Statistics is admin-only (navbar `adminOnly: true`, page checks isAdmin). The uncommitted change on native-social-publishing gates it by the postsStatistics flag (Standard and Enterprise). Publish this page only after that change ships. */}
+
+## Before you start
+
+| Requirement | Details |
+| --- | --- |
+| Plan | Standard or Enterprise. See [Plans and limits](/docs/account/plans-and-limits). |
+| Extension | [WriteStack extension](/docs/using/setup/browser-extension) version 1.5.25 or newer |
+| Substack | A connected Substack account with at least one newsletter |
+
+## Steps
+
+1. Open **Posts Statistics** in the sidebar.
+2. The first time, WriteStack asks **Which newsletters are yours?** Tick every newsletter you own and click **Save newsletters**. WriteStack fetches post stats only for those.
+3. Keep the tab open while the first fetch runs. The page shows "Fetching your posts". It can take a few minutes if you have hundreds of posts.
+4. Pick a date range and interval at the top. To see one newsletter, choose it under **Newsletter**; the default is **All newsletters**.
+
+To change your newsletters later, click **Choose newsletters**. New publications on your Substack profile show up there, marked **New**, until you decide. Use **Refresh newsletters** if one is missing.
+
+## What the page shows
+
+### Subscribers
+
+Live counts from Substack's own subscriber chart, not sums of post conversions. Switch the metric between **Free subscribers**, **Paid subscribers** and **ARR**. The section also shows **Paid now**, **Total now**, and the change across the selected range. Paid subscribers are split into Paid, Free trials, Gifts and Comps.
+
+### How posts land
+
+| Tile | What it means |
+| --- | --- |
+| **Open rate** | Substack's unique email opens divided by emails delivered |
+| **Email traffic** | The share of all views that came from email, including repeat views |
+| **Engagement rate** | Average across emailed posts |
+| **Delivery rate** | Emails delivered out of emails sent |
+
+<Callout type="info">
+Open rate and email traffic are different numbers. Open rate counts each reader once. Email traffic is about views, so one reader opening an email three times adds three views. Use **Open rate** when you compare with Substack's dashboard.
+</Callout>
+
+### Interaction mix
+
+Totals for posts published in the range: **Views**, **Likes**, **Comments**, **Restacks** and **Shares**.
+
+### Post type and Audience
+
+- **Post type** splits views by the kind of post.
+- **Audience** splits views by the Substack audience setting of each post (who can read it).
+
+### Top posts
+
+A table of your posts with **Views**, **Unique opens**, **Open rate**, **Clicks**, **Free subs** and **Paid subs**. Click a column header to rank posts by it. Click a title to read the post on Substack.
+
+## Date range and interval
+
+| Control | Options |
+| --- | --- |
+| Date range | Last 7 days, Last 30 days (default), Last 90 days, Last 12 months, All time, Custom |
+| Interval | Daily, Weekly, Monthly, Yearly |
+
+You can add an annotation to a point on the Subscribers chart, for example the day you launched a paid tier.
+
+## How often it updates
+
+The extension fetches post stats when you open WriteStack, at most once a day. The page header shows **Last updated** with the time of the last fetch.
+
+## If it doesn't work
+
+- **"Choose your newsletters"**: you haven't marked any newsletter as yours. Click **Choose newsletters**.
+- **"No newsletters found"**: WriteStack found no newsletter on your Substack profile. Connect a publication in Settings, then open the page again.
+- **"No post stats yet"**: the first fetch hasn't run. Open WriteStack with the extension installed and keep the tab open until it finishes.
+- **Numbers look out of date**: check that your extension is 1.5.25 or newer. See [Browser extension](/docs/using/setup/browser-extension).
+- **"Posts Statistics isn't on for your account"**: your plan doesn't include it. See [Plans and limits](/docs/account/plans-and-limits).
