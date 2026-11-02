@@ -12,6 +12,8 @@ export default function Layout({ children }: LayoutProps<'/docs'>) {
       // Sidebar on the left with logo and search, track tabs across the top bar.
       nav={{ ...nav, mode: 'auto' }}
       tabMode="navbar"
+      // Full width: sidebar flush left, TOC flush right (default caps the layout at 97rem).
+      containerProps={{ className: '[--fd-layout-width:100%]' }}
     >
       {children}
     </DocsLayout>
