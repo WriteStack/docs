@@ -1,23 +1,56 @@
 ---
 title: Connect Claude
-description: Add WriteStack as a custom connector in Claude (web or desktop) and sign in with OAuth. No API key needed.
+description: Add WriteStack to Claude from the connector directory, as a custom connector, or through the Claude Desktop config file.
 ---
 
-Claude connects with OAuth: you paste the endpoint, sign in to WriteStack, and approve access.
+There are three ways to connect. Try them in this order.
 
-## Steps
+## 1. Find WriteStack in the directory
 
-1. In Claude, open **Settings → Connectors** and choose **Add custom connector**.
+WriteStack is listed in Claude's connector directory.
+
+1. In Claude, open **Settings → Connectors** and browse the connectors.
+2. Search for **WriteStack** and click **Connect**.
+3. Claude opens WriteStack. Sign in and approve access.
+4. In a chat, turn on WriteStack from the tools menu and ask, for example: "What's in my WriteStack queue this week?"
+
+## 2. Add a custom connector
+
+If you can't find WriteStack in the directory, add it by URL.
+
+1. In **Settings → Connectors**, choose **Add custom connector**.
 2. Name it `WriteStack` and paste the endpoint:
    ```text
    https://www.writestack.io/api/mcp/mcp
    ```
-3. Click **Connect**. Claude opens WriteStack. Sign in and approve access.
-4. In a chat, turn on the WriteStack connector from the tools menu and ask, for example: "What's in my WriteStack queue this week?"
+3. Click **Connect**, sign in to WriteStack and approve access.
 
-A connector added on Claude web also works in Claude Desktop with the same account.
+## 3. Use the Claude Desktop config file
 
-Claude's menus change from time to time. If a step looks different, follow the [step-by-step guide with screenshots](https://blogs.writestack.io/?post=2-guides-4-add-mcp-connector).
+Use this only if connectors don't work for you. It uses an API key instead of signing in.
+
+1. In WriteStack, open **Settings → MCP**, click **Generate Key**, and copy the MCP configuration JSON shown with your new key. See [API key](/docs/build/connect/api-key).
+2. In Claude Desktop, open **Settings → Developer → Edit Config**. This opens `claude_desktop_config.json`.
+3. Paste the `writestack` entry inside `mcpServers` and save:
+   ```json title="claude_desktop_config.json"
+   {
+     "mcpServers": {
+       "writestack": {
+         "command": "npx",
+         "args": [
+           "-y",
+           "mcp-remote",
+           "https://www.writestack.io/api/mcp/mcp",
+           "--header",
+           "Authorization: Bearer ws_your_api_key"
+         ]
+       }
+     }
+   }
+   ```
+4. Fully quit Claude Desktop (**⌘Q** on Mac, or **Quit** from the system tray on Windows) and open it again. Closing the window isn't enough.
+
+Use one method, not two. If you switch to a connector after using the config file, delete the `writestack` entry from `claude_desktop_config.json` and restart Claude Desktop, so WriteStack isn't loaded twice.
 
 ## If it doesn't work
 
@@ -25,6 +58,7 @@ Claude's menus change from time to time. If a step looks different, follow the [
 | --- | --- |
 | "MCP access is not available on your current plan" | Your plan doesn't include MCP. See [plans and limits](/docs/account/plans-and-limits). |
 | Sign-in window closes and nothing connects | Log in to [writestack.io](https://www.writestack.io) in the same browser first, then connect again. |
+| WriteStack doesn't show up after editing the config file | Check the JSON is valid, then fully quit and reopen Claude Desktop. |
 | Notes were scheduled but didn't post | Expected for Notes scheduled over MCP. Open WriteStack, go to **My Notes → Scheduled notes** and click **Sync N scheduled notes to Substack**. See [Sync](/docs/using/concepts/sync). |
 
 Next: [agent rules](/docs/build/agent-rules) and [recipes](/docs/build/recipes).
