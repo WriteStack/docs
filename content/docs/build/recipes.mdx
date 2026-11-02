@@ -59,6 +59,19 @@ The agent can draft replies, but posting replies happens in WriteStack or Substa
 
 Pushing runs through the writer's browser extension. With WriteStack open it usually finishes in seconds.
 
+## Add an image that has no public link
+
+> Add the chart from my Google Drive to the top of this article.
+
+1. Get the file's bytes: download it from Drive, or read the local file
+2. `create_article_image_upload` with the `articleId`, file name, exact `contentType` and exact `sizeBytes` (max 10 MB)
+3. Within 15 minutes, send each entry in `parts` as a `PUT` of the raw bytes for that range, with the same `Content-Type`:
+   - Up to 4 MB there is one part: `curl -X PUT -H 'Content-Type: image/png' --data-binary @chart.png '<uploadUrl>'`
+   - A bigger file has 2 or 3 parts of 4 MB (the last one shorter). Send them in order and wait for each to succeed: `dd if=photo.jpg bs=4194304 skip=<part> count=1 2>/dev/null | curl -X PUT -H 'Content-Type: image/jpeg' --data-binary @- '<part url>'`
+4. `get_article`, then `update_article` with `baseVersion`, and either `![alt](imageUrl)` in `bodyMarkdown` (to place it) or `imageUrl: [imageUrl]` (to add it at the end)
+
+Every part uploads to `www.writestack.io`, so this works from sandboxes that can't reach Amazon S3. Uploading alone does not add the image. If the upload didn't finish, `update_article` says the image was skipped. An error response from a `PUT` says what didn't match (file type, part size or order, or an expired link). Fix it, or ask for new upload links.
+
 ## Cross-post a Note
 
 > Schedule this Note and also post it to my LinkedIn through Buffer.

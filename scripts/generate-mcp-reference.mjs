@@ -69,6 +69,7 @@ const CATEGORIES = [
       'get_article',
       'create_article',
       'update_article',
+      'create_article_image_upload',
       'push_article_to_substack',
       'schedule_article_on_substack',
       'unschedule_article_on_substack',

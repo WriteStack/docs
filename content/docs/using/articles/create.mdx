@@ -55,7 +55,8 @@ Voice and video embeds are not supported.
 
 - Images in the Markdown body are fetched and stored by WriteStack.
 - An agent can also pass up to 20 image URLs. Each one is fetched, stored, and added to the end of the body.
-- Use full `https://` URLs. URLs that are invalid or can't be reached are skipped.
+- Use full `https://` URLs. URLs that are invalid or can't be reached are skipped, and the agent is told which ones.
+- For an image with no public link, like a file on your computer or a private Google Drive file, the agent can upload it with [`create_article_image_upload`](/docs/build/mcp-reference/create_article_image_upload). Nothing has to be made public. This needs an agent that can send files over HTTP, such as Claude Code, Cowork, or a Claude chat that can run code. Otherwise, give the agent a public image link.
 - Images are uploaded to Substack when the article is pushed.
 
 The Coach's **Post draft** editor has no image button. To add images to a Coach draft, ask an MCP agent to add them, or add them on Substack after you push.
@@ -71,6 +72,8 @@ A planned date does not schedule anything on Substack. To schedule, see [Schedul
 | Item | Limit |
 | --- | --- |
 | Image URLs passed by an agent per call | 20 |
+| Size of an image an agent uploads | 10 MB |
+| Time to use an upload link | 15 minutes |
 | Articles returned by `list_articles` per call | 20 by default |
 | MCP access (agents) | Standard and Enterprise. See [plans and limits](/docs/account/plans-and-limits) |
 

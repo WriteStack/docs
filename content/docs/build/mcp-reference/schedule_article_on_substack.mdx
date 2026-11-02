@@ -13,7 +13,7 @@ description: "Schedule Article On Substack. Schedule a WriteStack article on Sub
 
 The description the MCP server sends to the model, word for word. Its rules apply to every call.
 
-> Schedule a WriteStack article on Substack. BEFORE calling, call list_article_newsletters and ASK the user which newsletter to schedule on, then pass that publicationId. Only enabled newsletters are accepted. Pass publishAt (ISO 8601), or omit it to use the newsletter's next free article slot (the weekly slots set with Article schedule on the Articles page). Also pushes the draft if it is not synced yet.
+> Schedule a WriteStack article on Substack. BEFORE calling, call list_article_newsletters and ASK the user which newsletter to schedule on, then pass that publicationId. Only enabled newsletters are accepted. Requires publishAt (ISO 8601). Also pushes the draft if it is not synced yet.
 
 ## Arguments
 
@@ -23,7 +23,7 @@ The description the MCP server sends to the model, word for word. Its rules appl
 | `audience` | `string` | No |  |
 | `emailAudience` | `string` | No |  |
 | `publicationId` | `number` | Yes | Enabled newsletter publicationId. BEFORE creating or pushing an article, call list_article_newsletters and ASK the user which newsletter to use. Never guess or pick a default. Only IDs returned by that tool are accepted — newsletters the user hid from Articles are rejected. |
-| `publishAt` | `string` | No | ISO 8601 publish time. Omit to use the newsletter's next free article slot. |
+| `publishAt` | `string` | Yes | ISO 8601 publish time |
 
 ## Example call
 
@@ -38,7 +38,8 @@ The smallest valid request: required arguments only, with placeholder values.
     "name": "schedule_article_on_substack",
     "arguments": {
       "articleId": "…",
-      "publicationId": 1
+      "publicationId": 1,
+      "publishAt": "…"
     }
   }
 }

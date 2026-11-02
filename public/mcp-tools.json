@@ -69,7 +69,7 @@
             "type": "string"
           },
           "imageUrl": {
-            "description": "Optional remote image URLs to insert into the article. WriteStack fetches each URL, stores the image on S3, and appends it to the markdown body. Markdown/HTML images already in bodyMarkdown are ingested the same way. Max 20. Pass full https:// URLs. Invalid or unreachable URLs are skipped. Images are uploaded to Substack when the article is opened or saved with the Chrome extension, and again when pushing the draft.",
+            "description": "Optional image URLs to insert into the article. WriteStack fetches each URL, stores the image on S3, and appends it to the markdown body. For an image that has no public URL (a local file, a private Google Drive file), call create_article_image_upload first, upload the file, and pass the imageUrl it returned. Markdown/HTML images already in bodyMarkdown are ingested the same way. Max 20. Pass full https:// URLs. Invalid or unreachable URLs are skipped. Images are uploaded to Substack when the article is opened or saved with the Chrome extension, and again when pushing the draft.",
             "items": {
               "type": "string"
             },
@@ -135,6 +135,136 @@
         "required": [
           "articleId",
           "status",
+          "message"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Create Article Image Upload"
+      },
+      "description": "Get one-time upload URLs on writestack.io for an article image that has no public URL, such as a local file, an attachment you can read, or a private Google Drive file. Use it only when you can send the file's bytes yourself with an HTTP request (for example curl in a shell or code sandbox); if you cannot, ask the user for a public image URL instead. Pass the articleId, the file name, its exact contentType, and its exact size in bytes (max 10 MB). Within 15 minutes, send each entry in parts as an HTTP PUT of the raw bytes for that range (offset, sizeBytes) with the Content-Type header set to that contentType. A file up to 4 MB has one part: curl -X PUT -H 'Content-Type: <contentType>' --data-binary @<file> '<uploadUrl>'. A bigger file has 2 or 3 parts of 4 MB (4194304 bytes, the last one shorter); send them IN ORDER and wait for each 2xx, e.g. dd if=<file> bs=4194304 skip=<part> count=1 2>/dev/null | curl -X PUT -H 'Content-Type: <contentType>' --data-binary @- '<part url>'. Do not use multipart/form-data and do not base64-encode the body. An error response says what did not match (type, size, order, or an expired link); fix it or call this tool again. After the last part succeeds, pass the returned imageUrl to update_article (imageUrl array to append it, or ![alt](imageUrl) in bodyMarkdown to place it) or to create_article. Uploading alone does not add the image to the article. An imageUrl whose upload never finished is skipped.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articleId": {
+            "description": "The article the image is for.",
+            "type": "string"
+          },
+          "contentType": {
+            "description": "Exact MIME type of the file. Send the same value as the Content-Type header on the PUT.",
+            "enum": [
+              "image/png",
+              "image/jpeg",
+              "image/gif",
+              "image/webp",
+              "image/avif",
+              "image/heic"
+            ],
+            "type": "string"
+          },
+          "fileName": {
+            "description": "Original file name, e.g. cover.png. Used for the extension.",
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "sizeBytes": {
+            "description": "Exact file size in bytes (for example from `wc -c < file` or `stat`). The upload must be exactly this size. Max 10 MB. Files over 4 MB are sent in parts.",
+            "exclusiveMinimum": 0,
+            "maximum": 10485760,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "articleId",
+          "fileName",
+          "contentType",
+          "sizeBytes"
+        ],
+        "type": "object"
+      },
+      "name": "create_article_image_upload",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "articleId": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string"
+          },
+          "headers": {
+            "additionalProperties": false,
+            "properties": {
+              "Content-Type": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "Content-Type"
+            ],
+            "type": "object"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "maxBytes": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string"
+          },
+          "method": {
+            "const": "PUT",
+            "type": "string"
+          },
+          "parts": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "offset": {
+                  "type": "number"
+                },
+                "part": {
+                  "type": "number"
+                },
+                "sizeBytes": {
+                  "type": "number"
+                },
+                "url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "part",
+                "url",
+                "offset",
+                "sizeBytes"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "uploadUrl": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "articleId",
+          "uploadUrl",
+          "parts",
+          "method",
+          "headers",
+          "imageUrl",
+          "expiresAt",
+          "maxBytes",
           "message"
         ],
         "type": "object"
@@ -790,7 +920,7 @@
         "readOnlyHint": true,
         "title": "Get Feature Suggestion Link"
       },
-      "description": "Return the link to the WriteStack features board, where the user can post a product or feature idea for others to vote on. This tool only returns the link: it does not submit, store, or send the idea anywhere, and you cannot submit suggestions on the user's behalf. Use when the user asks for functionality that is not currently possible in the MCP or app, then tell them to post their idea at https://writestack.io/features.",
+      "description": "Return the link to the WriteStack features board, where the user can post a product or feature idea for others to vote on. This tool only returns the link: it does not submit, store, or send the idea anywhere, and you cannot submit suggestions on the user's behalf. Use when the user asks for functionality that is not currently possible in the MCP or app, then tell them to post their idea at https://features.writestack.io.",
       "inputSchema": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "additionalProperties": false,
@@ -2507,7 +2637,7 @@
         "readOnlyHint": false,
         "title": "Schedule Article On Substack"
       },
-      "description": "Schedule a WriteStack article on Substack. BEFORE calling, call list_article_newsletters and ASK the user which newsletter to schedule on, then pass that publicationId. Only enabled newsletters are accepted. Pass publishAt (ISO 8601), or omit it to use the newsletter's next free article slot (the weekly slots set with Article schedule on the Articles page). Also pushes the draft if it is not synced yet.",
+      "description": "Schedule a WriteStack article on Substack. BEFORE calling, call list_article_newsletters and ASK the user which newsletter to schedule on, then pass that publicationId. Only enabled newsletters are accepted. Requires publishAt (ISO 8601). Also pushes the draft if it is not synced yet.",
       "inputSchema": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "additionalProperties": false,
@@ -2526,13 +2656,14 @@
             "type": "number"
           },
           "publishAt": {
-            "description": "ISO 8601 publish time. Omit to use the newsletter's next free article slot.",
+            "description": "ISO 8601 publish time",
             "type": "string"
           }
         },
         "required": [
           "articleId",
-          "publicationId"
+          "publicationId",
+          "publishAt"
         ],
         "type": "object"
       },
@@ -2938,7 +3069,7 @@
             "type": "string"
           },
           "imageUrl": {
-            "description": "Optional remote image URLs to insert into the article. WriteStack fetches each URL, stores the image on S3, and appends it to the markdown body. Markdown/HTML images already in bodyMarkdown are ingested the same way. Max 20. Pass full https:// URLs. Invalid or unreachable URLs are skipped. Images are uploaded to Substack when the article is opened or saved with the Chrome extension, and again when pushing the draft.",
+            "description": "Optional image URLs to insert into the article. WriteStack fetches each URL, stores the image on S3, and appends it to the markdown body. For an image that has no public URL (a local file, a private Google Drive file), call create_article_image_upload first, upload the file, and pass the imageUrl it returned. Markdown/HTML images already in bodyMarkdown are ingested the same way. Max 20. Pass full https:// URLs. Invalid or unreachable URLs are skipped. Images are uploaded to Substack when the article is opened or saved with the Chrome extension, and again when pushing the draft.",
             "items": {
               "type": "string"
             },
