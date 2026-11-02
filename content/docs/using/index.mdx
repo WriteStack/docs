@@ -1,9 +1,21 @@
 ---
-title: Using WriteStack
-description: What WriteStack does for Substack writers, the draft → queue → sync → measure loop, and where to start in these docs.
+title: Introduction
+description: Draft Substack Notes in your voice, queue them on a weekly schedule, sync them to Substack, and see which ones grow your audience.
 ---
 
+import { Bot, CreditCard, PenLine, Rocket, RefreshCw, ListOrdered, Tag } from 'lucide-react';
+
 WriteStack helps you post Substack Notes consistently. You draft Notes in your voice, line them up on a weekly posting schedule, sync them to Substack, and then see which ones grew your audience.
+
+## Pick your path
+
+The docs are split three ways. Start with the one that describes you.
+
+<Cards className="@lg:grid-cols-3">
+  <Card icon={<PenLine />} title="Using WriteStack" href="/docs/using/quickstart" description="Schedule Notes, sync to Substack, write articles, work with the Coach and read your analytics." />
+  <Card icon={<CreditCard />} title="Account & billing" href="/docs/account" description="Plans and limits, trials, upgrades, cancelling, invoices, refunds and affiliates." />
+  <Card icon={<Bot />} title="Build with WriteStack" href="/docs/build" description="Connect Claude, ChatGPT, Notion or your own agent over MCP. Full tool reference." />
+</Cards>
 
 ## The main loop
 
@@ -19,10 +31,10 @@ The queue lives in WriteStack. A Note only reaches Substack once it is synced. R
 ## Start here
 
 <Cards>
-  <Card title="Schedule your first Note" href="/docs/using/quickstart" description="Sign up, connect Substack, queue a Note and confirm it posted." />
-  <Card title="Sync" href="/docs/using/concepts/sync" description="How Notes get from WriteStack to Substack, and why a Note didn't post." />
-  <Card title="Notes and the queue" href="/docs/using/concepts/notes-and-the-queue" description="Drafts, Ready, Scheduled, Published and Evergreen." />
-  <Card title="Tags and slots" href="/docs/using/concepts/tags-and-slots" description="Reserve posting times for certain kinds of Notes." />
+  <Card icon={<Rocket />} title="Schedule your first Note" href="/docs/using/quickstart" description="Sign up, connect Substack, queue a Note and confirm it posted." />
+  <Card icon={<RefreshCw />} title="Sync" href="/docs/using/concepts/sync" description="How Notes get from WriteStack to Substack, and why a Note didn't post." />
+  <Card icon={<ListOrdered />} title="Notes and the queue" href="/docs/using/concepts/notes-and-the-queue" description="Drafts, Ready, Scheduled, Published and Evergreen." />
+  <Card icon={<Tag />} title="Tags and slots" href="/docs/using/concepts/tags-and-slots" description="Reserve posting times for certain kinds of Notes." />
 </Cards>
 
 ## Main sections
@@ -38,4 +50,8 @@ The queue lives in WriteStack. A Note only reaches Substack once it is synced. R
   <Card title="Troubleshooting" href="/docs/using/troubleshooting/sync-errors" description="Fix sync errors, connection problems and schedule mismatches." />
 </Cards>
 
-Want an AI assistant like Claude or ChatGPT to work with your WriteStack account? See [Build with WriteStack](/docs/build).
+## For AI agents
+
+- Index: [/llms.txt](/llms.txt). Every page in one file: [/llms-full.txt](/llms-full.txt).
+- Any page as Markdown: add `.md` to its URL, or send `Accept: text/markdown`.
+- MCP server: `https://www.writestack.io/api/mcp/mcp`. Setup is in [Build with WriteStack](/docs/build).
