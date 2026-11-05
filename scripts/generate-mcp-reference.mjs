@@ -81,7 +81,17 @@ const CATEGORIES = [
     tools: ['get_notes_statistics', 'get_posts_statistics', 'list_activities'],
   },
   { group: 'Cross-posting', tools: ['list_buffer_channels'] },
-  { group: 'Coach', tools: ['ask_coach'] },
+  {
+    group: 'Coach',
+    tools: [
+      'ask_coach',
+      'list_skills',
+      'load_skill',
+      'create_skill',
+      'update_skill',
+      'delete_skill',
+    ],
+  },
   { group: 'Other', tools: ['get_feature_suggestion_link'] },
 ];
 

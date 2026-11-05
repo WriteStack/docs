@@ -20,6 +20,7 @@ The description the MCP server sends to the model, word for word. Its rules appl
 | Argument | Type | Required | Description |
 | --- | --- | --- | --- |
 | `message` | `string` | Yes | What to ask the Coach, in the user's words, plus any context they gave you. Min length 1. Max length 40000. |
+| `skills` | `string[]` | No | Slugs from list_skills to use in this chat. Replaces the skills on in it. Pass an empty list to turn them off. Leave it out to keep them as they are. Max items 5. Max length 40. |
 | `thread_id` | `string` | No | thread_id from an earlier ask_coach result. Pass it to continue that conversation. Leave it out to start a new chat. |
 
 ## Example call

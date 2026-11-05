@@ -45,11 +45,42 @@ Article bodies are GitHub-flavored Markdown. These formats are supported and syn
 | Blockquote | `> quote` |
 | Pullquote | `:::pullquote` ... `:::` |
 | Callout | `:::callout` ... `:::` |
+| Subscribe box with a line of text | `:::subscribe Your text:::` |
+| Share button with a line of text | `:::share Your text:::` |
 | Paywall | a line with only `:::paywall:::` |
+| Audience-specific section | see [below](#audience-specific-sections) |
 
 Everything after the `:::paywall:::` line is behind the Substack paywall: only paid subscribers see it.
 
 Voice and video embeds are not supported.
+
+### Audience-specific sections
+
+An audience-specific section shows its content only to the readers you choose. You can add a second part for everyone else. Put each marker on its own line, with a blank line before and after it:
+
+```md
+:::audience paid_sub founding_sub
+
+Bonus content for paid readers.
+
+:::else
+
+What everyone else sees.
+
+:::end-audience
+```
+
+| Audience | Who it is |
+| --- | --- |
+| `non_sub` | People who aren't subscribed |
+| `free_sub` | Free subscribers |
+| `paid_sub` | Paid subscribers |
+| `founding_sub` | Founding subscribers |
+
+- `:::else` and the text after it are optional.
+- A section for paid subscribers with no `:::else` shows everyone else Substack's upgrade prompt.
+- To show them nothing instead, add `no-else` to the first line: `:::audience paid_sub no-else`.
+- A section with no audiences isn't shown to anyone.
 
 ## Images
 

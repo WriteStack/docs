@@ -19,6 +19,15 @@
             "minLength": 1,
             "type": "string"
           },
+          "skills": {
+            "description": "Slugs from list_skills to use in this chat. Replaces the skills on in it. Pass an empty list to turn them off. Leave it out to keep them as they are.",
+            "items": {
+              "maxLength": 40,
+              "type": "string"
+            },
+            "maxItems": 5,
+            "type": "array"
+          },
           "thread_id": {
             "description": "thread_id from an earlier ask_coach result. Pass it to continue that conversation. Leave it out to start a new chat.",
             "type": "string"
@@ -59,13 +68,13 @@
         "readOnlyHint": false,
         "title": "Create Article"
       },
-      "description": "Create a WriteStack article draft. BEFORE calling, call list_article_newsletters and ASK the user which newsletter this article belongs to, then pass that publicationId. Only enabled newsletters are accepted — never guess or pick a default. Also pass title or topic, optional subtitle, markdown body, imageUrl (remote images fetched to S3 and inserted), and an optional plannedForDate target date (omit for an undated draft). Images in bodyMarkdown are also fetched to S3. GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Voice and video embeds are not supported.",
+      "description": "Create a WriteStack article draft. BEFORE calling, call list_article_newsletters and ASK the user which newsletter this article belongs to, then pass that publicationId. Only enabled newsletters are accepted — never guess or pick a default. Also pass title or topic, optional subtitle, markdown body, imageUrl (remote images fetched to S3 and inserted), and an optional plannedForDate target date (omit for an undated draft). Images in bodyMarkdown are also fetched to S3. GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, :::subscribe caption::: (email box and Subscribe button under a line of text), :::share caption::: (Share button under a line of text), and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Audience-specific sections show content to chosen readers only. Put each marker on its own line with blank lines around it: `:::audience paid_sub founding_sub`, the content, optionally `:::else` followed by what everyone else sees, then `:::end-audience`. Audiences are non_sub, free_sub, paid_sub and founding_sub. A paid section with no :::else shows everyone else Substack's upgrade prompt; add no-else to the :::audience line to show them nothing. Voice and video embeds are not supported.",
       "inputSchema": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "additionalProperties": false,
         "properties": {
           "bodyMarkdown": {
-            "description": "GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Voice and video embeds are not supported.",
+            "description": "GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, :::subscribe caption::: (email box and Subscribe button under a line of text), :::share caption::: (Share button under a line of text), and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Audience-specific sections show content to chosen readers only. Put each marker on its own line with blank lines around it: `:::audience paid_sub founding_sub`, the content, optionally `:::else` followed by what everyone else sees, then `:::end-audience`. Audiences are non_sub, free_sub, paid_sub and founding_sub. A paid section with no :::else shows everyone else Substack's upgrade prompt; add no-else to the :::audience line to show them nothing. Voice and video embeds are not supported.",
             "type": "string"
           },
           "imageUrl": {
@@ -298,7 +307,7 @@
                       "type": "null"
                     }
                   ],
-                  "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Pass null or omit to disable auto-restack on the note. Requires the WriteStack browser extension v1.4.78 or higher to actually fire."
+                  "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Leave this field out unless the user asks for a specific auto-restack choice: when creating a note, leaving it out applies the user's default auto-restack setting, and when scheduling or updating, leaving it out keeps the note's current value. Pass null ONLY when the user explicitly asks to turn auto-restack off. Requires the WriteStack browser extension v1.4.78 or higher to actually fire."
                 },
                 "bufferChannelIds": {
                   "description": "Optional array of Buffer channel IDs to cross-post this new note to once it publishes on Substack. Call list_buffer_channels first to get the valid IDs — only IDs returned by that tool are accepted. Maximum 20 channels per note — requests with more are rejected. Channel IDs from bufferChannelPosts are merged in automatically. Omit or pass an empty array to skip Buffer cross-posting unless you also pass bufferChannelPosts. Requires a connected Buffer account. Platform limits still apply: Instagram requires an image or video, and Instagram feed images must be between 4:5 and 1.91:1 aspect ratio for automatic posting (otherwise Buffer falls back to Notify Me). See https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges",
@@ -546,7 +555,7 @@
                 "type": "null"
               }
             ],
-            "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Pass null or omit to disable auto-restack on the note. Requires the WriteStack browser extension v1.4.78 or higher to actually fire."
+            "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Leave this field out unless the user asks for a specific auto-restack choice: when creating a note, leaving it out applies the user's default auto-restack setting, and when scheduling or updating, leaving it out keeps the note's current value. Pass null ONLY when the user explicitly asks to turn auto-restack off. Requires the WriteStack browser extension v1.4.78 or higher to actually fire."
           },
           "bufferChannelIds": {
             "description": "Optional array of Buffer channel IDs to cross-post this new note to once it publishes on Substack. Call list_buffer_channels first to get the valid IDs — only IDs returned by that tool are accepted. Maximum 20 channels per note — requests with more are rejected. Channel IDs from bufferChannelPosts are merged in automatically. Omit or pass an empty array to skip Buffer cross-posting unless you also pass bufferChannelPosts. Requires a connected Buffer account. Platform limits still apply: Instagram requires an image or video, and Instagram feed images must be between 4:5 and 1.91:1 aspect ratio for automatic posting (otherwise Buffer falls back to Notify Me). See https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges",
@@ -738,10 +747,125 @@
       "annotations": {
         "destructiveHint": false,
         "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Create Skill"
+      },
+      "description": "Save a new Coach skill for the user: reusable instructions for a job. Only call this when they ask. title names it, description says when to use it, and instructions hold the steps, format, and tone. The Coach won't use it on its own until they turn that on.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "instructions": {
+            "maxLength": 8000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 60,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "instructions"
+        ],
+        "type": "object"
+      },
+      "name": "create_skill",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "autoUse": {
+            "type": "boolean"
+          },
+          "skills_url": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "version": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "slug",
+          "title",
+          "version",
+          "autoUse",
+          "skills_url"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Delete Skill"
+      },
+      "description": "Permanently delete one of the user's Coach skills. There is no undo. Only call this when they ask to delete that skill. It turns off in every chat, and any routine using it runs without it.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "slug": {
+            "description": "The skill to delete, from list_skills.",
+            "maxLength": 40,
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug"
+        ],
+        "type": "object"
+      },
+      "name": "delete_skill",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "routines": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "slug": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "deleted",
+          "slug",
+          "routines"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
         "readOnlyHint": true,
         "title": "Get Article"
       },
-      "description": "Get one WriteStack article by ID, including markdown body, publicationId, contentVersion, and Substack draft/schedule status. The markdown may include headings, bold/italic/strike/code, lists, blockquotes, :::pullquote, :::callout, and :::paywall. ALWAYS call this immediately before update_article and pass the returned contentVersion as baseVersion — the user may have edited the article in WriteStack since you last saw it.",
+      "description": "Get one WriteStack article by ID, including markdown body, publicationId, contentVersion, and Substack draft/schedule status. The markdown may include headings, bold/italic/strike/code, lists, blockquotes, :::pullquote, :::callout, :::paywall, :::audience sections, and :::substack-embed lines. Keep :::substack-embed lines exactly as they are when you update the article. ALWAYS call this immediately before update_article and pass the returned contentVersion as baseVersion — the user may have edited the article in WriteStack since you last saw it.",
       "inputSchema": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "additionalProperties": false,
@@ -2520,6 +2644,56 @@
       "annotations": {
         "destructiveHint": false,
         "openWorldHint": false,
+        "readOnlyHint": true
+      },
+      "description": "List the user's saved Coach skills: their reusable instructions for a job. Pass a slug to load_skill to read one, or to ask_coach to have the Coach use it.",
+      "inputSchema": {
+        "properties": {},
+        "type": "object"
+      },
+      "name": "list_skills",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "skills": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "autoUse": {
+                  "type": "boolean"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "slug",
+                "title",
+                "description",
+                "autoUse"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "skills"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
         "readOnlyHint": true,
         "title": "List Tags"
       },
@@ -2562,6 +2736,63 @@
         },
         "required": [
           "tags"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Read one of the user's saved Coach skills in full. Pass a slug from list_skills.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "slug": {
+            "description": "The slug of one skill from your skill list.",
+            "maxLength": 40,
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug"
+        ],
+        "type": "object"
+      },
+      "name": "load_skill",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "instructions": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "version": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "version",
+          "title",
+          "description",
+          "instructions"
         ],
         "type": "object"
       }
@@ -2728,7 +2959,7 @@
                 "type": "null"
               }
             ],
-            "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Pass null or omit to disable auto-restack on the note. Requires the WriteStack browser extension v1.4.78 or higher to actually fire. When provided here, the same value is applied to every note in this batch. To set different values per note, call update_note for each one after scheduling."
+            "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Leave this field out unless the user asks for a specific auto-restack choice: when creating a note, leaving it out applies the user's default auto-restack setting, and when scheduling or updating, leaving it out keeps the note's current value. Pass null ONLY when the user explicitly asks to turn auto-restack off. Requires the WriteStack browser extension v1.4.78 or higher to actually fire. When provided here, the same value is applied to every note in this batch. To set different values per note, call update_note for each one after scheduling."
           },
           "bufferChannelIds": {
             "description": "Optional array of Buffer channel IDs to cross-post this note to once it publishes on Substack. Call list_buffer_channels first to get the valid IDs — only IDs returned by that tool are accepted. Maximum 20 channels per note — requests with more are rejected. When set, WriteStack will also post the note to these Buffer channels (e.g. LinkedIn, X/Twitter, Threads) shortly after it goes live. Pass an empty array or omit to leave cross-posting unchanged; pass the channels you want to keep, since this replaces any previously set channels. Requires a connected Buffer account. Platform limits still apply: Instagram requires an image or video, and Instagram feed images must be between 4:5 and 1.91:1 aspect ratio for automatic posting (otherwise Buffer falls back to Notify Me). See https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges When provided here, the same channels are applied to every note in this batch, unless the slot the note lands on has its own Buffer channels — those replace the batch value for that note.",
@@ -2865,7 +3096,7 @@
                       "type": "null"
                     }
                   ],
-                  "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Pass null or omit to disable auto-restack on the note. Requires the WriteStack browser extension v1.4.78 or higher to actually fire."
+                  "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Leave this field out unless the user asks for a specific auto-restack choice: when creating a note, leaving it out applies the user's default auto-restack setting, and when scheduling or updating, leaving it out keeps the note's current value. Pass null ONLY when the user explicitly asks to turn auto-restack off. Requires the WriteStack browser extension v1.4.78 or higher to actually fire."
                 },
                 "bufferChannelIds": {
                   "description": "Optional array of Buffer channel IDs to cross-post this note to once it publishes on Substack. Call list_buffer_channels first to get the valid IDs — only IDs returned by that tool are accepted. Maximum 20 channels per note — requests with more are rejected. When set, WriteStack will also post the note to these Buffer channels (e.g. LinkedIn, X/Twitter, Threads) shortly after it goes live. Pass an empty array or omit to leave cross-posting unchanged; pass the channels you want to keep, since this replaces any previously set channels. Requires a connected Buffer account. Platform limits still apply: Instagram requires an image or video, and Instagram feed images must be between 4:5 and 1.91:1 aspect ratio for automatic posting (otherwise Buffer falls back to Notify Me). See https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges",
@@ -3046,7 +3277,7 @@
         "readOnlyHint": false,
         "title": "Update Article"
       },
-      "description": "Update an article's title, subtitle, markdown body, imageUrl (remote images fetched to S3 and appended), or Substack settings (audience, comments, SEO, slug, social title, publishAt). This saves locally only — it does not push to Substack. Pass baseVersion from get_article; a version conflict means you must re-read the article. Images in bodyMarkdown are fetched to S3. Body markdown supports the same Substack-safe formats as create_article (headings, bold/italic/strike/code, lists, quotes, pullquotes, callouts, paywall, links, images). BEFORE calling this tool, you MUST call get_article for the same articleId and base the update on that fresh copy — the user may have edited the article in WriteStack. Never update from a stale draft you wrote earlier in the conversation. Replaces the article's current content and settings with the values you pass; there is no undo through this integration.",
+      "description": "Update an article's title, subtitle, markdown body, imageUrl (remote images fetched to S3 and appended), or Substack settings (audience, comments, SEO, slug, social title, publishAt). This saves locally only — it does not push to Substack. Pass baseVersion from get_article; a version conflict means you must re-read the article. Images in bodyMarkdown are fetched to S3. Body markdown supports the same Substack-safe formats as create_article (headings, bold/italic/strike/code, lists, quotes, pullquotes, callouts, subscribe and share blocks, audience-specific sections, paywall, links, images). BEFORE calling this tool, you MUST call get_article for the same articleId and base the update on that fresh copy — the user may have edited the article in WriteStack. Never update from a stale draft you wrote earlier in the conversation. Replaces the article's current content and settings with the values you pass; there is no undo through this integration.",
       "inputSchema": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "additionalProperties": false,
@@ -3062,7 +3293,7 @@
             "type": "integer"
           },
           "bodyMarkdown": {
-            "description": "GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Voice and video embeds are not supported.",
+            "description": "GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, :::subscribe caption::: (email box and Subscribe button under a line of text), :::share caption::: (Share button under a line of text), and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Audience-specific sections show content to chosen readers only. Put each marker on its own line with blank lines around it: `:::audience paid_sub founding_sub`, the content, optionally `:::else` followed by what everyone else sees, then `:::end-audience`. Audiences are non_sub, free_sub, paid_sub and founding_sub. A paid section with no :::else shows everyone else Substack's upgrade prompt; add no-else to the :::audience line to show them nothing. Voice and video embeds are not supported.",
             "type": "string"
           },
           "commentPermissions": {
@@ -3188,7 +3419,7 @@
                 "type": "null"
               }
             ],
-            "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Pass null or omit to disable auto-restack on the note. Requires the WriteStack browser extension v1.4.78 or higher to actually fire."
+            "description": "Optional auto-restack delay in hours (1–168). If set, after the note is published WriteStack will automatically restack (re-post) it the given number of hours later to boost visibility. Leave this field out unless the user asks for a specific auto-restack choice: when creating a note, leaving it out applies the user's default auto-restack setting, and when scheduling or updating, leaving it out keeps the note's current value. Pass null ONLY when the user explicitly asks to turn auto-restack off. Requires the WriteStack browser extension v1.4.78 or higher to actually fire."
           },
           "bufferChannelIds": {
             "description": "Optional array of Buffer channel IDs to cross-post this note to once it publishes on Substack. Call list_buffer_channels first to get the valid IDs — only IDs returned by that tool are accepted. Maximum 20 channels per note — requests with more are rejected. Omit to leave cross-posting unchanged; pass an empty array to clear/disable Buffer cross-posting; pass the channel IDs you want (this replaces any previously set channels). Channel IDs from bufferChannelPosts are merged in automatically. Requires a connected Buffer account. Platform limits still apply: Instagram requires an image or video, and Instagram feed images must be between 4:5 and 1.91:1 aspect ratio for automatic posting (otherwise Buffer falls back to Notify Me). See https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges",
@@ -3354,6 +3585,81 @@
         "required": [
           "noteId",
           "message"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Update Skill"
+      },
+      "description": "Change a saved Coach skill. Call load_skill first and pass its version. Send only the fields to change, and send instructions in full. This turns Auto off for the skill, so the new text doesn't run until the user turns it back on.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "instructions": {
+            "maxLength": 8000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "slug": {
+            "description": "The skill to change, from list_skills.",
+            "maxLength": 40,
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 60,
+            "minLength": 1,
+            "type": "string"
+          },
+          "version": {
+            "description": "The version from load_skill. A newer skill is not overwritten.",
+            "exclusiveMinimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "slug",
+          "version"
+        ],
+        "type": "object"
+      },
+      "name": "update_skill",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "autoUse": {
+            "type": "boolean"
+          },
+          "skills_url": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "version": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "slug",
+          "title",
+          "version",
+          "autoUse",
+          "skills_url"
         ],
         "type": "object"
       }

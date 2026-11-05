@@ -36,6 +36,11 @@
     "list_buffer_channels",
     "---Coach---",
     "ask_coach",
+    "list_skills",
+    "load_skill",
+    "create_skill",
+    "update_skill",
+    "delete_skill",
     "---Other---",
     "get_feature_suggestion_link"
   ]
