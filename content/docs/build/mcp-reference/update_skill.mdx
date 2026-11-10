@@ -7,7 +7,9 @@ description: "Update Skill. Change a saved Coach skill."
 
 | Group | Access | MCP name |
 | --- | --- | --- |
-| Coach | Writes data | `update_skill` |
+| Coach | Irreversible | `update_skill` |
+
+<Callout type="warn">This tool changes data in a way that cannot be undone. Confirm with the writer before calling it.</Callout>
 
 ## Description
 
@@ -61,7 +63,7 @@ The result has `structuredContent` that matches this schema. The same data is al
 | Hint | Value |
 | --- | --- |
 | `readOnlyHint` | `false` |
-| `destructiveHint` | `false` |
+| `destructiveHint` | `true` |
 | `openWorldHint` | `false` |
 
 The full input and output JSON Schemas for every tool are in [/mcp-tools.json](/mcp-tools.json).

@@ -48,6 +48,7 @@ const CATEGORIES = [
       'create_note',
       'create_many_notes',
       'update_note',
+      'generate_image',
     ],
   },
   {
@@ -80,6 +81,10 @@ const CATEGORIES = [
     group: 'Statistics and activity',
     tools: ['get_notes_statistics', 'get_posts_statistics', 'list_activities'],
   },
+  {
+    group: 'Published posts',
+    tools: ['list_my_newsletters', 'list_my_posts', 'search_my_posts', 'get_my_posts'],
+  },
   { group: 'Cross-posting', tools: ['list_buffer_channels'] },
   {
     group: 'Coach',
@@ -106,7 +111,48 @@ const loadTools = () => {
   new Function('exports', fs.readFileSync(SNAPSHOT, 'utf8'))(exportsObj);
   const printed = Object.values(exportsObj)[0];
   // Jest's pretty-format output is JSON plus trailing commas.
-  return JSON.parse(printed.replace(/,(\s*[}\]])/g, '$1'));
+  return JSON.parse(escapeStrings(printed).replace(/,(\s*[}\]])/g, '$1'));
+};
+
+/**
+ * Jest prints string values raw: a quote or backslash inside a description is
+ * not escaped, so the text is not valid JSON. A string value always starts
+ * after `"key": ` or at the start of an array item, and ends at the last quote
+ * on a line (before an optional comma). This re-quotes each one properly.
+ */
+const escapeStrings = (printed) => {
+  // A keyed string value, or a bare string in an array. A key followed by
+  // an object, array, number or boolean is left alone.
+  const KEYED = /^(\s*"[^"]*": )"(.*)$/s;
+  const BARE = /^(\s*)"(.*)$/s;
+  const KEY_ONLY = /^\s*"[^"]*": [^"]/;
+  const END = /^(.*)"(,?)$/s;
+  const out = [];
+  let open = null; // { prefix, parts } while inside a string that spans lines
+  for (const line of printed.split('\n')) {
+    if (open) {
+      const end = line.match(END);
+      if (!end) {
+        open.parts.push(line);
+        continue;
+      }
+      open.parts.push(end[1]);
+      out.push(`${open.prefix}${JSON.stringify(open.parts.join('\n'))}${end[2]}`);
+      open = null;
+      continue;
+    }
+    const start =
+      line.match(KEYED) ?? (KEY_ONLY.test(line) ? null : line.match(BARE));
+    if (!start) {
+      // A tool with no output schema prints `undefined`, which JSON has no word for.
+      out.push(line.replace(/^(\s*"[^"]*": )undefined(,?)$/, '$1null$2'));
+      continue;
+    }
+    const end = start[2].match(END);
+    if (end) out.push(`${start[1]}${JSON.stringify(end[1])}${end[2]}`);
+    else open = { prefix: start[1], parts: [start[2]] };
+  }
+  return out.join('\n');
 };
 
 /** Escape text for MDX prose: braces and angle brackets are JSX. */

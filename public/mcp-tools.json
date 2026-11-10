@@ -68,13 +68,13 @@
         "readOnlyHint": false,
         "title": "Create Article"
       },
-      "description": "Create a WriteStack article draft. BEFORE calling, call list_article_newsletters and ASK the user which newsletter this article belongs to, then pass that publicationId. Only enabled newsletters are accepted — never guess or pick a default. Also pass title or topic, optional subtitle, markdown body, imageUrl (remote images fetched to S3 and inserted), and an optional plannedForDate target date (omit for an undated draft). Images in bodyMarkdown are also fetched to S3. GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, :::subscribe caption::: (email box and Subscribe button under a line of text), :::share caption::: (Share button under a line of text), and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Audience-specific sections show content to chosen readers only. Put each marker on its own line with blank lines around it: `:::audience paid_sub founding_sub`, the content, optionally `:::else` followed by what everyone else sees, then `:::end-audience`. Audiences are non_sub, free_sub, paid_sub and founding_sub. A paid section with no :::else shows everyone else Substack's upgrade prompt; add no-else to the :::audience line to show them nothing. Voice and video embeds are not supported.",
+      "description": "Create a WriteStack article draft. BEFORE calling, call list_article_newsletters and ASK the user which newsletter this article belongs to, then pass that publicationId. Only enabled newsletters are accepted — never guess or pick a default. Also pass title or topic, optional subtitle, markdown body, imageUrl (remote images fetched to S3 and inserted), and an optional plannedForDate target date (omit for an undated draft). Images in bodyMarkdown are also fetched to S3. GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, :::subscribe caption::: (email box and Subscribe button under a line of text), :::share caption::: (Share button under a line of text), and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Audience-specific sections show content to chosen readers only. Put each marker on its own line with blank lines around it: `:::audience paid_sub founding_sub`, the content, optionally `:::else` followed by what everyone else sees, then `:::end-audience`. Audiences are non_sub, free_sub, paid_sub and founding_sub. A paid section with no :::else shows everyone else Substack's upgrade prompt; add no-else to the :::audience line to show them nothing. Collapsible text stays hidden until readers click to open it: put `:::collapsed expand=\"Show more\" collapse=\"Show less\"` on its own line, then the content, then `:::end-collapsed`. expand is the label readers click to open it, collapse the label to close it; write a quote inside a label as &#34;. Voice and video embeds are not supported.",
       "inputSchema": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "additionalProperties": false,
         "properties": {
           "bodyMarkdown": {
-            "description": "GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, :::subscribe caption::: (email box and Subscribe button under a line of text), :::share caption::: (Share button under a line of text), and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Audience-specific sections show content to chosen readers only. Put each marker on its own line with blank lines around it: `:::audience paid_sub founding_sub`, the content, optionally `:::else` followed by what everyone else sees, then `:::end-audience`. Audiences are non_sub, free_sub, paid_sub and founding_sub. A paid section with no :::else shows everyone else Substack's upgrade prompt; add no-else to the :::audience line to show them nothing. Voice and video embeds are not supported.",
+            "description": "GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, :::subscribe caption::: (email box and Subscribe button under a line of text), :::share caption::: (Share button under a line of text), and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Audience-specific sections show content to chosen readers only. Put each marker on its own line with blank lines around it: `:::audience paid_sub founding_sub`, the content, optionally `:::else` followed by what everyone else sees, then `:::end-audience`. Audiences are non_sub, free_sub, paid_sub and founding_sub. A paid section with no :::else shows everyone else Substack's upgrade prompt; add no-else to the :::audience line to show them nothing. Collapsible text stays hidden until readers click to open it: put `:::collapsed expand=\"Show more\" collapse=\"Show less\"` on its own line, then the content, then `:::end-collapsed`. expand is the label readers click to open it, collapse the label to close it; write a quote inside a label as &#34;. Voice and video embeds are not supported.",
             "type": "string"
           },
           "imageUrl": {
@@ -539,7 +539,7 @@
         "readOnlyHint": false,
         "title": "Create Note"
       },
-      "description": "Create a new note draft or ready note. The content body must be in Markdown format. When generating new note content (not when the user already provided the full body), call get_writing_style first unless they pasted complete style instructions. If the content includes a link (https:// URL or bare domain like example.com), ask the user if they'd like a link preview before calling this tool; pass includePreviews: true only if they confirm. Prefer full https:// URLs in the content. To attach images, pass imageUrl as an array of remote image URLs (max 5) — WriteStack fetches and stores them like CSV import. You can also enable auto-restack by passing autoRestackAfterHours (1–168 hours) — the note will automatically be restacked that many hours after it's published. To cross-post to Buffer, call list_buffer_channels first and pass bufferChannelIds and/or bufferChannelPosts (per-channel text and images). Tags you assign also decide which reserved queue times this note can take later (OR match; untagged notes only use open or untagged-only times). Very important: New line MUST be with double newlines (\n\n).",
+      "description": "Create a new note draft or ready note. The content body must be in Markdown format. When generating new note content (not when the user already provided the full body), call get_writing_style first unless they pasted complete style instructions. If the content includes a link (https:// URL or bare domain like example.com), ask the user if they'd like a link preview before calling this tool; pass includePreviews: true only if they confirm. Prefer full https:// URLs in the content. To attach images, pass imageUrl as an array of remote image URLs (max 5) — WriteStack fetches and stores them like CSV import. You can also enable auto-restack by passing autoRestackAfterHours (1–168 hours) — the note will automatically be restacked that many hours after it's published. To cross-post to Buffer, call list_buffer_channels first and pass bufferChannelIds and/or bufferChannelPosts (per-channel text and images). Tags you assign also decide which reserved queue times this note can take later (OR match; untagged notes only use open or untagged-only times). Very important: New line MUST be with double newlines (\\n\\n).",
       "inputSchema": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "additionalProperties": false,
@@ -861,11 +861,86 @@
     {
       "annotations": {
         "destructiveHint": false,
+        "openWorldHint": true,
+        "readOnlyHint": false,
+        "title": "Generate Image"
+      },
+      "description": "Generate one image, or edit one, and get back its url. Use it when the user asks for an image for a note, or agrees to one you offered, for example because the note is for a platform whose rules say needsImage (see list_buffer_channels). Write the note first, then write a full, specific prompt drawn from what that note says. Pick quality yourself: low for drafts and simple graphics, medium when the image is final or has text in it. Pick aspect from the channel's rules.imageAspect, or square. To put the image on a note, pass the returned url as imageUrl to create_note, create_many_notes or update_note. For several notes, call this once per note; up to three run at a time. To edit an image, pass its url in referenceImageUrls (only urls this tool returned) and describe the change. Each image counts against the user's weekly Coach usage; when that is used up the call fails and says when it resets.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "aspect": {
+            "default": "square",
+            "description": "square for notes and most social posts. portrait for phone-first posts. landscape for article headers and thumbnails.",
+            "enum": [
+              "square",
+              "portrait",
+              "landscape"
+            ],
+            "type": "string"
+          },
+          "prompt": {
+            "description": "What the image shows: subject, setting, style, colors, and any text that must appear in it, spelled exactly.",
+            "maxLength": 4000,
+            "minLength": 3,
+            "type": "string"
+          },
+          "quality": {
+            "description": "low for quick drafts, simple graphics, and variations to choose from. medium for a final image, fine detail, or text inside the image.",
+            "enum": [
+              "low",
+              "medium"
+            ],
+            "type": "string"
+          },
+          "referenceImageUrls": {
+            "description": "Images to edit or match, by url: the Attached image urls listed in the writer's messages, or urls generate_image returned. Pass every logo, product shot, or person the writer wants in the image; describing them in the prompt is not enough. Leave empty to start from text.",
+            "items": {
+              "format": "uri",
+              "type": "string"
+            },
+            "maxItems": 4,
+            "type": "array"
+          }
+        },
+        "required": [
+          "prompt",
+          "quality"
+        ],
+        "type": "object"
+      },
+      "name": "generate_image",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "mediaType": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "mediaType",
+          "size"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
         "openWorldHint": false,
         "readOnlyHint": true,
         "title": "Get Article"
       },
-      "description": "Get one WriteStack article by ID, including markdown body, publicationId, contentVersion, and Substack draft/schedule status. The markdown may include headings, bold/italic/strike/code, lists, blockquotes, :::pullquote, :::callout, :::paywall, :::audience sections, and :::substack-embed lines. Keep :::substack-embed lines exactly as they are when you update the article. ALWAYS call this immediately before update_article and pass the returned contentVersion as baseVersion — the user may have edited the article in WriteStack since you last saw it.",
+      "description": "Get one WriteStack article by ID, including markdown body, publicationId, contentVersion, and Substack draft/schedule status. The markdown may include headings, bold/italic/strike/code, lists, blockquotes, :::pullquote, :::callout, :::paywall, :::audience sections, :::collapsed sections, and :::substack-embed lines. Keep :::substack-embed lines exactly as they are when you update the article. ALWAYS call this immediately before update_article and pass the returned contentVersion as baseVersion — the user may have edited the article in WriteStack since you last saw it.",
       "inputSchema": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "additionalProperties": false,
@@ -1082,6 +1157,46 @@
         ],
         "type": "object"
       }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Get My Posts"
+      },
+      "description": "Read up to 10 of this writer's published Substack posts in full, by the ids from list_my_posts or search_my_posts. Call it again for the next 10. The body is the written text only, cut at 12,000 characters (bodyTruncated says so). What was said in a live, video or podcast recording is not in the body: for posts with hasRecordingTranscript: true, pass includeTranscripts: true to also get the transcript, one paragraph per speaker turn labelled with the speaker's name when it could be matched to the post's bylines, otherwise Speaker 1, Speaker 2 and so on. Transcripts share one size budget per call, up to 60,000 characters each. Long transcripts come in parts: when transcriptNextOffset is not null, call again with just that post id and transcriptOffset set to transcriptNextOffset to read the next part. Transcripts are copied when WriteStack syncs the writer's posts through the browser extension, so a new live can take up to a day to appear.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "includeTranscripts": {
+            "default": false,
+            "description": "Also return what was said in each post's live, video or podcast recording, for posts with hasRecordingTranscript: true. Transcripts are long and share one size budget, so pass only the posts whose recording you need.",
+            "type": "boolean"
+          },
+          "postIds": {
+            "description": "Post ids from list_my_posts or search_my_posts. Up to 10 in one call.",
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 10,
+            "minItems": 1,
+            "type": "array"
+          },
+          "transcriptOffset": {
+            "description": "Read the next part of one post's transcript: pass that single post id and its transcriptNextOffset from the previous call.",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "postIds"
+        ],
+        "type": "object"
+      },
+      "name": "get_my_posts",
+      "outputSchema": null
     },
     {
       "annotations": {
@@ -2445,7 +2560,7 @@
         "readOnlyHint": true,
         "title": "List Buffer Channels"
       },
-      "description": "List the user's connected Buffer channels (social accounts like LinkedIn, X/Twitter, Threads, etc.) available for cross-posting. Returns each channel's id, name, and service. Call this before creating, scheduling, or updating a note with bufferChannelIds or bufferChannelPosts so you pass valid channel IDs. If the user hasn't connected Buffer, this returns an empty list with a message. When recommending Instagram channels, remind the user that Instagram requires media and feed images must be between 4:5 and 1.91:1 for automatic Buffer publishing (see https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges); otherwise Buffer uses Notify Me.",
+      "description": "List the user's connected Buffer channels (social accounts like LinkedIn, X/Twitter, Threads, etc.) available for cross-posting. Returns each channel's id, name, and service. Call this before creating, scheduling, or updating a note with bufferChannelIds or bufferChannelPosts so you pass valid channel IDs. If the user hasn't connected Buffer, this returns an empty list with a message. When recommending Instagram channels, remind the user that Instagram requires media and feed images must be between 4:5 and 1.91:1 for automatic Buffer publishing (see https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges); otherwise Buffer uses Notify Me. Each channel also carries rules for its platform: needsImage (a post needs an image or video; make one with generate_image and pass its url as imageUrl), needsVideo (a post needs a video, which cannot be generated), characterLimit, imageAspect (the generate_image aspect that fits) and an optional note. When the user asks for notes for a platform whose rules say needsImage and has not mentioned images, ask whether to generate one for each note before writing.",
       "inputSchema": {
         "properties": {},
         "type": "object"
@@ -2464,6 +2579,40 @@
                 },
                 "name": {
                   "type": "string"
+                },
+                "platform": {
+                  "type": "string"
+                },
+                "rules": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "characterLimit": {
+                      "type": "number"
+                    },
+                    "imageAspect": {
+                      "enum": [
+                        "square",
+                        "portrait",
+                        "landscape"
+                      ],
+                      "type": "string"
+                    },
+                    "needsImage": {
+                      "type": "boolean"
+                    },
+                    "needsVideo": {
+                      "type": "boolean"
+                    },
+                    "note": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "needsImage",
+                    "needsVideo",
+                    "imageAspect"
+                  ],
+                  "type": "object"
                 },
                 "service": {
                   "type": "string"
@@ -2491,6 +2640,58 @@
         ],
         "type": "object"
       }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "List My Newsletters"
+      },
+      "description": "List the Substack newsletters this writer owns, each with publicationId, title and url. Call it when they name a newsletter, then pass that publicationId to list_my_posts or search_my_posts. These are their published newsletters; for WriteStack article drafts use list_article_newsletters.",
+      "inputSchema": {
+        "properties": {},
+        "type": "object"
+      },
+      "name": "list_my_newsletters",
+      "outputSchema": null
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "List My Posts"
+      },
+      "description": "List this writer's published Substack posts, newest first, with title, subtitle, date, free or paid audience, likes, comments, word count, url and a short preview. Pass publicationId from list_my_newsletters to limit it to one newsletter, and audience to get only free or only paid posts. hasRecordingTranscript is true when the post has a live, video or podcast recording whose transcript get_my_posts returns with includeTranscripts: true. These are published posts, not WriteStack article drafts (use list_articles for those).",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "audience": {
+            "description": "everyone for free posts, only_paid for paywalled posts",
+            "enum": [
+              "everyone",
+              "only_paid"
+            ],
+            "type": "string"
+          },
+          "limit": {
+            "default": 15,
+            "description": "Max posts to return, newest first (default 15, max 30)",
+            "maximum": 30,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "publicationId": {
+            "description": "Limit to one newsletter. Use a publicationId from list_my_newsletters.",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "name": "list_my_posts",
+      "outputSchema": null
     },
     {
       "annotations": {
@@ -3213,6 +3414,44 @@
     },
     {
       "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Search My Posts"
+      },
+      "description": "Find this writer's published Substack posts by words in the title or subtitle. Also returns recent: the newest titles, subtitles and slugs, so you can judge a match by meaning when the words differ. Pass publicationId from list_my_newsletters when the post is on one newsletter. Do not put a newsletter name in query. Zero matches is a success with an empty posts list. hasRecordingTranscript is true when the post has a live, video or podcast recording whose transcript get_my_posts returns with includeTranscripts: true.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "limit": {
+            "default": 15,
+            "description": "Max matches to return, newest first (default 15, max 30)",
+            "maximum": 30,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "publicationId": {
+            "description": "Limit to one newsletter. Use a publicationId from list_my_newsletters.",
+            "type": "integer"
+          },
+          "query": {
+            "description": "Words from the title or subtitle they named",
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "type": "object"
+      },
+      "name": "search_my_posts",
+      "outputSchema": null
+    },
+    {
+      "annotations": {
         "destructiveHint": true,
         "openWorldHint": true,
         "readOnlyHint": false,
@@ -3293,7 +3532,7 @@
             "type": "integer"
           },
           "bodyMarkdown": {
-            "description": "GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, :::subscribe caption::: (email box and Subscribe button under a line of text), :::share caption::: (Share button under a line of text), and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Audience-specific sections show content to chosen readers only. Put each marker on its own line with blank lines around it: `:::audience paid_sub founding_sub`, the content, optionally `:::else` followed by what everyone else sees, then `:::end-audience`. Audiences are non_sub, free_sub, paid_sub and founding_sub. A paid section with no :::else shows everyone else Substack's upgrade prompt; add no-else to the :::audience line to show them nothing. Voice and video embeds are not supported.",
+            "description": "GitHub-flavored Markdown body. Supported and synced to Substack: headings #–######, **bold**, *italic*, ~~strikethrough~~, `inline code`, [links](https://...), images ![alt](url), bullet and numbered lists, > blockquotes, :::pullquote ... :::, :::callout ... :::, :::subscribe caption::: (email box and Subscribe button under a line of text), :::share caption::: (Share button under a line of text), and a paid-only split with a standalone :::paywall::: line (content after it is behind the Substack paywall). Audience-specific sections show content to chosen readers only. Put each marker on its own line with blank lines around it: `:::audience paid_sub founding_sub`, the content, optionally `:::else` followed by what everyone else sees, then `:::end-audience`. Audiences are non_sub, free_sub, paid_sub and founding_sub. A paid section with no :::else shows everyone else Substack's upgrade prompt; add no-else to the :::audience line to show them nothing. Collapsible text stays hidden until readers click to open it: put `:::collapsed expand=\"Show more\" collapse=\"Show less\"` on its own line, then the content, then `:::end-collapsed`. expand is the label readers click to open it, collapse the label to close it; write a quote inside a label as &#34;. Voice and video embeds are not supported.",
             "type": "string"
           },
           "commentPermissions": {
@@ -3591,7 +3830,7 @@
     },
     {
       "annotations": {
-        "destructiveHint": false,
+        "destructiveHint": true,
         "openWorldHint": false,
         "readOnlyHint": false,
         "title": "Update Skill"

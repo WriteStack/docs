@@ -13,7 +13,7 @@ description: "Get Article. Get one WriteStack article by ID, including markdown 
 
 The description the MCP server sends to the model, word for word. Its rules apply to every call.
 
-> Get one WriteStack article by ID, including markdown body, publicationId, contentVersion, and Substack draft/schedule status. The markdown may include headings, bold/italic/strike/code, lists, blockquotes, :::pullquote, :::callout, :::paywall, :::audience sections, and :::substack-embed lines. Keep :::substack-embed lines exactly as they are when you update the article. ALWAYS call this immediately before update_article and pass the returned contentVersion as baseVersion — the user may have edited the article in WriteStack since you last saw it.
+> Get one WriteStack article by ID, including markdown body, publicationId, contentVersion, and Substack draft/schedule status. The markdown may include headings, bold/italic/strike/code, lists, blockquotes, :::pullquote, :::callout, :::paywall, :::audience sections, :::collapsed sections, and :::substack-embed lines. Keep :::substack-embed lines exactly as they are when you update the article. ALWAYS call this immediately before update_article and pass the returned contentVersion as baseVersion — the user may have edited the article in WriteStack since you last saw it.
 
 ## Arguments
 

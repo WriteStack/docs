@@ -13,7 +13,7 @@ description: "List Buffer Channels. List the user's connected Buffer channels (s
 
 The description the MCP server sends to the model, word for word. Its rules apply to every call.
 
-> List the user's connected Buffer channels (social accounts like LinkedIn, X/Twitter, Threads, etc.) available for cross-posting. Returns each channel's id, name, and service. Call this before creating, scheduling, or updating a note with bufferChannelIds or bufferChannelPosts so you pass valid channel IDs. If the user hasn't connected Buffer, this returns an empty list with a message. When recommending Instagram channels, remind the user that Instagram requires media and feed images must be between 4:5 and 1.91:1 for automatic Buffer publishing (see https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges); otherwise Buffer uses Notify Me.
+> List the user's connected Buffer channels (social accounts like LinkedIn, X/Twitter, Threads, etc.) available for cross-posting. Returns each channel's id, name, and service. Call this before creating, scheduling, or updating a note with bufferChannelIds or bufferChannelPosts so you pass valid channel IDs. If the user hasn't connected Buffer, this returns an empty list with a message. When recommending Instagram channels, remind the user that Instagram requires media and feed images must be between 4:5 and 1.91:1 for automatic Buffer publishing (see https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges); otherwise Buffer uses Notify Me. Each channel also carries rules for its platform: needsImage (a post needs an image or video; make one with generate_image and pass its url as imageUrl), needsVideo (a post needs a video, which cannot be generated), characterLimit, imageAspect (the generate_image aspect that fits) and an optional note. When the user asks for notes for a platform whose rules say needsImage and has not mentioned images, ask whether to generate one for each note before writing.
 
 ## Arguments
 
@@ -44,6 +44,13 @@ The result has `structuredContent` that matches this schema. The same data is al
 | `channels` | `object[]` | Yes |  |
 | `channels[].id` | `string` | Yes |  |
 | `channels[].name` | `string` | Yes |  |
+| `channels[].platform` | `string` | No |  |
+| `channels[].rules` | `object` | No |  |
+| `channels[].rules.characterLimit` | `number` | No |  |
+| `channels[].rules.imageAspect` | `string` | Yes | One of: `"square"`, `"portrait"`, `"landscape"`. |
+| `channels[].rules.needsImage` | `boolean` | Yes |  |
+| `channels[].rules.needsVideo` | `boolean` | Yes |  |
+| `channels[].rules.note` | `string` | No |  |
 | `channels[].service` | `string` | Yes |  |
 | `count` | `number` | Yes |  |
 | `message` | `string` | No |  |
