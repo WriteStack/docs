@@ -1,0 +1,214 @@
+---
+title: The article editor
+description: Everything in the WriteStack article editor (title and subtitle, toolbar, the / menu, Substack buttons, freewall and paywall, audience-specific sections, footnotes, post embeds, mentions), how autosave and version history work, keyboard shortcuts, and what changes when the article goes to Substack.
+---
+
+The article editor works like Substack's: the same blocks, buttons and walls, so what you write here looks the same on Substack after you push. It saves on its own about 3 seconds after you stop typing.
+
+Open it by clicking an article on the [Articles page](/docs/using/articles/articles-page), or with **New article**.
+
+## The top bar
+
+| Item | What it does |
+| --- | --- |
+| Back arrow | Goes back to the Articles page. |
+| Save status | **Saving...**, **Saved**, or **Couldn't save · Retry**. |
+| Substack status | Whether Substack has your latest version. See [Push an article to Substack](/docs/using/articles/substack-sync#edits-are-pushed-on-their-own). |
+| **History** | [Version history](#version-history). |
+| **Open in Substack** | Opens the Substack draft, once the article is pushed. |
+| Word count | Words in the body. The title and subtitle don't count. |
+| **Comments** | Comments on the draft. See [Share a draft and get comments](/docs/using/articles/share-and-comments). |
+| **Share** | A private link to the draft. |
+| **Copy** | Copies the whole article, with formatting, to paste anywhere. |
+| **Push to Substack** | Sends it to Substack as a draft. |
+
+At the bottom right, **Settings** opens [Post settings](/docs/using/articles/post-settings) and **Ask Quill** opens [Quill](/docs/using/articles/quill).
+
+## Title and subtitle
+
+| Field | Limit |
+| --- | --- |
+| Title | 200 characters |
+| Subtitle | 200 words |
+
+Both can be left empty. An article with no title shows as "Untitled article". To push it to Substack, give it a title, or an **SEO title** or **URL slug** in [Post settings](/docs/using/articles/post-settings#discovery).
+
+A counter shows while you type in a field. Press Enter to move to the next field. Both fields are one line: line breaks you paste become spaces.
+
+## The toolbar
+
+| Button | What it does |
+| --- | --- |
+| Undo, Redo | Undo or redo the last change. |
+| **Style** | **Normal text** or **Heading 1** to **Heading 6**. |
+| Bold, Italic, Strikethrough, Inline code | Format the selected text. |
+| **Text color**, **Highlight color** | 60 colors. **None** removes the color. |
+| Link | Adds a link to the selected text. |
+| Image, Audio, Video | See [Images, video and audio](/docs/using/articles/media). |
+| Quote | **Blockquote**, **Pullquote**, **Callout block** or **Collapsible text**. |
+| Bullet list, Numbered list | Start a list. |
+| Text alignment | **Align left**, **Align center**, **Align right**, **Justify**. Works on paragraphs and headings. |
+| **Button** | Insert a Substack button. See [Buttons](#buttons). |
+| **Template** | Insert a saved template. See [Templates](/docs/using/articles/templates). |
+| **More** | **Audience-specific content**, **Code block**, **Divider**, **Footnote**, **Freewall**, **Paywall**, **Poetry**, **Superscript**, **Subscript**. |
+
+The editor has no tables and no underline.
+
+## Selected text
+
+Select text to get a small menu above it: **Ask Quill**, **Comment**, **Bold**, **Italic**, **Strikethrough**, **Inline code**, **Link**, **Highlight**, **Heading 1** to **Heading 3**, **Quote**, **Bulleted list** and **Numbered list**.
+
+## The / menu
+
+Type `/` to insert any block. Keep typing to filter, use the arrow keys to pick, and press Enter.
+
+| Section | Items |
+| --- | --- |
+| Text | Headings 1 to 3, lists, **Quote**, **Pullquote**, **Callout**, **Collapsible text**, **Code block**, **Poetry** |
+| Blocks | **Image**, **Video**, **Audio**, **Divider**, **Footnote** |
+| Buttons | Every Substack button, and **Custom button** |
+| Audience | **Freewall**, **Paywall**, **Free readers only**, **Paid readers only**, **Custom audience** |
+| Templates | Your saved templates |
+
+Type a section name, like `/buttons`, to see the whole section.
+
+## Buttons
+
+| Button | What readers see |
+| --- | --- |
+| **Subscribe** | A **Subscribe now** button |
+| **Subscribe w/ caption** | A line of text, an email box and a **Subscribe** button |
+| **Share post** | A **Share** button |
+| **Share post w/ caption** | A line of text and a **Share** button |
+| **Leave a comment** | A button that opens the comments |
+| **Custom…** | A button with your own text and link |
+
+For **Custom…**, fill in **Button text** and **Link** (it must start with `http://` or `https://`), then click **Insert button**.
+
+To change a button after you insert it, delete it and insert a new one.
+
+### Captions on Subscribe and Share blocks
+
+Click the caption on a **w/ caption** block to edit it. It's one line.
+
+To change the text every new block starts with:
+
+1. Hover the block and click the gear.
+2. Write your text under **Default text** (up to 1,000 characters).
+3. Click **Save**.
+
+The default is per newsletter. Blocks already in your articles don't change. **Reset** goes back to the standard text.
+
+## Freewall and paywall
+
+A wall hides everything below it from some readers.
+
+| Wall | Who sees what's below it |
+| --- | --- |
+| **Freewall** | Subscribers, free or paid |
+| **Paywall** | Paid subscribers |
+
+Insert one from **More** or the `/` menu. A post has one wall: inserting a new one removes the old one. To remove it, select the wall and click **Remove wall** under **More**.
+
+Inserting a wall also sets the post's **Audience** in [Post settings](/docs/using/articles/post-settings#audience): **Freewall** sets **Subscribers only**, **Paywall** sets **Paid only**.
+
+## Audience-specific sections
+
+An audience-specific section shows its content only to the readers you pick. Everyone else sees nothing, or a second part you write for them.
+
+1. Click **More → Audience-specific content** and pick **Free readers**, **Paid readers** or **Custom**.
+2. Use the **Audience** picker on the section to choose who sees it:
+
+| Option | Who it is |
+| --- | --- |
+| **Not subscribed** | Anyone who isn't subscribed |
+| **Free subscribers** | Anyone with a free subscription |
+| **Paid subscribers** | Anyone with a paid subscription |
+| **Founding subscribers** | Only founding subscribers |
+
+3. Write the content inside the section.
+4. Optional: click **Everyone else +** to add what everyone else sees.
+
+**Free readers** picks Not subscribed and Free. **Paid readers** picks Paid and Founding, and starts the part for everyone else with an upgrade box. Remove that part and other readers see nothing.
+
+Audiences outside the post's own audience are greyed out. The section warns you when it won't show to anyone ("Won't render: no audiences selected") or when it covers the whole post audience.
+
+## Other blocks
+
+| Block | How it works |
+| --- | --- |
+| **Collapsible text** | Hidden until readers click to open it. Set the labels readers click: **Collapsed** (default "Show more") and **Expanded** (default "Show less"), up to 120 characters each. It's always open in the editor. |
+| **Footnote** | Adds a number where your cursor is and a note at the end of the post. Substack numbers them in order. |
+| **Poetry** | Keeps every line break. Enter starts a new line. No formatting inside it. |
+| **Code block** | Monospace text. |
+| **Divider** | A horizontal line. |
+| **Superscript**, **Subscript** | Raised or lowered text, like x² or x₂. You can't use both on the same text. |
+
+## Embed a Substack post
+
+Paste a link to a Substack post (`/p/` in the address) on an empty line. It turns into a card with the post's title, byline, date and cover. Pasted in the middle of a sentence, it stays a normal link.
+
+Hover the card and open its menu to pick **Small display**, **Medium display** or **Large display** (the default), **Edit caption**, **Convert to link** or **Remove**. Small cards have no caption.
+
+## Mentions
+
+Type `@` and a name to mention someone on Substack. Pick them from the list. Hover a mention to see their profile. Mentions need the [browser extension](/docs/using/setup/browser-extension) to search.
+
+## Links
+
+Typed web addresses become links on their own. To link text, select it and click the link button (or Cmd+K). Enter the **URL** and click **Apply**. `https://` is added if you leave it out. **Remove** takes a link off.
+
+## Blocks from Substack
+
+When you import a draft that has blocks WriteStack can't edit, like a poll, a recipe, a YouTube or Tweet embed, or an embedded Note, they show as labelled boxes such as "Poll (edit on Substack)". They go back to Substack unchanged when you push.
+
+## Autosave
+
+- The article saves about 3 seconds after you stop typing. Cmd+S (Ctrl+S on Windows) saves right away.
+- A failed save is tried 3 times. If it still fails, click **Retry**.
+- If the article was changed in another tab, by the Coach or by an AI agent while you had edits, you see "This article changed elsewhere". **Reload** takes the other version. **Keep mine** keeps yours.
+- Leaving with unsaved changes asks "Changes are not saved. Leave anyway?"
+
+## Version history
+
+Click **History** to see earlier versions of the title, subtitle and body.
+
+- Versions are saved as you edit. Edits within 10 minutes are grouped into one version.
+- Labels show where a version came from: **Edited with Quill**, **Edited by AI** (an agent over MCP), or **Restored**.
+- Click a version to preview it, then **Restore this version**. Your current version stays in the history, so you can go back.
+- Up to 50 versions are kept per article. History covers the title, subtitle and body, not Post settings.
+
+## Keyboard shortcuts
+
+On Windows, use Ctrl instead of Cmd.
+
+| Shortcut | Does |
+| --- | --- |
+| Cmd+S | Save now |
+| Cmd+J | Ask Quill |
+| Cmd+K | Add a link |
+| Cmd+B, Cmd+I | Bold, italic |
+| Cmd+Shift+X | Strikethrough |
+| Cmd+E | Inline code |
+| Cmd+Shift+H | Highlight |
+| Cmd+Option+1 to 6 | Heading 1 to 6 (Ctrl+Alt on Windows) |
+| Cmd+Shift+B | Quote |
+| Cmd+Shift+8, Cmd+Shift+7 | Bullet list, numbered list |
+| Cmd+Z, Cmd+Shift+Z | Undo, redo |
+
+## What changes on Substack
+
+Everything in the editor has a Substack match, so a push keeps your formatting, colors, alignment, blocks, buttons, walls and audience sections. A few small things change:
+
+- A numbered list always starts at 1.
+- Code blocks have no language.
+- Images keep no caption.
+
+## If it doesn't work
+
+| What you see | Fix |
+| --- | --- |
+| **Couldn't save · Retry** | Click **Retry**. If it keeps failing, check your connection and copy your text somewhere safe. |
+| "This article changed elsewhere" | Pick **Reload** or **Keep mine**. |
+| "Won't render: no audiences selected" | Pick at least one audience for the section. |
+| "Not in this post's audience" | The post's **Audience** doesn't include those readers. Change it in [Post settings](/docs/using/articles/post-settings#audience). |

@@ -1,0 +1,85 @@
+---
+title: Post settings
+description: Every setting in an article's Post settings (thumbnail, audience, comments, tags, section, SEO title and description, URL slug, social title), what it sends to Substack, and its default.
+---
+
+**Post settings** holds the Substack settings for one article: its thumbnail, who can read it, tags, section and how it looks in search and when shared. Changes save on their own and go to Substack with the next push.
+
+## Open Post settings
+
+1. Open the article on the **Articles** page.
+2. Click **Settings** at the bottom right of the editor.
+3. Pick a section on the left: **Media**, **Audience**, **Discovery** or **Publishing**. Click **Done** when you're finished.
+
+**Publishing** is where you push and schedule. See [Push an article to Substack](/docs/using/articles/substack-sync).
+
+## Media
+
+| Setting | What it does |
+| --- | --- |
+| **Thumbnail** | The cover image people see on Substack and in link previews. Click the image to upload your own. |
+
+If the thumbnail can't be uploaded, WriteStack uses the first image in the article as the Substack cover and tells you. More on images: [Images, video and audio](/docs/using/articles/media).
+
+## Audience
+
+| Setting | Options | Default |
+| --- | --- | --- |
+| **Audience** | **Everyone**, **Subscribers only**, **Paid only**, **Founding** | **Everyone** |
+| **Comments** | **Everyone**, **Subscribers**, **None** | **Everyone** |
+| **Tags** | Your newsletter's Substack tags | None |
+| **Section** | **Newsletter default**, or one of your newsletter's sections | **Newsletter default** |
+
+- **Subscribers only** is a freewall: free and paid subscribers can read it, everyone else can't.
+- **Paid only** and **Founding** lock the post for paid or founding members.
+- To lock only part of a post, use a paywall or an audience-specific section in the body. See [Formatting](/docs/using/articles/create#formatting).
+
+### Who gets the email
+
+When the post is scheduled, Substack emails it to:
+
+| Audience | Email goes to |
+| --- | --- |
+| **Everyone** | Everyone |
+| **Subscribers only** | Everyone. A freewall post still emails every subscriber. |
+| **Paid only** | Paid subscribers |
+| **Founding** | Founding members |
+
+There's no setting to turn the email off.
+
+### Tags
+
+- Click **Add tag** and check the tags you want. Remove one with the X on its chip.
+- You can only pick tags that already exist on your newsletter. Create new tags on Substack.
+- When you first open a pushed article, the tags it has on Substack are loaded in.
+- On push, tags you added or removed in WriteStack change on Substack. Tags someone changed on Substack since the last push are kept and copied back into WriteStack.
+- Removing every tag clears them on Substack.
+
+**Tags** only appears when your newsletter has at least one tag. **Section** only appears when it has sections. Both need the [browser extension](/docs/using/setup/browser-extension) version 1.5.28 or newer. Use 1.5.35 or newer for tags: older versions can fail to read tags on drafts.
+
+## Discovery
+
+| Setting | What it does | If left empty |
+| --- | --- | --- |
+| **SEO title** | The title in search results. The counter shows 60 characters as a guide. | Substack's own |
+| **SEO description** | The description in search results and the post's description. The counter shows 160 characters as a guide. | The subtitle |
+| **URL slug** | The end of the post's link, after `/p/`. | The SEO title, then the title |
+| **Social title** | The headline shown when your post is shared. | The post title |
+
+- **Generate with AI** writes the SEO title, SEO description and slug from the article. It replaces what's in those fields. **Instructions** lets you tell it how to write them.
+- On push, the slug is made lowercase, words are joined with hyphens, small words like "the" are dropped, and it's cut to 80 characters.
+- If another post on your newsletter already uses the slug, the draft keeps its current slug and you get a warning.
+
+## What's kept from Substack
+
+A push doesn't change the bylines, paywall type or post type already set on the Substack draft. Change those on Substack.
+
+## If it doesn't work
+
+| Message | What it means |
+| --- | --- |
+| "Write or generate the article before generating SEO." | The body is empty. Write it first. |
+| "SEO generation reused the article title or subtitle. Try again." | The result was the same as your title or subtitle. Click **Generate with AI** again. |
+| "Add a slug before pushing to Substack." | The article has no title, SEO title or slug. Add one. |
+| "Tags could not be updated on Substack." | Update the [browser extension](/docs/using/setup/browser-extension) to 1.5.35 or newer, then push again. |
+| "Thumbnail could not be uploaded to Substack." | Pick another image, or set the cover on Substack. |

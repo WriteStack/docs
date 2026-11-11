@@ -1,1 +1,1 @@
-{ "pages": ["create", "substack-sync", "coach-articles"] }
+{ "pages": ["articles-page", "create", "editor", "media", "templates", "post-settings", "substack-sync", "share-and-comments", "quill", "coach-articles"] }

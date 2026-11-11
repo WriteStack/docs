@@ -1,0 +1,140 @@
+---
+title: The Articles page
+description: What the Articles page shows (list and calendar views, newsletter tabs, the unscheduled tray), how to create, find, select, move and delete articles, how your Substack drafts are imported, and the per-newsletter Article settings.
+---
+
+The **Articles** page is where your long-form posts live: every draft you write in WriteStack and every draft and scheduled post on your Substack newsletters. You write, plan and push them to Substack from here. It's in every paid plan, and it's marked **beta** in the sidebar.
+
+## Open it
+
+Click **Articles** in the sidebar. On a phone it isn't in the menu, and the page always shows the list.
+
+## Newsletter tabs
+
+The tabs at the top filter by newsletter: **All**, then one tab per newsletter, with your primary newsletter first. The number on each tab is how many articles it has. On **All**, each article shows which newsletter it belongs to.
+
+To hide a newsletter from Articles, see [Article settings](#article-settings).
+
+## Create an article
+
+1. Click **New article**.
+2. If you're on **All** and have more than one newsletter, pick one under **Which newsletter?**.
+3. The editor opens. See [The article editor](/docs/using/articles/editor).
+
+In the calendar, the **+** on a day creates an article with that day as its target date.
+
+**New article** is greyed out when no newsletter is visible. [Connect Substack](/docs/using/setup/connect-substack), or show a hidden newsletter in [Article settings](#article-settings).
+
+You can also create articles [with the Coach or an AI agent](/docs/using/articles/create).
+
+## List view
+
+| Part | What it does |
+| --- | --- |
+| **Drafts**, **Scheduled**, **Published** | Filters by status. **Drafts** is the default. |
+| **Search articles** | Finds articles by title or subtitle. |
+| Month headers | Articles are grouped by month, newest edit first. |
+| **⋯** on a row | **Select**, **Open in Substack**, **Push to Substack** or **Update on Substack**, **Disconnect from Substack**, **Delete**. |
+
+Each row shows the title, when it was last updated, the word count and these labels:
+
+| Label | Meaning |
+| --- | --- |
+| **On Substack** | Pushed, and Substack has the latest version. |
+| **Pending sync** | A push is waiting to run. |
+| **Sync failed** | The last push failed. |
+| **Needs attention** | A conflict, or the extension is blocked. Open the article. |
+| **Scheduled for** a date | Scheduled on Substack. |
+| **Published** a date | Live on Substack. |
+| **Paid** | The audience is **Paid only** or **Founding**. |
+| **Target** a date | The day you plan to publish. It doesn't schedule anything. |
+| **Video** | A video or podcast post from Substack. See [Video and podcast posts](/docs/using/articles/substack-sync#video-and-podcast-posts). |
+
+Click a row to open it.
+
+## Select several articles
+
+1. Click **Select** next to the search box, or **Select** in a row's **⋯** menu.
+2. Click rows to select them. Shift-click selects every row between two rows.
+3. Use the bar at the bottom:
+
+| Button | What it does |
+| --- | --- |
+| **Select all** / **Deselect all** | Selects every article you can see. |
+| **Batch → Push to Substack** | Pushes them one at a time. Video posts are skipped. |
+| **Batch → Clear target date** | Removes the target date. Articles scheduled on Substack keep their date. |
+| **Batch → Disconnect from Substack** | Stops tracking their Substack drafts. The drafts stay on Substack. |
+| **Delete** | Deletes them here and their drafts on Substack. |
+
+Only rows you can see count. If a filter, search or tab hides a selected article, it's left out. One action handles up to 200 articles.
+
+Select is only in the list view.
+
+## Calendar view
+
+Click **Calendar** at the top to see a month. Weeks start on Monday. **Today** jumps back to this month.
+
+An article sits on its published date, then its Substack scheduled date, then its target date.
+
+- **Drag** an article to another day to change its target date.
+- **Drag** it onto **Unscheduled** to clear its date.
+- A scheduled article has a lock and can't be moved. Unschedule it on Substack first. A published article stays on its publish date.
+
+The **Unscheduled** panel on the side lists articles with no date. Drag one onto a day to give it a target date.
+
+The page remembers whether you last used the list or the calendar.
+
+## Your Substack drafts
+
+Each time you open the Articles page, WriteStack brings in your Substack drafts and scheduled posts. Click the sync button (the circular arrows) at the top to do it again. Hover it to see when it last ran.
+
+- New drafts on Substack are added.
+- A draft edited on Substack is updated here, unless you edited it in WriteStack after that. The most recent change wins.
+- Posts scheduled on Substack show as scheduled. Posts that went live show as published.
+- A draft deleted on Substack is removed here. If you edited it in WriteStack or it has comments, it's only disconnected instead.
+- Video and podcast posts come in as text you can edit. They're marked **Video**, and your changes aren't pushed back.
+- Up to 50 drafts per newsletter come in each time. The rest come in next time.
+
+A toast tells you what changed, for example "Imported 3 drafts from Substack".
+
+This needs the [browser extension](/docs/using/setup/browser-extension) version 1.5.28 or newer, and you logged into Substack in the same browser.
+
+Changes made in another tab, by the Coach or by an AI agent show up on their own.
+
+## Delete an article
+
+Delete from a row's **⋯** menu, the trash button on a calendar card, or a selection. Confirm with **Delete**.
+
+Deleting also deletes the draft on Substack. Posts already published on Substack are left there and only removed from WriteStack. If the Substack draft can't be deleted, the article is kept. Details: [Delete or disconnect](/docs/using/articles/substack-sync#delete-or-disconnect).
+
+The editor has no delete button.
+
+## Article settings
+
+Click the gear (**Article settings**) at the top of the page. Settings are per newsletter: pick one under **Newsletter** first, then click **Save**.
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| **Show this newsletter in Articles** | Turn it off to hide the newsletter from the list, the calendar and the tabs. Hidden newsletters can't be used by the Coach or AI agents. | On |
+| **Language** | The language WriteStack writes SEO titles and descriptions in. | English |
+| **Image generation** | Lets WriteStack generate thumbnails and images when you ask in the editor. | On |
+| **Image style prompt** | Style, colors, composition and brand feel for generated images. Up to 300 words. | Empty |
+| **Style reference images** | Up to 4 images used as a style guide for every generated image. | None |
+| **Thumbnail instructions** | Extra direction for generated thumbnails only. Up to 300 words. | Empty |
+| **Thumbnail reference images** | Up to 4 example thumbnails, used only when generating a thumbnail. | None |
+| **SEO instructions** | Keywords to target, terms to keep, and phrasing for **Generate with AI** in Post settings. Up to 300 words. | Empty |
+
+Reference images can be PNG, JPEG, WebP or GIF, up to 15 MB each.
+
+{/* TODO(orel): Reference images upload through the API as form data, not direct to S3, so files between ~4.5 MB and 15 MB may be rejected by Vercel's body limit. Test a 10 MB reference image. */}
+
+## If it doesn't work
+
+| What you see | Fix |
+| --- | --- |
+| "Install or update the WriteStack extension to sync Substack drafts" | [Install or update the extension](/docs/using/setup/browser-extension) to 1.5.28 or newer. |
+| "Log into Substack to import drafts" | Log into Substack in the same browser, then click the sync button. |
+| "Grant access to" your domain "to import its Substack drafts." | Your newsletter uses a custom domain. Click **Grant access** and accept the browser prompt. |
+| "Pending Substack syncs" | Pushes are waiting for the extension. Install or update it and keep WriteStack open. |
+| "Unschedule on Substack to move it" | The article is scheduled. [Unschedule it](/docs/using/articles/substack-sync#unschedule) first. |
+| "N article(s) kept: …" after deleting | The Substack draft couldn't be deleted, so the article was kept. Do what the message says, then delete again. |

@@ -1,96 +1,154 @@
 ---
 title: Push an article to Substack
-description: How a WriteStack article becomes a Substack draft, how to schedule and unschedule it on Substack, which Substack settings sync, what the browser extension needs, and what each sync status and error means.
+description: How a WriteStack article becomes a Substack draft, how edits are pushed on their own, how to pull, schedule, unschedule, resolve a conflict, delete or disconnect, what the browser extension needs, and what each status and error means.
 ---
 
-Pushing sends a WriteStack article to Substack as a **draft**. It never publishes. The push runs through the WriteStack browser extension in an open WriteStack tab, so it finishes in seconds when WriteStack is open and waits otherwise.
+Pushing sends a WriteStack article to Substack as a **draft**. It never publishes. After the first push, your edits go to the same draft on their own. To publish, schedule the article or publish it on Substack.
 
-For how WriteStack and Substack stay in step in general, see [Sync](/docs/using/concepts/sync).
-
-{/* TODO(orel): The Articles page and its Substack panel (push, schedule, unschedule, settings, conflict view, "Grant access" for custom domains) are adminOnly + comingSoon in src/types/navbar.ts. This page only documents the Coach and MCP paths. Add the in-app buttons when Articles ships. */}
+Every Substack action runs through the WriteStack browser extension in an open WriteStack tab. For how WriteStack and Substack stay in step in general, see [Sync](/docs/using/concepts/sync).
 
 ## What you need
 
-- The [WriteStack browser extension](/docs/using/setup/browser-extension), version 1.5.28 or newer.
-- You are logged into Substack in the same Chrome.
-- WriteStack is open in a Chrome tab. Any WriteStack page works.
-- The newsletter is enabled for Articles. See [Create an article](/docs/using/articles/create#before-you-start).
+- The [WriteStack browser extension](/docs/using/setup/browser-extension), version 1.5.28 or newer. Use 1.5.35 or newer to send audio and to update tags.
+- You are logged into Substack in the same browser.
+- WriteStack is open in a tab. Any WriteStack page works.
 
-{/* TODO(orel): 1.5.28 is the "substack-drafts" gate in src/types/useExtension.type.ts. The code comment says to confirm it against the extension release. Confirm 1.5.28 is published in the Chrome and Firefox stores. */}
+Editing Post settings, **Generate with AI** and **Disconnect from Substack** don't need the extension.
 
 ## Push a draft
 
-**From the Coach:** ask, for example, "Push this to Substack." If you have more than one newsletter and didn't name one, the Coach asks "Which newsletter should I push it to?". See [How the Coach writes articles](/docs/using/articles/coach-articles).
+1. Open the article on the **Articles** page.
+2. Click **Push to Substack** at the top of the editor.
 
-**From an AI agent (MCP):** the agent calls [`push_article_to_substack`](/docs/build/mcp-reference/push_article_to_substack) with the newsletter you chose.
+The first push creates the Substack draft. After that the button reads **Update Substack**, and **Open in Substack** opens the draft.
 
-What happens:
+You can also push from an article's card or list row (**Push to Substack** or **Update on Substack**), or select several articles and push them together. Pushing several runs one at a time.
 
-1. WriteStack queues a sync job for the article.
-2. An open WriteStack tab with the extension picks it up and writes the draft on Substack.
-3. The first push creates the Substack draft. Later pushes update the same draft.
+What a push does:
 
-A push replaces the title, subtitle, body and settings of the Substack draft with the WriteStack version. If the Substack draft was edited after the last push, WriteStack stops with a **conflict** instead of overwriting it.
+1. Saves the article.
+2. Creates the Substack draft the first time.
+3. Uploads images, audio and narration.
+4. Writes the title, subtitle, body, thumbnail, [Post settings](/docs/using/articles/post-settings) and tags.
 
-An article that already has a Substack draft stays on that newsletter. An agent can't push it to a different one. If you ask the Coach to push it to another newsletter, it pushes a copy there and the original stays where it was.
+A push replaces the title, subtitle, body and settings of the Substack draft with the WriteStack version. If the Substack draft was edited after the last push, WriteStack stops with a [conflict](#resolve-a-conflict) instead.
+
+**From the Coach:** ask, for example, "Push this to Substack." See [How the Coach writes articles](/docs/using/articles/coach-articles).
+
+**From an AI agent (MCP):** the agent calls [`push_article_to_substack`](/docs/build/mcp-reference/push_article_to_substack) with the newsletter you chose. An article that already has a Substack draft stays on that newsletter.
+
+## Edits are pushed on their own
+
+Once an article is on Substack, your edits are pushed about 3 seconds after you stop typing. No button needed.
+
+This stops when the article is:
+
+- scheduled or published on Substack (click **Update Substack** or **Schedule** again to send edits),
+- in conflict or blocked,
+- a video or podcast post.
+
+The status next to the save state tells you where things are:
+
+| Status | Meaning |
+| --- | --- |
+| **Not on Substack** | Not pushed yet. |
+| **Updating Substack…** | A push is running. It says when images and audio are uploading. |
+| **Up to date** | Substack has your latest version. |
+| **Changes not on Substack** | You have edits Substack doesn't have yet. |
+| **Needs attention** | A conflict, or the extension is blocked. Open **Settings → Publishing**. |
+
+## Pull from Substack
+
+**Pull from Substack** (in **Settings → Publishing**) replaces the WriteStack title, subtitle and body with the current Substack draft. Click **Pull from Substack** again to confirm. It also brings in the schedule from Substack.
+
+The article must be pushed once first.
 
 ## Schedule on Substack
 
-Scheduling sets the article to publish on Substack at a set time. Only an AI agent can do this today, with [`schedule_article_on_substack`](/docs/build/mcp-reference/schedule_article_on_substack). The Coach can't schedule articles.
+1. Open **Settings → Publishing**.
+2. Under **Schedule**, pick a date and time.
+3. Check the timezone. It starts as your computer's timezone. Click it to pick another.
+4. Click the button. It shows how long until the post goes out, like **Schedule in 3 hours**.
 
-- The agent passes a publish time, or leaves it out to use the newsletter's next free article slot.
-- If the article isn't on Substack yet, it is pushed as a draft first, then scheduled.
-- The agent can also set the post audience and email audience.
+Scheduling always pushes your latest edits too. Once scheduled, the card shows "Scheduled on Substack for" the date, and an **Unschedule** button.
 
-{/* TODO(orel): Without a publish time, scheduling uses "Article schedule" slots, which are set on the Articles page (not live yet). With no slots it fails with "This newsletter has no article slots yet. Add one with Article schedule on the Articles page." Until Articles ships, agents should always pass a time. */}
+- The timezone is only used for this post. Your account timezone stays the same.
+- Changing the timezone keeps the same clock time. 6 PM stays 6 PM in the new timezone, so the post goes out at a different moment.
+- A time that has already passed can't be scheduled.
+- If you scheduled the post on Substack instead, WriteStack shows that time after the next push or pull.
+- A scheduled article can't be moved on the calendar. Unschedule it first.
+
+**From an AI agent (MCP):** [`schedule_article_on_substack`](/docs/build/mcp-reference/schedule_article_on_substack) needs a publish time. If the article isn't on Substack yet, it is pushed first. The agent can also set the post and email audience.
+
+The Coach can't schedule articles.
 
 ## Unschedule
 
-[`unschedule_article_on_substack`](/docs/build/mcp-reference/unschedule_article_on_substack) removes the article from the Substack schedule. The draft stays on Substack. The article must have been pushed first.
+Click **Unschedule** in **Settings → Publishing**. The post goes back to being a draft on Substack. The time you picked stays in the field.
 
-## Substack settings
+An agent can use [`unschedule_article_on_substack`](/docs/build/mcp-reference/unschedule_article_on_substack).
 
-An agent can change these with [`update_article`](/docs/build/mcp-reference/update_article). They are saved in WriteStack and sent to Substack on the next push.
+## Resolve a conflict
 
-| Setting | Default when not set |
+A conflict means the Substack draft was edited after your last push. WriteStack doesn't overwrite it. A dialog opens with "Substack has edits made after your last update." and a list of what changed.
+
+| Button | What it does |
 | --- | --- |
-| Audience | Everyone |
-| Who can comment | Everyone |
-| SEO title and SEO description | Substack's own |
-| Slug (the post's URL) | Substack's own |
-| Social title | The article title |
-| Publish time | None |
+| **Keep Substack version** | Pulls the Substack draft into WriteStack. Your WriteStack title, subtitle and body are replaced. |
+| **Use WriteStack version** | Pushes your WriteStack version over the Substack draft. |
 
-If the slug is already used by another post on Substack, the draft keeps its current slug and you get a warning.
+Edits aren't pushed on their own until you pick one.
 
-The Coach edits only the title, subtitle and body.
+{/* TODO(orel): The dialog says "Use WriteStack version" keeps "Substack-only blocks". The code suggests only blocks already pulled into WriteStack survive; blocks added on Substack after the last pull would be overwritten. Confirm before documenting either way. */}
 
-## Status
+## Video and podcast posts
 
-An agent can read the status with [`get_article_substack_status`](/docs/build/mcp-reference/get_article_substack_status). The Coach checks it when you ask whether a draft is on Substack.
+A post that is a video or podcast on Substack can be edited in WriteStack, but your changes aren't pushed back. **Push** and **Schedule** are off for it. **Pull** and **Unschedule** still work.
+
+## When the post is published
+
+WriteStack notices when a post goes live on Substack. The article shows **Published** with the date, and edits are no longer pushed on their own. A published article stays on its date in the calendar.
+
+## Delete or disconnect
+
+| Action | What it does |
+| --- | --- |
+| **Delete** | Deletes the Substack draft, then the article in WriteStack. A post already published on Substack is left there and only removed from WriteStack. |
+| **Disconnect from Substack** | WriteStack stops tracking the Substack draft. The draft stays on Substack. |
+
+If the Substack draft can't be deleted (no extension, not logged in, or no access to a custom domain), the article is kept in WriteStack so nothing is lost.
+
+Disconnecting a scheduled article doesn't cancel the schedule on Substack. Unschedule first if you don't want it to go out.
+
+If you delete a draft on Substack, WriteStack removes its copy unless you edited it in WriteStack or it has comments. In that case it's only disconnected.
+
+## Status for agents
+
+An agent can read the status with [`get_article_substack_status`](/docs/build/mcp-reference/get_article_substack_status).
 
 | Status | Meaning |
 | --- | --- |
 | `idle` | Not pushed yet. |
-| `pending` | Queued. It runs the next time WriteStack is open in Chrome with the extension. |
+| `pending` | Queued. It runs the next time WriteStack is open with the extension. |
 | `syncing` | An open WriteStack tab is pushing it right now. |
 | `synced` | The draft (and schedule, if any) is on Substack. |
-| `blocked` | The extension can't run it yet. See the table below. |
-| `conflict` | The Substack draft has edits made after the last push. Nothing was overwritten. |
+| `blocked` | The extension can't run it yet. See below. |
+| `conflict` | The Substack draft has edits made after the last push. |
 | `failed` | The push failed. The error text says why. |
 
 ## If it doesn't work
 
 | Message | Fix |
 | --- | --- |
-| "Sync is waiting for WriteStack to be open with the Chrome extension. It is not on Substack yet." | Open WriteStack in a browser with the extension installed. The push runs on its own. |
-| "Sync is blocked until the WriteStack Chrome extension is installed." | [Install or update the extension](/docs/using/setup/browser-extension). |
-| "Sync is blocked until you log into Substack in Chrome." | Log into Substack in the same Chrome, then open WriteStack. |
-| "Sync is blocked until the extension is granted access to this custom domain." | Your newsletter uses a custom domain. The extension needs permission for it. |
-| "Substack has edits made after the last WriteStack update. Open the article to resolve." | Someone edited the draft on Substack. Copy those edits into WriteStack, or keep editing on Substack. |
-| "This article is already drafted on a different Substack newsletter." | Push it to that newsletter, or create a new article for the other one. |
-| "That draft is empty, so it was not pushed." | The Coach only pushes drafts with a body. |
-
-{/* TODO(orel): Custom-domain access and conflict resolution are only offered in the Articles page UI ("Grant access", conflict view), which is not live. Say where a writer without the Articles page should grant host access and resolve a conflict. */}
+| "Queued. It will sync when WriteStack is open with the Chrome extension." | Keep WriteStack open in a browser with the extension. It runs on its own. |
+| "Install the WriteStack Chrome extension to sync." | [Install or update the extension](/docs/using/setup/browser-extension). |
+| "Log into Substack in Chrome, then sync again." | Log into Substack in the same browser, then click **Log into Substack** or push again. |
+| "Grant the extension access to your custom domain, then sync again." | Your newsletter uses a custom domain. In **Settings → Publishing**, click **Grant access**, accept the browser prompt, then push again. |
+| "This draft was edited on Substack. Open it to resolve." | [Resolve the conflict](#resolve-a-conflict). |
+| "Your newsletter requires a section. Open the draft on Substack, pick one under Post settings, then update again." | Pick a **Section** in [Post settings](/docs/using/articles/post-settings#audience), or on Substack. |
+| "N image(s) could not be uploaded to Substack." | Push again. If it keeps failing, replace the image. |
+| "Update the WriteStack extension to send audio to Substack." | Update the extension to 1.5.35 or newer, then push again. |
+| "That time has already passed. Pick a later time." | Pick a time in the future. |
+| "This article is already drafted on a different Substack newsletter." (agent) | Push it to that newsletter, or create a new article for the other one. |
 
 More fixes: [Sync errors](/docs/using/troubleshooting/sync-errors).

@@ -1,0 +1,155 @@
+---
+title: Images, video and audio
+description: How to add images, a thumbnail, video, audio and a voiceover narration to a WriteStack article, how the image library works, how recordings are kept safe, when each one reaches Substack, and the size limits.
+---
+
+You can add images, videos and audio to an article from the toolbar, the `/` menu, or by dragging a file onto the editor. Images and audio go to Substack when you push. A video goes to Substack as soon as you add it.
+
+## Images
+
+Ways to add one:
+
+- Click the image button in the toolbar, or type `/image`. This opens your **image library**.
+- Drag an image onto the editor. It uploads right away.
+- Paste an image, or paste a link to an image.
+
+Images up to 15 MB work. While one uploads, a grey box holds its place in the article.
+
+There is no caption or alt text field for images. The alt text is the file name.
+
+Images are copied to Substack when you open or save the article (if you have the [browser extension](/docs/using/setup/browser-extension)), or at the latest when you push. An image that can't be uploaded is left out of the Substack draft, and the push tells you how many.
+
+## The image library
+
+The library has every image you've uploaded, generated or imported from Substack, across your articles and Notes. Newest images come first.
+
+| To | Do this |
+| --- | --- |
+| Add one image | Click it. |
+| Add several | Hover an image and click its circle. Shift-click selects every image in between. Then click **Add**. |
+| Upload a new one | Click **Upload new**. |
+| Remove from the library | Hover an image, click the trash, and confirm. Or select several and click the trash. |
+
+Images marked **AI** were generated. Images marked **Substack** were imported from your drafts.
+
+Removing an image only takes it out of the library. Articles and Notes that use it keep it.
+
+## Thumbnail
+
+The thumbnail is the cover image on Substack and in link previews.
+
+1. Click **Settings** at the bottom right of the editor. **Media** opens.
+2. Click the thumbnail to pick an image from your library, or drop an image on it.
+
+To have WriteStack make one, click **Generate** (or **Regenerate** to replace it). It's based on the article title and the newsletter's thumbnail instructions and style. Click **Instructions** to change those, or see [Article settings](/docs/using/articles/articles-page#article-settings). Generated thumbnails are added to your library.
+
+If the thumbnail can't be uploaded to Substack, the first image in the article is used as the cover.
+
+## Video
+
+1. Click the video button in the toolbar, type `/video`, or drag a video onto the editor.
+2. Pick the file.
+3. Keep the page open while it says "Uploading video…" and then "Processing video…". Processing on Substack can take a few minutes.
+
+The video uploads straight to Substack, so you need the [browser extension](/docs/using/setup/browser-extension) and to be logged into Substack in the same browser. One video uploads at a time.
+
+WriteStack sets no size or length limit for videos. Substack's limits apply.
+
+Click **Play** on the video in the editor to watch it.
+
+## Audio
+
+1. Click the headphones button in the toolbar, or type `/audio`.
+2. In **Add audio**, drop an audio file (MP3, AAC, WAV, AIFF and similar), or click **Record audio**.
+3. Optional: turn on **Include download button on web** so readers can download it.
+4. Click **Insert**.
+
+You can also drag an audio file onto the editor.
+
+To let readers download it later, check **Readers can download it on Substack** on the audio block.
+
+Audio files can be up to 200 MB. Audio needs the [browser extension](/docs/using/setup/browser-extension) version 1.5.35 or newer.
+
+### Record
+
+When you click **Record audio**, a bar stays at the bottom of the screen so you can scroll and read the article aloud.
+
+- **Pause** and **Resume** as you go. Click **Stop** when you're done.
+- If WriteStack hears nothing for 10 seconds, a red warning appears: "We can't hear you". Check that your microphone is plugged in, not muted and allowed in the browser.
+- If your microphone disconnects, recording stops and what you recorded is kept.
+- Discarding a recording of 3 seconds or more asks you to confirm.
+
+The first time, your browser asks to use the microphone. Allow it.
+
+### Your recording is kept safe
+
+While you record, every second is saved in your browser until the upload is done. If the page closes, the next time you open the article you see "You have an unsaved recording":
+
+| Button | What it does |
+| --- | --- |
+| **Continue recording** | Records more after it. On **Stop**, both parts are joined into one file. |
+| **Add to article** | Adds it as an audio block. |
+| **Use as narration** | Adds it as the post's voiceover. |
+| **Download** | Saves the file to your computer. |
+| **Discard** | Deletes it. It can't be brought back. |
+
+The backup is only in the browser you recorded in. In a private window, recording works but there is no backup.
+
+If an upload fails, the article shows "That audio didn't upload." with **Retry upload** and **Download recording**. Uploads are tried 3 times before that.
+
+## Voiceover narration
+
+A narration is you reading the post. Subscribers see an optional play button at the top of the post on Substack. Each post has one.
+
+1. In **Add audio**, record or pick your file.
+2. Turn on **This is my narration of the post**.
+3. Click **Insert**.
+
+The narration shows as **Article voiceover** under the title. Its menu has **Replace voiceover**, **Download** and **Remove voiceover**. **Remove voiceover** doesn't ask first.
+
+Readers can't download a narration. Removing it in WriteStack removes it on Substack at the next push.
+
+WriteStack doesn't generate narration. You record or upload it.
+
+## When media reaches Substack
+
+| Item | When it goes to Substack |
+| --- | --- |
+| Images | When you open or save the article, or at the latest when you push |
+| Thumbnail | On push |
+| Video | As soon as you add it |
+| Audio and narration | On push. Each clip shows its status: "Waiting to upload to Substack…", "Uploading to Substack…", "Substack is processing it…", then "On Substack". |
+
+Audio added on Substack shows as "Audio · on Substack". It plays there and stays as it is when you push.
+
+Video and podcast posts imported from Substack keep their recording on Substack. See [Video and podcast posts](/docs/using/articles/substack-sync#video-and-podcast-posts).
+
+## Limits
+
+| Item | Limit |
+| --- | --- |
+| Image size | 15 MB |
+| Audio file size | 200 MB |
+| Narrations per post | 1 |
+| Videos uploading at once | 1 |
+| Video size and length | Substack's limits |
+| Extension for video | 1.4.23 or newer |
+| Extension for audio and narration | 1.5.35 or newer |
+
+## If it doesn't work
+
+| Message | Fix |
+| --- | --- |
+| "File too large. Maximum size is 15MB." | Make the image smaller, or export it as JPG. |
+| "Drop an image (PNG, JPG, WebP, or GIF), a video or an audio file." | That file type can't go in an article. |
+| "Uploading a video needs the WriteStack Chrome extension." | [Install the extension](/docs/using/setup/browser-extension). |
+| "That video didn't upload. Check you're logged into Substack in Chrome, then try again." | Log into Substack in the same browser and try again. |
+| "Substack couldn't process that video. Try again, or try a different file." | Substack rejected the file. Try another format. |
+| "Audio needs the latest WriteStack Chrome extension. Update it, then try again." | Update the extension to 1.5.35 or newer. |
+| "Audio files can be up to 200 MB." | Use a smaller file, or split the recording. |
+| "WriteStack can't use your microphone. Allow it in the browser's address bar, then try again." | Allow the microphone for WriteStack in your browser. |
+| "This post already has a narration. Remove it first to add another." | Use **Replace voiceover**, or remove the current one. |
+| "N image(s) could not be uploaded to Substack." | Push again. If it keeps failing, replace the image. |
+| "Update the WriteStack extension to send audio to Substack." | Update the extension to 1.5.35 or newer, then push again. |
+
+{/* TODO(orel): Recording on Firefox and Safari is not confirmed: Chrome falls back to WebM when it can't record MP4, and ARTICLE_AUDIO.md says it isn't confirmed Substack accepts WebM audio. Say which browsers are supported for recording. */}

@@ -1,18 +1,24 @@
 ---
 title: Create an article
-description: How to create a long-form article draft in WriteStack (with the Coach or an AI agent over MCP), which newsletters it can go to, the Markdown formatting it supports, images and the planned date.
+description: The three ways to create a long-form article in WriteStack (the Articles page, the Coach, an AI agent over MCP), which newsletters it can go to, the Markdown formatting agents can use, images and the planned date.
 ---
 
-An article is a long-form draft that WriteStack stores for one of your Substack newsletters. You create one by asking [the Coach](/docs/using/coach/what-it-does) to write a post, or from an AI agent connected over MCP. It stays in WriteStack until you [push it to Substack as a draft](/docs/using/articles/substack-sync).
+An article is a long-form draft that WriteStack stores for one of your Substack newsletters. You create one on the [Articles page](/docs/using/articles/articles-page), by asking [the Coach](/docs/using/coach/what-it-does) to write a post, or from an AI agent connected over MCP. It stays in WriteStack until you [push it to Substack as a draft](/docs/using/articles/substack-sync).
 
-{/* TODO(orel): The Articles page (/articles: "New article" button, calendar, editor, "Article settings", "Article schedule") is adminOnly + comingSoon in src/types/navbar.ts, so non-admin writers see a "Coming soon" page there. This page only documents the paths that are live (Coach and MCP). The "Open in Articles" button on Coach post cards is shown to every writer with the articles flag and leads to that Coming soon page. Add the Articles page steps here when it ships. */}
+Your Substack drafts are also brought into Articles on their own. See [Your Substack drafts](/docs/using/articles/articles-page#your-substack-drafts).
 
 ## Before you start
 
 - **A connected Substack account.** Articles go to the newsletters linked to your Substack profile. If none is found, the Coach shows "Connect a publication to save this post." See [Connect Substack](/docs/using/setup/connect-substack).
-- **The newsletter must be enabled for Articles.** Every newsletter on your Substack profile is enabled unless you hid it from Articles. An AI agent can only create, push or schedule on enabled newsletters.
+- **The newsletter must be enabled for Articles.** Every newsletter on your Substack profile is enabled unless you hid it with **Show this newsletter in Articles** in [Article settings](/docs/using/articles/articles-page#article-settings). The Coach and AI agents can only create, push or schedule on enabled newsletters.
 
-{/* TODO(orel): The only place to hide or show a newsletter ("Show this newsletter in Articles" in Article settings) is on the Articles page, which is not live yet. */}
+## On the Articles page
+
+1. Open **Articles** and click **New article**.
+2. If you have more than one newsletter, pick one under **Which newsletter?**.
+3. Write in the [editor](/docs/using/articles/editor).
+
+To start from a saved layout, insert a [template](/docs/using/articles/templates).
 
 ## With the Coach
 
@@ -32,7 +38,9 @@ If you give no title or topic, the article is called "Untitled article".
 
 ## Formatting
 
-Article bodies are GitHub-flavored Markdown. These formats are supported and synced to Substack:
+In the editor you format with the toolbar and the `/` menu. See [The article editor](/docs/using/articles/editor).
+
+When the Coach or an AI agent writes an article, the body is GitHub-flavored Markdown. These formats are supported and synced to Substack:
 
 | Format | Markdown |
 | --- | --- |
@@ -49,10 +57,11 @@ Article bodies are GitHub-flavored Markdown. These formats are supported and syn
 | Share button with a line of text | `:::share Your text:::` |
 | Paywall | a line with only `:::paywall:::` |
 | Audience-specific section | see [below](#audience-specific-sections) |
+| Collapsible text | `:::collapsed expand="Show more" collapse="Show less"` ... `:::end-collapsed` |
 
 Everything after the `:::paywall:::` line is behind the Substack paywall: only paid subscribers see it.
 
-Voice and video embeds are not supported.
+Voice and video can't be added in Markdown. Add them in the editor: see [Images, video and audio](/docs/using/articles/media).
 
 ### Audience-specific sections
 
@@ -90,11 +99,13 @@ What everyone else sees.
 - For an image with no public link, like a file on your computer or a private Google Drive file, the agent can upload it with [`create_article_image_upload`](/docs/build/mcp-reference/create_article_image_upload). Nothing has to be made public. This needs an agent that can send files over HTTP, such as Claude Code, Cowork, or a Claude chat that can run code. Otherwise, give the agent a public image link.
 - Images are uploaded to Substack when the article is pushed.
 
-The Coach's **Post draft** editor has no image button. To add images to a Coach draft, ask an MCP agent to add them, or add them on Substack after you push.
+In the editor, add images from the toolbar or by dragging them in. See [Images, video and audio](/docs/using/articles/media).
+
+The Coach's **Post draft** panel has no image button. To add images to a Coach draft, click **Open in Articles** and add them in the editor.
 
 ## Planned date
 
-A planned date is the day you plan to publish. It is saved with the article, and agents read it back as `plannedForDate`. Leave it out for an undated draft.
+A planned date is the day you plan to publish. On the Articles page it's the **Target** date, and you can change it by dragging the article in the calendar. Agents read it back as `plannedForDate`. Leave it out for an undated draft.
 
 A planned date does not schedule anything on Substack. To schedule, see [Schedule on Substack](/docs/using/articles/substack-sync#schedule-on-substack).
 
