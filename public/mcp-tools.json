@@ -4,6 +4,153 @@
     {
       "annotations": {
         "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true,
+        "readOnlyHint": false
+      },
+      "description": "Save links or short text cards to one of the user's boards, only when they ask. A link is read once and kept with its title and text. Pass board (id or title from list_boards), or newBoardTitle to make a new board. Over MCP only the link and text item types work; the other types refer to a WriteStack Coach chat.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "board": {
+            "description": "Board id or title. In a Coach chat about a board, omit it to use that board.",
+            "maxLength": 200,
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "anyOf": [
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "type": {
+                      "const": "link",
+                      "type": "string"
+                    },
+                    "url": {
+                      "description": "A public http or https address. The page is read once and kept.",
+                      "maxLength": 2000,
+                      "minLength": 4,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "url"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "text": {
+                      "description": "A short text card.",
+                      "maxLength": 2000,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "type": {
+                      "const": "text",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "text"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "description": "Coach chat only: a note id from find_inspiration in that chat.",
+                      "maxLength": 60,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "type": {
+                      "const": "inspiration_note",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "id"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "description": "Coach chat only: an article id from find_article_inspiration in that chat.",
+                      "type": [
+                        "string",
+                        "number"
+                      ]
+                    },
+                    "type": {
+                      "const": "inspiration_article",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "id"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "ref": {
+                      "description": "Coach chat only: the ref of a note card in that chat.",
+                      "maxLength": 80,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "type": {
+                      "const": "note_card",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "ref"
+                  ],
+                  "type": "object"
+                }
+              ]
+            },
+            "maxItems": 30,
+            "minItems": 1,
+            "type": "array"
+          },
+          "newBoardTitle": {
+            "description": "Make a new board with this name and add the items there.",
+            "maxLength": 120,
+            "minLength": 1,
+            "type": "string"
+          },
+          "note": {
+            "description": "The user's own reason for saving, in their words. Only when they gave one.",
+            "maxLength": 500,
+            "type": "string"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "type": "object"
+      },
+      "name": "add_to_board",
+      "outputSchema": null
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
         "openWorldHint": false,
         "readOnlyHint": false,
         "title": "Ask Coach"
@@ -1111,6 +1258,59 @@
         ],
         "type": "object"
       }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Read one of the user's boards as text: what it is for, its frames (sections the user named), every saved item with author, numbers, text and the user's own note on why they saved it, and the arrows between items. Items have refs like b3 for get_board_item. Use it as the user's reference set, and do not copy saved items as their own. Over MCP, always pass board: its id or title from list_boards.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "board": {
+            "description": "Board id or title. In a Coach chat about a board, omit it to use that board.",
+            "maxLength": 200,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "get_board",
+      "outputSchema": null
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      },
+      "description": "One item from a board in full, by its ref from get_board (like b3): all of its text, the user's note, its numbers and link, and for an image what it shows. Over MCP, always pass board: its id or title from list_boards.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "board": {
+            "description": "Board id or title. In a Coach chat about a board, omit it to use that board.",
+            "maxLength": 200,
+            "type": "string"
+          },
+          "ref": {
+            "description": "The item's ref from get_board, like b3.",
+            "maxLength": 40,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "ref"
+        ],
+        "type": "object"
+      },
+      "name": "get_board_item",
+      "outputSchema": null
     },
     {
       "annotations": {
@@ -2557,6 +2757,20 @@
       "annotations": {
         "destructiveHint": false,
         "openWorldHint": false,
+        "readOnlyHint": true
+      },
+      "description": "List the user's WriteStack Coach boards: collections of notes, articles, posts, links, images and text they saved as references. Returns id, title, what each board is for, item count and last change. Read one with get_board.",
+      "inputSchema": {
+        "properties": {},
+        "type": "object"
+      },
+      "name": "list_boards",
+      "outputSchema": null
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
         "readOnlyHint": true,
         "title": "List Buffer Channels"
       },
@@ -3411,6 +3625,32 @@
         ],
         "type": "object"
       }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Find saved items across all of the user's boards by words in their text, author, link or the user's note. Returns the board and each item's ref for get_board_item.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "description": "Words to find, like an author, topic or phrase.",
+            "maxLength": 200,
+            "minLength": 2,
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "type": "object"
+      },
+      "name": "search_boards",
+      "outputSchema": null
     },
     {
       "annotations": {

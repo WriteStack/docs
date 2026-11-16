@@ -47,6 +47,12 @@
     "create_skill",
     "update_skill",
     "delete_skill",
+    "---Boards (beta)---",
+    "list_boards",
+    "get_board",
+    "get_board_item",
+    "search_boards",
+    "add_to_board",
     "---Other---",
     "get_feature_suggestion_link"
   ]

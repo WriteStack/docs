@@ -97,6 +97,10 @@ const CATEGORIES = [
       'delete_skill',
     ],
   },
+  {
+    group: 'Boards (beta)',
+    tools: ['list_boards', 'get_board', 'get_board_item', 'search_boards', 'add_to_board'],
+  },
   { group: 'Other', tools: ['get_feature_suggestion_link'] },
 ];
 
