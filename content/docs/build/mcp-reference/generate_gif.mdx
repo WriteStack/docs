@@ -20,6 +20,7 @@ The description the MCP server sends to the model, word for word. Its rules appl
 | Argument | Type | Required | Description |
 | --- | --- | --- | --- |
 | `aspect` | `string` | No | square for notes and most posts. portrait for phone-first posts. landscape for article headers. One of: `"square"`, `"portrait"`, `"landscape"`. Default `"square"`. |
+| `background` | `string` | No | opaque for a normal GIF with its own background. transparent only when they ask for no background, a see-through background, a sticker or a cutout. One of: `"opaque"`, `"transparent"`. Default `"opaque"`. |
 | `frameDurationMs` | `integer` | No | How long each frame shows, in milliseconds. 80 to 150 for smooth motion, 300 to 800 for a slow slideshow. Min 40. Max 1000. Default `150`. |
 | `frames` | `integer` | No | How many frames, 2 to 12. 4 to 6 for a simple blink or bounce, 8 to 12 for smoother motion. Min 2. Max 12. Default `8`. |
 | `prompt` | `string` | Yes | What the GIF shows and how it moves, start to end: subject, style, colors, the motion in each beat, and that it loops smoothly. Spell any text exactly. Min length 3. Max length 4000. |

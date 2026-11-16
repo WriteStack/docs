@@ -1027,6 +1027,15 @@
             ],
             "type": "string"
           },
+          "background": {
+            "default": "opaque",
+            "description": "opaque for a normal GIF with its own background. transparent only when they ask for no background, a see-through background, a sticker or a cutout.",
+            "enum": [
+              "opaque",
+              "transparent"
+            ],
+            "type": "string"
+          },
           "frameDurationMs": {
             "default": 150,
             "description": "How long each frame shows, in milliseconds. 80 to 150 for smooth motion, 300 to 800 for a slow slideshow.",
