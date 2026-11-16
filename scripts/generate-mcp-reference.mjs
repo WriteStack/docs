@@ -49,6 +49,7 @@ const CATEGORIES = [
       'create_many_notes',
       'update_note',
       'generate_image',
+      'generate_gif',
     ],
   },
   {

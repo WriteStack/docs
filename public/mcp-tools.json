@@ -1010,6 +1010,86 @@
         "destructiveHint": false,
         "openWorldHint": true,
         "readOnlyHint": false,
+        "title": "Generate GIF"
+      },
+      "description": "Generate one animated GIF and get back its url. Use it when the user asks for a GIF or an animation. Describe the motion beat by beat and say it should loop. Pick 4 to 6 frames for a simple motion, 8 to 12 for smoother motion. To put it on a note, pass the url as imageUrl to create_note, create_many_notes or update_note. A GIF counts as one image against the user's weekly Coach usage. It cannot edit an existing image; use generate_image for that.",
+      "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "aspect": {
+            "default": "square",
+            "description": "square for notes and most posts. portrait for phone-first posts. landscape for article headers.",
+            "enum": [
+              "square",
+              "portrait",
+              "landscape"
+            ],
+            "type": "string"
+          },
+          "frameDurationMs": {
+            "default": 150,
+            "description": "How long each frame shows, in milliseconds. 80 to 150 for smooth motion, 300 to 800 for a slow slideshow.",
+            "maximum": 1000,
+            "minimum": 40,
+            "type": "integer"
+          },
+          "frames": {
+            "default": 8,
+            "description": "How many frames, 2 to 12. 4 to 6 for a simple blink or bounce, 8 to 12 for smoother motion.",
+            "maximum": 12,
+            "minimum": 2,
+            "type": "integer"
+          },
+          "prompt": {
+            "description": "What the GIF shows and how it moves, start to end: subject, style, colors, the motion in each beat, and that it loops smoothly. Spell any text exactly.",
+            "maxLength": 4000,
+            "minLength": 3,
+            "type": "string"
+          },
+          "quality": {
+            "default": "low",
+            "description": "low for most GIFs. medium when it has text or fine detail.",
+            "enum": [
+              "low",
+              "medium"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "prompt"
+        ],
+        "type": "object"
+      },
+      "name": "generate_gif",
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "mediaType": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "mediaType",
+          "size"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": true,
+        "readOnlyHint": false,
         "title": "Generate Image"
       },
       "description": "Generate one image, or edit one, and get back its url. Use it when the user asks for an image for a note, or agrees to one you offered, for example because the note is for a platform whose rules say needsImage (see list_buffer_channels). Write the note first, then write a full, specific prompt drawn from what that note says. Pick quality yourself: low for drafts and simple graphics, medium when the image is final or has text in it. Pick aspect from the channel's rules.imageAspect, or square. To put the image on a note, pass the returned url as imageUrl to create_note, create_many_notes or update_note. For several notes, call this once per note; up to three run at a time. To edit an image, pass its url in referenceImageUrls (only urls this tool returned) and describe the change. Each image counts against the user's weekly Coach usage; when that is used up the call fails and says when it resets.",

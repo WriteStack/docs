@@ -11,6 +11,7 @@
     "create_many_notes",
     "update_note",
     "generate_image",
+    "generate_gif",
     "---Schedule---",
     "get_schedule",
     "get_queue",
