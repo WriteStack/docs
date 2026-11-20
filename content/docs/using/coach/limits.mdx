@@ -1,6 +1,6 @@
 ---
 title: Coach limits
-description: How much you can use the WriteStack Coach (Quill) on each plan, when the weekly allowance resets, what happens when it runs out, other message and routine limits, and what the Coach can't do.
+description: How much you can use the WriteStack Coach (Quill) on each plan, when the weekly allowance resets, what happens when it runs out, other message, skill and routine limits, and what the Coach can't do.
 ---
 
 Every paid plan includes a weekly Coach allowance: Hobbyist is the 1x base, Standard gets 5x and Enterprise 20x. The allowance resets every Monday at 00:00 UTC. When it runs out, the Coach stops replying until the reset or until you upgrade.
@@ -22,7 +22,7 @@ The Coach needs a paid plan. Plan details are on [Plans and limits](/docs/accoun
 - Messages in the Coach.
 - Questions an AI agent sends through [`ask_coach`](/docs/build/mcp-reference/ask_coach).
 - [Routine](/docs/using/coach/what-it-does#routines) runs.
-- Images the Coach makes.
+- Images and GIFs the Coach makes. A GIF counts as one image.
 
 ## When you are close or out
 
@@ -49,6 +49,25 @@ A routine that runs while the allowance is used up is paused: "Your weekly Coach
 Rarely, the Coach is busy for everyone: "The Coach is at capacity for today." It resets at midnight UTC, shown in your time.
 
 {/* TODO(orel): requestsPerMinute (default 10) and the routine caps (3 / 10) come from the admin-editable Coach config. Confirm the live values before adding exact numbers for messages per minute. */}
+
+## Skills
+
+[Skills](/docs/using/coach/skills-and-plugins) are saved instructions you can turn on in any chat.
+
+| Limit | Value |
+| --- | --- |
+| Skills you can save on Hobbyist | 5 |
+| Skills you can save on Standard | 25 |
+| Skills you can save on Enterprise | 100 |
+| Skills on in one chat at once | 5 |
+| **Name** | 60 characters |
+| **When to use it** | 200 characters |
+| **Instructions** | 8,000 characters |
+| Imported `.md` file | 64 KB |
+
+At the cap, **New skill**, **Import .md** and the starters go away under **Skills**, and a skill card from the Coach says "You've reached the 25 skills on your plan. Delete one to save this." (with your plan's number). Skills on in one chat also share a size budget, so a few long skills can fill a chat before you reach 5. Then you see "That's more skills than one chat can hold. Turn one off first."
+
+{/* TODO(orel): skillsPerPlan (5 / 25 / 100), maxActiveSkills (5) and skillActiveCharsBudget (12,000) are defaults in the admin-editable Coach config (src/lib/coach/config/schema.ts). Confirm the live values match. */}
 
 ## Routines
 

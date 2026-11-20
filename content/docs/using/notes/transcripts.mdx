@@ -1,0 +1,45 @@
+---
+title: Transcripts of your lives, videos and podcasts
+description: How to read and copy the transcript of a Substack post with a recording (live, video or podcast) in WriteStack, where the Transcript button shows, how speaker names work, and how Notes generated from that post use what was said.
+---
+
+When one of your Substack posts has a recording (a live, a video or a podcast), WriteStack keeps its transcript. Hover the post and click **Transcript** to read it. Notes you generate from that post also draw on what was said, not just the written text.
+
+## Where the Transcript button shows
+
+A post with a recording has a small sound-wave badge on its card. Hover the card and the badge expands to **Transcript**.
+
+| Where | How to get there |
+| --- | --- |
+| Notes generator | **My Notes → Notes generator → My articles**. The badge is on the post cards, and in the list under **View all articles**. |
+| The article editor | Open an article that is linked to a Substack post with a recording. The badge is on the recording's preview at the top of a video or podcast post, and on its video blocks when you hover them. See [The article editor](/docs/using/articles/editor). |
+
+Live drafts work too. A live usually stays a draft on Substack, so WriteStack reads its transcript the first time you open that article in the editor, through the [browser extension](/docs/using/setup/browser-extension).
+
+## Read and copy a transcript
+
+1. Hover a post with a recording and click **Transcript**.
+2. Read the transcript. The top line shows the recording's length and "Auto-transcribed by Substack."
+3. Click **Copy transcript** to copy it, with speaker names, to your clipboard.
+
+### Speaker names
+
+Each speaker's lines are in their own color. WriteStack names speakers from the post's bylines; the dialog then says "Names are matched from the post's bylines." A voice it can't match shows as **Speaker 1**, **Speaker 2** and so on. When no one can be named, the dialog says "Speakers aren't named."
+
+## Notes from a recording
+
+In the [Notes generator](/docs/using/notes/drafting#notes-generator-many-notes), pick **My articles** and select a post with a recording. The generated Notes use what was said in the recording as well as the post's text, so a live or podcast with little written text still gives you material.
+
+The [Coach](/docs/using/coach/what-it-does) and AI assistants connected through MCP can read your transcripts too. See [`get_my_posts`](/docs/build/mcp-reference/get_my_posts).
+
+## Limits
+
+- Substack must have transcribed the recording. WriteStack copies Substack's transcript; it doesn't transcribe anything itself.
+- You can read transcripts of your own posts: posts on your newsletter, posts with your byline, and Substack posts linked to one of your articles.
+- For a long recording, Notes generation uses about the first 24,000 characters of the transcript.
+
+## If it doesn't work
+
+- **"We haven't copied this recording's transcript yet"**: WriteStack saves a published post's transcript the next time it syncs your posts, which happens when you open WriteStack with the extension installed. To do it now (Standard and Enterprise), use **Fetch posts** in **Settings → Publication & data → Fetch Data**. See [Sync](/docs/using/concepts/sync#fetch-your-latest-posts-and-notes-from-substack).
+- **"Couldn't load the transcript. Try again in a moment."**: a temporary error. Close the dialog and click **Transcript** again.
+- **No Transcript badge on a post**: Substack has no transcript for it, or WriteStack hasn't synced that post yet.

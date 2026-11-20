@@ -1,9 +1,9 @@
 ---
 title: Ask Quill about an article
-description: How to use Quill, the Coach, inside the article editor for feedback and edits, the difference between Review and Auto mode, how to accept, skip and undo edits, and what Quill can't change.
+description: How to use Quill, the Coach, inside the article editor for feedback, edits and post settings (search text, readers, tags, thumbnail, publish time), the difference between Review and Auto mode, how to accept, skip and undo edits, and what Quill can't change.
 ---
 
-Quill is [the Coach](/docs/using/concepts/the-coach) inside the article editor. It reads your draft as you write and can give feedback or edit it. In **Review** mode nothing changes until you accept each edit.
+Quill is [the Coach](/docs/using/concepts/the-coach) inside the article editor. It reads your draft as you write and can give feedback, edit it, and fill in its post settings. In **Review** mode nothing changes until you accept each edit. Quill can set the publish time, but you push and schedule yourself.
 
 ## Open Quill
 
@@ -14,7 +14,31 @@ Quill opens on the right. It shares that space with comments, so only one is ope
 
 ## Ask
 
-Type what you want, or start with a suggestion: "Give me feedback on this draft", "Make the opening stronger" or "Suggest better titles". Quill sees your latest text, even before it saves.
+Type what you want, or start with a suggestion: "Give me feedback on this draft", "Suggest better titles", "Make the opening stronger" or "Get this ready to publish". Quill sees your latest text, even before it saves.
+
+Type `/` in the message box to turn on your Coach skills and plugins for this chat.
+
+## Change the post settings
+
+Quill sees the article's [Post settings](/docs/using/articles/post-settings), even ones not saved yet, and your newsletter's tags and sections. Ask it to change one, for example "Write a search title and description" or "Make me a thumbnail". "Get this ready to publish" fills every setting that is still empty and leaves the publish time to you.
+
+| On the card | What it changes |
+| --- | --- |
+| **Search title**, **Search description** | The SEO title and description |
+| **Link** | The URL slug |
+| **Social title** | The headline when the post is shared |
+| **Readers** | The audience |
+| **Comments** | Who can comment |
+| **Tags**, **Section** | Only tags and sections your newsletter already has |
+| **Publish time** | The date and time in **When**. It doesn't schedule the post. |
+| **Thumbnail** | Quill makes an image and proposes it as the thumbnail. |
+| **Search instructions**, **Thumbnail instructions**, **Image style** | Your newsletter's [Article settings](/docs/using/articles/articles-page#article-settings). The card says "Applies to every article in this newsletter." Quill only proposes these when you ask to change how all your articles are handled. |
+
+- Quill can look at the thumbnail, the images in the article and your reference images before it judges or matches them.
+- Setting changes show on the same edit cards, with **Accept**, **Skip** and **Undo**.
+- In **Auto** mode they apply at once, except **Readers** and the three newsletter instructions. Those always wait for you to click **Accept**.
+- Setting **Readers** to everyone removes the article's paywall line, the same as in Post settings. **Undo** puts both back.
+- After a reload, the **Original** view of a setting can't show the earlier value: "The earlier value isn't kept after a reload."
 
 ## Review or Auto
 
@@ -44,6 +68,8 @@ An edit is not applied when:
 | "This text has changed, so the edit no longer fits." | You edited that part after Quill wrote the edit. |
 | "This covers an embed, paywall or footnote, so Quill can't change it." | Edit those blocks yourself. |
 | "This text has a link in it. Replacing it would drop the link." | Edit it yourself, or ask Quill to keep the link. |
+
+Quill can't push the article to Substack or schedule it from this chat. Ask it to set the publish time, then click **Schedule** in [Post settings](/docs/using/articles/post-settings#schedule-from-get-ready).
 
 ## Start over
 

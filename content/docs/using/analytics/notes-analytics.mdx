@@ -1,6 +1,6 @@
 ---
 title: Notes analytics
-description: What the Statistics and Notes Performance pages show for your Substack Notes (impressions, interactions, free and paid subscribers, audience and surface mix), where the data comes from, and how to filter it by date.
+description: What the Statistics and Notes Performance pages show for your Substack Notes (impressions, interactions, free and paid subscribers, audience and surface mix), where the data comes from, how to filter it by date, and how to compare a period with an earlier one.
 ---
 
 WriteStack shows how your published Substack Notes perform on two pages: **Statistics** (totals and trends for a date range) and **Notes Performance** (every Note, one card each, sortable by any metric). Both read the numbers Substack reports for your Notes, collected by the WriteStack browser extension.
@@ -26,11 +26,19 @@ See [Plans and limits](/docs/account/plans-and-limits).
 
 Open **Statistics** in the sidebar. The page title is **Notes Statistics**.
 
-### Date range and interval
+### Date range, compare and interval
 
-- **Date range:** Last 7 days, Last 30 days (default), Last 90 days, Last 12 months, All time, or Custom.
-- **Interval** for the charts: Daily, Weekly, Monthly, or Yearly.
-- Most numbers show a trend badge that compares the range with the previous period of the same length. "No data in the previous period" means there is nothing to compare with.
+The controls sit at the top right of the page: the date range menu, the **Compare** menu next to it, and the chart interval buttons under them.
+
+| Control | Options |
+| --- | --- |
+| Date range | Today, Yesterday, Last 24 hours, Last 7 days, Last 30 days (default), Last 3 months, Last 6 months, Last 12 months, Week to date, Month to date, Year to date, All time, Custom |
+| Compare | Previous period (default), Previous month, Previous year, Custom |
+| Interval | Daily (default), Weekly, Monthly, Yearly |
+
+**Week to date** starts on Monday. **Custom** opens a calendar on the dates you are looking at now.
+
+See [Compare with an earlier period](#compare-with-an-earlier-period) for how the comparison works.
 
 ### Sections
 
@@ -51,6 +59,40 @@ Open **Statistics** in the sidebar. The page title is **Notes Statistics**.
 - **A link** in Link clicks lists the Notes that included it.
 - **Add annotation** pins a note to a point on the chart, for example "Started posting twice a day". Use it to remember what you changed.
 - **Share** turns the Impressions section into a screenshot and creates a Note with it.
+
+## Compare with an earlier period
+
+Comparison is on by default. Every number with a trend badge (for example **+12%** in green or **−8%** in red) is measured against an earlier period, and the charts draw that earlier period as a dashed line on the same axis.
+
+### What each option compares against
+
+| Compare | Compared with |
+| --- | --- |
+| **Previous period** | Depends on the date range. See the next table. |
+| **Previous month** | The same dates one month earlier |
+| **Previous year** | The same dates one year earlier |
+| **Custom** | Dates you pick in the calendar |
+
+With **Previous period**:
+
+| Date range | Compared with |
+| --- | --- |
+| Today | Yesterday, up to the same time |
+| Week to date, Month to date, Year to date | The same days one week, month or year earlier. For example, Nov 1 to Nov 12 against Oct 1 to Oct 12. |
+| Last 7 days, Last 30 days, Last 3, 6 or 12 months | The same span right before it |
+| Yesterday, Last 24 hours, Custom | The same length of time right before it |
+
+### Where you see it
+
+- **Impressions** shows "vs N in" and the earlier dates under the total. The chart legend names both periods, and the tooltip shows both values with the change.
+- **What notes drove** and **Interaction mix** show a trend badge on each tile. Interaction tiles and their detail view also draw the dashed line.
+- A badge that says **New** means there was no data in the comparison period.
+
+### Turn it off
+
+Click the **x** at the left of the **Compare** menu. To turn it back on, pick an option from **Compare** again.
+
+**All time** can't be compared, because it has no earlier period. The **Compare** menu is greyed out while it is selected.
 
 ## Notes Performance page
 
@@ -84,3 +126,4 @@ Switch between the grid and a list with the view toggle. The page loads 30 Notes
 - **"Stats are still computing"**: Substack has not returned engagement data yet. Check back in a few minutes.
 - **"No notes found"**: WriteStack is still fetching your Notes. Click **Refresh now** after a few minutes, or **Contact support**.
 - A section says "will appear once Substack returns data": Substack has no data for that breakdown in the selected range. Try a longer range.
+- **Today looks short or starts at an odd hour**: days on the Statistics page run from midnight to midnight UTC, so "Today" and "Yesterday" may not match your local day.

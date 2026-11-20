@@ -1,0 +1,143 @@
+---
+title: Skills and plugins
+description: How to save reusable instructions as Coach (Quill) skills, turn skills and plugins on in a chat with /, let the Coach use a skill on its own, and browse, get or buy creator plugins in the Plugins store.
+---
+
+A skill is a set of instructions you use again and again, saved once and used in any Coach chat. A plugin is a playbook or writing style made by a Substack creator, which you get from the Plugins store. Turn either one on in a chat by typing `/`.
+
+## Skills
+
+Open **Skills** in the Coach's list of chats, next to **Memory** and **Library**. The page is called **Your skills** and shows how many you have saved out of your plan's total, for example "3 of 25".
+
+### Add a skill
+
+| Way | Steps |
+| --- | --- |
+| Write one | Click **New skill**. Fill in **Name**, **When to use it** and **Instructions**, then click **Add skill**. |
+| Copy a starter | Under **Start from one of these**, click **Add** next to a starter. The copy is yours to edit. |
+| Import a file | Click **Import .md** and pick a Markdown file. Read what it says, then click **Add skill**. |
+| Ask the Coach | Ask in a chat, for example "Turn the way you just rewrote my hook into a skill". The Coach shows a card. Click **Read the instructions** to check them, then **Save skill**. Nothing is saved until you click. |
+| From an AI assistant | A client connected through MCP can list, add, change and delete your skills. See [`create_skill`](/docs/build/mcp-reference/create_skill). |
+
+The Coach can also change a skill you already have. It shows the new version on a card, and nothing changes until you click **Update skill**.
+
+**When to use it** tells the Coach when the skill fits, for example "When I ask to rewrite the opening line of a note or post". **Instructions** are the steps, format and tone the Coach should follow.
+
+### Starters
+
+| Starter | Use it when |
+| --- | --- |
+| **Hook doctor** | You ask to fix, sharpen or rewrite the opening line of a note or post. |
+| **Title lab** | You ask for title or subtitle ideas for a post. |
+| **SEO pass** | You ask to make a post easier to find in search. |
+| **Post to notes** | You ask to turn a post or article into Substack Notes. |
+| **Voice check** | You ask if a draft sounds like you, or to make it sound more like you. |
+| **Tighten** | You ask to shorten, trim or tighten a draft. |
+| **Weekly review** | You ask how your week went, or to review your recent notes. |
+| **Accountability check-in** | You ask if you're on track with your writing goal. |
+
+A starter you've added no longer shows in the list.
+
+### Import and download a skill file
+
+A skill file is a Markdown (`.md`) file of up to 64 KB:
+
+```md
+---
+name: "hook-doctor"
+description: "When I ask to rewrite the opening line of a note or post."
+---
+
+# Hook doctor
+
+The steps, format and tone the Coach should follow.
+```
+
+The `# heading` becomes the name, `description` becomes **When to use it**, and the rest becomes the instructions. The download button on a skill saves it in the same format, so you can share it or keep a copy.
+
+An imported skill starts with "Read this before you save it." The Coach follows what's written in it, so it starts switched off and only runs when you pick it with `/`.
+
+### Let the Coach use a skill on its own
+
+Each skill has a switch:
+
+| Switch | What happens |
+| --- | --- |
+| **Auto** | The Coach reads **When to use it** and uses the skill on its own when your message fits. |
+| **Only with /** | The skill only runs when you pick it with `/` in a chat. |
+
+New skills you write start on **Auto**. Imported skills, and skills an AI assistant adds or changes over MCP, start on **Only with /**.
+
+### Use skills in a chat
+
+1. Type `/` in the message box. The menu lists commands, your skills and plugins.
+2. Pick a skill. It shows as a chip above the message box.
+3. Pick more if you want. Several skills can be on at once.
+
+You can also start a message with the skill's name after a slash, for example `/hook-doctor make this punchier`. Each skill's `/name` is shown under its title in **Skills**.
+
+Skills stay on in that chat until you remove them. Click the x on a chip to turn one off in that chat only. If you turn on more than a chat can hold, you see "That's more skills than one chat can hold. Turn one off first." See [Coach limits](/docs/using/coach/limits#skills).
+
+### Change or delete a skill
+
+- Click **Edit**, change it, then **Save**.
+- Click the delete button, then **Delete**. The skill turns off in every chat that uses it. Your chats stay as they are. If a routine uses it, the dialog names the routines that will run without it.
+
+### Skills in routines
+
+A [routine](/docs/using/coach/what-it-does#routines) uses the skills that were on in the chat where you set it up. The routine card lists them under **Skills used**.
+
+## Plugins
+
+A plugin is a playbook or writing style from a Substack creator. It runs inside the Coach, in any chat.
+
+### Browse the store
+
+1. In a Coach chat, type `/` and pick **Browse plugins**, or send `/store`. The **Plugins** window opens.
+2. Plugins you have are under **Yours**. The rest are under **Explore**, or **All plugins** if you have none yet.
+3. Filter by **All**, **Yours**, **Playbooks** or **Write like**. When there are enough plugins, search by name, creator or topic.
+4. Click a plugin to see its creator, what it does and its price.
+
+### Get or buy a plugin
+
+| Plugin | What to click |
+| --- | --- |
+| Free | **Get it free** |
+| Paid | **Buy for** and the price. Checkout opens inside the Coach. It's a one-time purchase, yours for good. |
+
+After you pay, the plugin page shows "Payment received. Adding it to your plugins…" and then "It's yours." If you cancel, you see "Checkout canceled. Nothing was charged."
+
+You get a confirmation email, "You bought" and the plugin's name. It shows the plugin, its creator and cover, and what you paid. Its **Open it in the Coach** button starts a new chat with the plugin already on.
+
+A plugin on sale shows a badge with the percent off, the old price struck through, and "Ends" with the date when the sale has an end date. Checkout charges the sale price.
+
+A plugin that's no longer sold stays yours: "No longer sold. It stays yours."
+
+### Turn a plugin on
+
+- On the plugin's page, click **Use in this chat**.
+- Or type `/` and pick it, or start a message with its name after a slash. The plugin page shows the exact command: "Type /name in any chat to turn it on."
+
+Plugins you don't have also show in the `/` menu, with their price. Picking one opens it in the store.
+
+While a plugin is on, it shows as a chip with its name and creator. After you send, it shows as "Using" and the plugin's name. Click the x to turn it off.
+
+The Coach remembers the plugins you used in a chat. It uses one when your message needs it, for example when you ask for new notes, and skips it for quick edits like "add a link to each". You can ask for an earlier plugin by name, or ask the Coach to stop using one.
+
+A routine set up in a chat with a plugin on lists it on the routine card under **Plugins used**.
+
+## Slash commands
+
+| Command | Menu label | What it does |
+| --- | --- | --- |
+| `/off` | **Turn off plugin and skills** | Turns off the plugin and every skill in this chat. |
+| `/skills` | **Your skills** | Opens **Skills**. |
+| `/store` | **Browse plugins** | Opens the Plugins store. |
+
+Sending `/name` when no skill, plugin or command has that name shows "Nothing called /name." and keeps your message in the box.
+
+## In the article Quill panel and Ask Quill
+
+The `/` menu also works in the [Quill panel next to an article](/docs/using/articles/quill) and in [Ask Quill](/docs/using/support#ask-quill-first). You can turn on a plugin there, and `/skills` opens your skills.
+
+{/* TODO(orel): f85c652b says skills can be turned on with / in both sheets, but skillAccessFor (src/lib/coach/skills/resolve.ts) gives article chats load-only access and help chats none, and turnOnSkills returns "Skills aren't available in this chat." for both. So picking a skill there looks like it fails. Confirm, then either fix the server or keep the docs plugin-only as written here. In article chats Quill can still use Auto skills on its own. */}

@@ -33,10 +33,10 @@ You can also create articles [with the Coach or an AI agent](/docs/using/article
 | --- | --- |
 | **Drafts**, **Scheduled**, **Published** | Filters by status. **Drafts** is the default. |
 | **Search articles** | Finds articles by title or subtitle. |
-| Month headers | Articles are grouped by month, newest edit first. |
+| Month headers | Articles are grouped by month, newest edit first. Published posts are grouped by the month they went out, newest first. |
 | **⋯** on a row | **Select**, **Open in Substack**, **Push to Substack** or **Update on Substack**, **Disconnect from Substack**, **Delete**. |
 
-Each row shows the title, when it was last updated, the word count and these labels:
+Each row shows the title, when it was last updated, the word count and these labels. A published post shows only its **Published** date, with no last-updated date or **Target** label.
 
 | Label | Meaning |
 | --- | --- |
@@ -90,7 +90,7 @@ Each time you open the Articles page, WriteStack brings in your Substack drafts,
 
 - New drafts on Substack are added.
 - A draft edited on Substack is updated here, unless you edited it in WriteStack after that. The most recent change wins.
-- Posts scheduled on Substack show as scheduled. Posts that went live show as published.
+- Posts scheduled on Substack show as scheduled. A post you unschedule on Substack goes back to a draft here. Posts that went live show as published.
 - A draft deleted on Substack is removed here. If you edited it in WriteStack or it has comments, it's only disconnected instead.
 - Video and podcast posts come in as text you can edit. They're marked **Video**, and your changes aren't pushed back.
 - Up to 50 drafts per newsletter come in each time. The rest come in next time.
@@ -125,7 +125,7 @@ Click the gear (**Article settings**) at the top of the page. Settings are per n
 | **Thumbnail reference images** | Up to 4 example thumbnails, used only when generating a thumbnail. | None |
 | **SEO instructions** | Keywords to target, terms to keep, and phrasing for **Generate with AI** in Post settings. Up to 300 words. | Empty |
 
-Reference images can be PNG, JPEG, WebP or GIF, up to 15 MB each.
+Adding a reference image opens your [image library](/docs/using/articles/media#the-image-library) first. Pick one or more images, or click **Upload new**. Reference images can be PNG, JPEG, WebP or GIF, up to 15 MB each.
 
 {/* TODO(orel): Reference images upload through the API as form data, not direct to S3, so files between ~4.5 MB and 15 MB may be rejected by Vercel's body limit. Test a 10 MB reference image. */}
 

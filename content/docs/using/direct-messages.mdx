@@ -1,0 +1,106 @@
+---
+title: Welcome DMs
+description: How to send an automatic Substack DM to new free subscribers, paid subscribers and new followers from the DMs page, what each of the 4 setup steps does, the daily limit per plan, the extension version it needs, and how to pause it.
+---
+
+Welcome DMs send an automatic direct message on Substack to people who just subscribed to your newsletter or followed you. You set them up on the **DMs** page (titled Direct Messages) in four steps: who gets one, when it goes out, what it says and how many go out a day. They need the Standard or Enterprise plan and the [browser extension](/docs/using/setup/browser-extension) 1.5.8 or newer.
+
+## How it works
+
+- DMs are sent from your own Substack account by the browser extension. They only send while your browser is open. The page says: "Any missed while it's closed don't roll over."
+- Only people who join after you turn auto-DMs on get one. Nobody on your current list does.
+- Each newsletter you have has its own setup. If you have more than one, they show as tabs at the top. Use the **Newsletters** menu to hide or show a newsletter.
+- **New followers** and the daily limit are shared by all your newsletters. They are tagged **All newsletters**.
+- A reader only ever gets one welcome DM from you, even if they join more than one of your newsletters.
+
+## Steps
+
+1. Open **DMs** in the sidebar (under Engage).
+2. Pick the newsletter tab, if you have more than one.
+3. **Step 1, Who gets a welcome DM.** Switch on **Free subscribers**, **Paid subscribers** and **New followers** as you like.
+   - **Skip readers you already chat with** (on by default): no welcome DM if you already have a conversation with them.
+4. **Step 2, When it goes out.** In **Send it**, choose **Right away** (the default), **15 minutes**, **1 hour**, **3 hours**, **1 day**, **2 days**, **3 days** or **7 days**. The wait counts from when the reader joins.
+5. **Step 3, What it says.** Each audience has its own tab and message. Edit the text and click **Save**. The preview next to it shows the message **To Sara** and **To a reader with no name**.
+6. **Step 4, How many a day.** Type a number in **Up to … DMs a day** and click **Save**. Under it, **Today** shows how many were sent, how many are left and how many are waiting in line.
+7. Click **Turn on auto-DMs** at the top. The badge next to the newsletter name changes to **Live**.
+
+Changes to the switches and **Send it** save right away. Messages and the daily limit need **Save**.
+
+To send the waiting DMs without waiting for the next run, click **Run now** next to **Last run** at the top. While it runs, it shows **Sending now**.
+
+### Personalize the message
+
+| Button | What it adds |
+| --- | --- |
+| `{name}` | The reader's first name, or "there" when they don't have one |
+| **Insert condition** | `{{ name ? 'Hey {name},' : 'Hey,' }}`: the first wording when the reader has a name, the second when they don't |
+
+WriteStack checks whether each reader's name looks like a real name. Brands, handles and blank names count as no name.
+
+## Welcome new followers
+
+Turn on **New followers** in step 1, then write their message in the **New followers** tab in step 3. These are people who follow you on Substack without subscribing.
+
+- A follower waits at least 4 hours. If they subscribe in that time, they get the subscriber message instead.
+- Only people who follow you after you switch it on get a DM. People who followed while it was off, or more than 7 days ago, don't.
+- Followers you already chat with are always skipped.
+- Substack only shares up to 10 names per follow notification. When more people follow at once, WriteStack can't welcome the rest. The page shows how many it missed in the last 30 days.
+- The **New followers** card shows how many were sent and how many are waiting.
+
+Follower DMs need extension 1.5.32 or newer. With an older extension, the card says "Update the WriteStack extension to welcome new followers."
+
+## Pause DMs
+
+Click **Pause DMs** at the top. The badge changes to **Paused**. Click **Turn on auto-DMs** to start again.
+
+New followers don't wait for **Turn on auto-DMs**: they get a DM as soon as their switch is on. If only **New followers** is on, the top of the page shows **Live**, and **Pause DMs** pauses follower DMs. When follower DMs are switched back on, people who followed while they were paused don't get one.
+
+| Badge | Meaning |
+| --- | --- |
+| **Live** | DMs are going out |
+| **Paused** | Free or paid subscribers are switched on, but auto-DMs are paused |
+| **Off** | No audience is switched on |
+
+{/* TODO(orel): Subscriber DMs keep the date they were first turned on. After Pause then Turn on auto-DMs, do people who subscribed during the pause still get a DM? Page doesn't say. */}
+
+## Limits
+
+| | Hobbyist | Standard | Enterprise |
+| --- | --- | --- | --- |
+| Welcome DMs | Not included | Included | Included |
+| Most DMs a day | Not included | 30 | 50 |
+
+| Setting | Value |
+| --- | --- |
+| Lowest daily limit | 1 |
+| Highest daily limit | Your plan's maximum |
+| Longest wait before sending | 7 days |
+| Message length | Up to 2,000 characters |
+| Follower wait to see if they subscribe | 4 hours |
+| Oldest follow that still gets a DM | 7 days |
+
+- The daily limit is one number for all your newsletters and new followers together. Subscribers go first. Followers only get the slots left over.
+- The day resets at midnight in your WriteStack timezone.
+- On Hobbyist, the DMs page shows **Unlock Welcome DMs** with an **Upgrade Now** button. See [Plans and limits](/docs/account/plans-and-limits).
+
+| Feature | Minimum extension version |
+| --- | --- |
+| Welcome DMs | 1.5.8 |
+| Welcome DMs on a custom domain | 1.5.17 |
+| Welcome DMs to new followers | 1.5.32 |
+
+{/* TODO(orel): The extension gate in code is 1.5.8, but the "Update the WriteStack extension" notice on the DMs page says "1.5.5 or newer". One of them is wrong. Page uses 1.5.8. */}
+
+## If it doesn't work
+
+| Problem | Fix |
+| --- | --- |
+| "Update the WriteStack extension" | Update the extension, then refresh the page. See [Install the browser extension](/docs/using/setup/browser-extension). |
+| "Connect your publication" | Click **Connect publication** and connect your newsletter. See [Connect your Substack](/docs/using/setup/connect-substack). |
+| **Turn on auto-DMs** can't be clicked | Switch on free or paid subscribers in step 1 first |
+| "Turn on free or paid subscribers first" | Same: switch on at least one subscriber audience in step 1 |
+| "Chrome needs access to your-domain.com to send welcome DMs" (or Firefox, Edge…) | Your newsletter is on a custom domain. Click **Allow** and accept the browser prompt. In Firefox, click **Allow access** in the WriteStack tab that opens. |
+| "Unfinished condition…" | A `{{ … }}` condition is missing a quote or brace. Use the format `{{ name ? 'Hey {name},' : 'Hey,' }}`. |
+| "No newsletter shown" | You hid every newsletter. Show one from the **Newsletters** menu. |
+| DMs stopped for the day | You reached your daily limit. More go out after midnight. |
+| DMs didn't go out overnight | They only send while your browser is open with the extension |

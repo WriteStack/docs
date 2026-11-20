@@ -1,17 +1,84 @@
 ---
 title: Post settings
-description: Every setting in an article's Post settings (thumbnail, audience, comments, tags, section, SEO title and description, URL slug, social title), what it sends to Substack, and its default.
+description: Every setting in an article's Post settings (the Get ready list, AI fill, thumbnail, audience, comments, tags, section, SEO title and description, URL slug, social title), what it sends to Substack, and its default.
 ---
 
-**Post settings** holds the Substack settings for one article: its thumbnail, who can read it, tags, section and how it looks in search and when shared. Changes save on their own and go to Substack with the next push.
+**Post settings** holds the Substack settings for one article: its thumbnail, who can read it, tags, section and how it looks in search and when shared. It opens on **Get ready**, one list of everything the post needs, where AI can fill the empty settings for you. Changes save on their own and go to Substack with the next push.
 
 ## Open Post settings
 
 1. Open the article on the **Articles** page.
-2. Click **Settings** at the bottom right of the editor.
-3. Pick a section on the left: **Media**, **Audience**, **Discovery** or **Publishing**. Click **Done** when you're finished.
+2. Click **Settings** at the bottom right of the editor. **Get ready** opens.
+3. To see one group of settings on its own, pick a section on the left: **Media**, **Audience**, **Discovery** or **Publishing**. Click **Done** when you're finished.
+
+**Get ready** and the other sections show the same controls. A change in one shows in the other.
 
 **Publishing** is where you push and schedule. See [Push an article to Substack](/docs/using/articles/substack-sync).
+
+## Get ready
+
+**Get ready** lists what Substack needs before the post goes out. Only the publish time is required. The rest is optional.
+
+| Row | What it holds | Same controls as |
+| --- | --- | --- |
+| **Readers** | Audience and comments | **Audience** |
+| **Thumbnail** | The cover image | **Media** |
+| **Search text** | SEO title, SEO description, URL slug and social title | **Discovery** |
+| **Tags and section** | Tags and section. Shows as **Tags** or **Section** if your newsletter has only one of them, and is hidden if it has neither. | **Audience** |
+| **When** | The publish date, time and timezone | **Publishing** |
+
+Each row shows its value and a state. Click a row to open its controls.
+
+| State | Meaning |
+| --- | --- |
+| **Done** | Set. |
+| **Optional** | Empty. The row says what Substack does instead, for example "Without one, Substack picks an image from the post if it has any." |
+| **Needs you** | This stops the post from being scheduled. |
+| **Suggested** | AI filled it. Check it. |
+| **Suggestion** | AI suggests a different audience. Nothing changes until you accept. |
+| **Working** | AI is filling it. |
+| **Didn't work** | AI couldn't fill it. Click **Try again**. |
+
+Two things stop a post from being scheduled:
+
+- **When** has no publish time, or the time has passed.
+- The article has a paywall line but **Audience** is **Everyone**. See [Paywall line and audience](#paywall-line-and-audience).
+
+### Schedule from Get ready
+
+The line at the bottom says what's left, for example "One thing left: pick a publish time." or "Everything is set.".
+
+- When something is missing, the button reads **Pick a time** or **Choose readers**. Click it to open that row.
+- When nothing is missing, it reads **Schedule** and how long until the post goes out, like **Schedule in 3 hours**. It works like **Schedule** in **Publishing**. See [Schedule on Substack](/docs/using/articles/substack-sync#schedule-on-substack).
+
+### Let AI fill the empty settings
+
+When the thumbnail, search text, tags or section are empty, **Get ready** offers to fill them.
+
+1. Write the article first. AI reads it to fill the settings.
+2. Click **Prepare my article for release**. Rows fill in one by one. The thumbnail takes the longest.
+3. Check each row marked **Suggested**:
+
+| Button | What it does |
+| --- | --- |
+| **Looks good** | Keeps the value and removes the **Suggested** mark. |
+| **Edit** | Opens the row's controls. |
+| **Try again** | Fills that row again. |
+| **Undo** | Puts back what the row held before. |
+
+- AI only fills settings that are empty. It never replaces something you set, and an edit you make while it runs wins.
+- **Search text** fills the SEO title, SEO description and slug. **Tags and section** picks only from the tags and sections your newsletter already has.
+- AI never changes **Readers** by itself. If your audience doesn't fit, it shows "AI suggests:" an audience and why, for example because the article has a paywall line, or because most of your recent posts used another audience. Click **Accept** or **Keep mine**.
+- **I'll fill them in myself** hides the offer for this article. A smaller **Prepare with AI** button stays, for when you change your mind.
+
+## Paywall line and audience
+
+A paywall line in the article body only works when the post isn't open to everyone. Post settings keeps the two in step:
+
+- A line under **Audience** says who reads what, for example "Paid subscribers read everything. Everyone else stops at the paywall line in your article."
+- Choosing **Everyone** while the article has a paywall line removes the line from the article. Click **Put it back** to bring back the line and the audience you had.
+- If the article already has a paywall line and **Everyone**, **Readers** shows **Needs you**: "This post has a paywall line but is open to everyone." Click **Make it paid** or **Remove the line**.
+- Removing the paywall line in the editor doesn't change the audience.
 
 ## Media
 
@@ -83,3 +150,5 @@ A push doesn't change the bylines, paywall type or post type already set on the 
 | "Add a slug before pushing to Substack." | The article has no title, SEO title or slug. Add one. |
 | "Tags could not be updated on Substack." | Update the [browser extension](/docs/using/setup/browser-extension) to 1.5.35 or newer, then push again. |
 | "Thumbnail could not be uploaded to Substack." | Pick another image, or set the cover on Substack. |
+| "Write the article first, so there is something to read." | **Prepare my article for release** needs a body. Write the article first. |
+| "Couldn't write the search text.", "Couldn't pick tags. Try again." or "Couldn't make a thumbnail. Try again." | Click **Try again** on that row, or fill it yourself. |

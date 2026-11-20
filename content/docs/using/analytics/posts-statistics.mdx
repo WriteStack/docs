@@ -1,11 +1,9 @@
 ---
 title: Posts Statistics
-description: What WriteStack's Posts Statistics page shows for your Substack newsletter posts (subscribers, ARR, open rate, email traffic, delivery, views, likes, free and paid subs per post), how open rate differs from email traffic, and the extension version it needs.
+description: What WriteStack's Posts Statistics page shows for your Substack newsletter posts (subscribers, ARR, open rate, email traffic, delivery, views, likes, free and paid subs per post), how open rate differs from email traffic, how to compare periods and update now, and the extension version it needs.
 ---
 
 **Posts Statistics** shows how your Substack newsletter posts perform: subscriber counts and ARR, email open and delivery rates, interactions, and a ranked table of your posts. The numbers come from Substack and are collected by the WriteStack browser extension.
-
-{/* TODO(orel): On main, Posts Statistics is admin-only (navbar `adminOnly: true`, page checks isAdmin). The uncommitted change on native-social-publishing gates it by the postsStatistics flag (Standard and Enterprise). Publish this page only after that change ships. */}
 
 ## Before you start
 
@@ -20,7 +18,7 @@ description: What WriteStack's Posts Statistics page shows for your Substack new
 1. Open **Posts Statistics** in the sidebar.
 2. The first time, WriteStack asks **Which newsletters are yours?** Tick every newsletter you own and click **Save newsletters**. WriteStack fetches post stats only for those.
 3. Keep the tab open while the first fetch runs. The page shows "Fetching your posts". It can take a few minutes if you have hundreds of posts.
-4. Pick a date range and interval at the top. To see one newsletter, choose it under **Newsletter**; the default is **All newsletters**.
+4. Use the bar under the page title to filter: **Newsletter** (default **All newsletters**; shown when you have two or more), **Date range**, **Compare to** and **Chart interval**. See [Date range, compare and interval](#date-range-compare-and-interval).
 
 To change your newsletters later, click **Choose newsletters**. New publications on your Substack profile show up there, marked **New**, until you decide. Use **Refresh newsletters** if one is missing.
 
@@ -29,6 +27,14 @@ To change your newsletters later, click **Choose newsletters**. New publications
 ### Subscribers
 
 Live counts from Substack's own subscriber chart, not sums of post conversions. Switch the metric between **Free subscribers**, **Paid subscribers** and **ARR**. The section also shows **Paid now**, **Total now**, and the change across the selected range. Paid subscribers are split into Paid, Free trials, Gifts and Comps.
+
+#### Your posts on the chart
+
+A strip of small cover images under the Subscribers chart marks the day each post went out, so you can see which posts came before a jump in subscribers.
+
+- Hover a cover to see the post's title and date. Click a title to open the post on Substack.
+- In the Weekly, Monthly and Yearly views, and when posts are too close together to fit, one cover stands for several posts and shows how many. Hover it to see them all.
+- Hover the chart on a date to see that day's posts in the tooltip.
 
 ### How posts land
 
@@ -56,23 +62,29 @@ Totals for posts published in the range: **Views**, **Likes**, **Comments**, **R
 
 A table of your posts with **Views**, **Unique opens**, **Open rate**, **Clicks**, **Free subs** and **Paid subs**. Click a column header to rank posts by it. Click a title to read the post on Substack.
 
-## Date range and interval
+## Date range, compare and interval
 
 | Control | Options |
 | --- | --- |
-| Date range | Last 7 days, Last 30 days (default), Last 90 days, Last 12 months, All time, Custom |
-| Interval | Daily, Weekly, Monthly, Yearly |
+| **Date range** | Today, Yesterday, Last 24 hours, Last 7 days, Last 30 days (default), Last 3 months, Last 6 months, Last 12 months, Week to date, Month to date, Year to date, All time, Custom |
+| **Compare to** | Previous period (default), Previous month, Previous year, Custom |
+| **Chart interval** | Daily (default), Weekly, Monthly, Yearly |
 
-You can add an annotation to a point on the Subscribers chart, for example the day you launched a paid tier.
+With a comparison on, the Subscribers chart draws the earlier period as a dashed line, the legend names both date ranges, and the change line reads "across this range, vs" the change in the earlier period. The comparison works the same way as on the Notes Statistics page: see [Compare with an earlier period](/docs/using/analytics/notes-analytics#compare-with-an-earlier-period). To turn it off, click the **x** at the left of **Compare to**. **All time** has no earlier period, so it can't be compared.
+
+You can add an annotation to a point on the Subscribers chart, for example the day you launched a paid tier: hover a point and click the note icon.
 
 ## How often it updates
 
 The extension fetches post stats when you open WriteStack, at most once a day. The page header shows **Last updated** with the time of the last fetch.
+
+To fetch now instead of waiting, click **Update now** next to **Last updated**. It fetches your post and subscriber stats from Substack, shows the fetching banner while it runs, and refreshes the page when it's done. It needs the [WriteStack extension](/docs/using/setup/browser-extension) and a Substack sign-in in the same browser. If an update is already running, WriteStack tells you "Your stats are already updating."
 
 ## If it doesn't work
 
 - **"Choose your newsletters"**: you haven't marked any newsletter as yours. Click **Choose newsletters**.
 - **"No newsletters found"**: WriteStack found no newsletter on your Substack profile. Connect a publication in Settings, then open the page again.
 - **"No post stats yet"**: the first fetch hasn't run. Open WriteStack with the extension installed and keep the tab open until it finishes.
-- **Numbers look out of date**: check that your extension is 1.5.25 or newer. See [Browser extension](/docs/using/setup/browser-extension).
+- **Numbers look out of date**: click **Update now**. Check that your extension is 1.5.25 or newer. See [Browser extension](/docs/using/setup/browser-extension).
+- **"Couldn't update your stats"**: the extension isn't installed, or you aren't signed in to Substack in this browser.
 - **"Posts Statistics isn't on for your account"**: your plan doesn't include it. See [Plans and limits](/docs/account/plans-and-limits).

@@ -1,6 +1,6 @@
 ---
 title: Article templates
-description: How to save part of an article as a reusable template, insert it into any article from the Template menu or the / menu, edit, rename and delete templates.
+description: How to save part of an article as a reusable template, insert it into any article from the Template menu or the / menu, use templates you made in Substack, and edit, rename and delete templates.
 ---
 
 A template is a piece of an article you reuse, like a weekly intro, a sign-off with a Subscribe button, or a section layout. You insert it into any article where your cursor is. Templates hold only body content, not a title or settings.
@@ -21,6 +21,19 @@ A template can hold every block the article editor has, except audio. If you hav
 2. Click **Template** in the toolbar and pick it, or type `/` and the template's name.
 
 If the template has a freewall or paywall, the article's **Audience** changes to match, the same as inserting the wall yourself.
+
+## Templates from Substack
+
+Templates you made in Substack's own editor show in the **Template** menu too, under **From Substack**. They come from the article's newsletter.
+
+1. Put your cursor where it should go.
+2. Click **Template** and pick one under **From Substack**, or type `/` and the template's name. In the `/` menu they're marked "Your Substack template".
+
+- They're read from Substack each time you open the menu, so changes you make in Substack show up next time.
+- You can't edit or delete them in WriteStack. Do that in Substack.
+- This needs the [browser extension](/docs/using/setup/browser-extension) version 1.5.35 or newer, and you logged into Substack in the same browser. Without it, **From Substack** doesn't show.
+
+{/* TODO(orel): "From Substack" was built without seeing a real Substack templates response (de5f75d9). Confirm in the real app that a Substack template shows and inserts with its formatting. */}
 
 ## Edit, rename or delete
 
@@ -46,6 +59,8 @@ Templates are only in the app. The Coach and AI agents can't use them yet.
 | Message | Fix |
 | --- | --- |
 | "No templates yet" | Make one with **New template**. |
+| "This Substack template is empty." | The Substack template has no content. Add some in Substack. |
+| **From Substack** is missing | Update the extension to 1.5.35 or newer and log into Substack in the same browser. If you have no templates in Substack, the section stays hidden. |
 | "This template doesn't exist anymore." | It was deleted, maybe in another tab. |
 | "This template changed elsewhere" | Pick **Reload** or **Keep mine**. |
 | "Failed to create the template." | You need a connected newsletter. See [Connect Substack](/docs/using/setup/connect-substack). |

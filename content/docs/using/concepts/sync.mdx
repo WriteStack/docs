@@ -1,6 +1,6 @@
 ---
 title: Sync
-description: How a scheduled Note gets from WriteStack to Substack, when you need to click the yellow Sync button, and the common reasons a Note didn't post.
+description: How a scheduled Note gets from WriteStack to Substack, when you need to click the yellow Sync button, the common reasons a Note didn't post, and how to fetch your latest posts and Notes from Substack with Fetch Data.
 ---
 
 Sync is the step where the WriteStack browser extension schedules your Note on Substack. Until a Note is synced, it exists only in your WriteStack queue and will not post. Once it is synced, Substack holds the scheduled Note and publishes it at its time.
@@ -69,3 +69,24 @@ Check these in order:
 | The posting time was more than 90 days out | Scheduling was refused: "Substack allows scheduling up to 3 months ahead" | Pick a time within 3 months |
 
 Still stuck? See [Sync errors](/docs/using/troubleshooting/sync-errors) or [contact support](/docs/using/support).
+
+## Fetch your latest posts and Notes from Substack
+
+Sync sends Notes to Substack. Data also flows the other way: WriteStack pulls your Substack posts and Notes once a day. If something recent is missing (a post you just published, or a Note you posted on Substack directly), fetch it now.
+
+### Steps
+
+1. Go to **Settings → Publication & data**.
+2. Find the **Fetch Data** card.
+3. Click **Fetch posts** or **Fetch notes**.
+
+| Button | What it fetches | Needs |
+| --- | --- | --- |
+| **Fetch posts** | Your posts from the last 30 days. Can take a few minutes. | The [browser extension](/docs/using/setup/browser-extension) and a Substack sign-in in the same browser |
+| **Fetch notes** | The Notes you published on Substack recently | Nothing extra |
+
+When it's done you see "Your latest posts are in." or "Your latest notes are in." If a posts fetch is already running, WriteStack says so; check back in a few minutes.
+
+The **Fetch Data** card is on the Standard and Enterprise plans. See [Plans and limits](/docs/account/plans-and-limits).
+
+For post statistics (views, opens, subscribers), use **Update now** on [Posts Statistics](/docs/using/analytics/posts-statistics#how-often-it-updates) instead.

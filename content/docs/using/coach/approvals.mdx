@@ -20,6 +20,7 @@ These run as soon as you ask for them in the chat. The result appears as a statu
 | Push an article to Substack | Sends it to Substack as a draft. |
 | Remember something | Saves a fact to [Memory](/docs/using/coach/what-it-does#memory). |
 | Make an image | Makes or edits images in the reply, one per note when you ask for several. |
+| Make a GIF | Makes a looping GIF in the reply, ready to put on a note. |
 
 Notes that are already scheduled, evergreen or published are left as they are, and the status line says **Already scheduled**, **Already evergreen** or **Already published**. A scheduled note only moves back to draft or ready when you name that note and ask.
 
@@ -40,6 +41,8 @@ Notes the Coach writes are not saved on their own. Each one is a **Note** card u
 | Card | When it shows | What to do |
 | --- | --- | --- |
 | Routine card | You ask for something every day or every week | Check **When**, **Timezone**, **Does** and **Delivery**, then click **Confirm**. Nothing is saved until you do. |
+| Routine change card | You ask to change a routine you already have | Check each change, then click **Save changes**. Nothing is saved until you do. |
+| Skill card | You ask the Coach to turn something into a [skill](/docs/using/coach/skills-and-plugins), or to change one | Click **Read the instructions** to check them, then **Save skill** or **Update skill**. Nothing is saved until you do. |
 | Question card | Two or more options are close, for example which newsletter to push to | Pick an option, or type your own under **Something else**, then send. Or **Skip**. |
 | Push an edited draft | You asked for an edit to an article that is already on Substack | Pick the newsletter to push to, or **Don't push yet**. |
 | Select articles | The Coach couldn't find a post you named | Mark the posts, then confirm. |
@@ -56,6 +59,6 @@ Chats started from an AI agent through [`ask_coach`](/docs/build/mcp-reference/a
 ## Decline or undo
 
 - **Before it runs:** don't ask, or tell the Coach to stop. Click **Stop** to end a reply that is still running.
-- **On a card:** don't click **Confirm**, choose **Don't push yet**, or **Skip** the question.
-- **After it runs:** open the note from the status line and change it in the note editor, or ask the Coach to move it back to draft. Remove a routine under **Routines**.
+- **On a card:** don't click **Confirm**, **Save changes** or **Save skill**, choose **Don't push yet**, or **Skip** the question.
+- **After it runs:** open the note from the status line and change it in the note editor, or ask the Coach to move it back to draft. Remove a routine under **Routines**, or click **Stop this routine** in one of its emails.
 - **Pushed drafts:** a push only creates or updates a Substack draft. Delete or edit it on Substack if you don't want it.
