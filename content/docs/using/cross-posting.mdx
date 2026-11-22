@@ -1,6 +1,6 @@
 ---
 title: Cross-posting with Buffer
-description: How to cross-post Substack Notes from WriteStack to X, LinkedIn, Instagram, Threads, Facebook, Bluesky and more through Buffer, with channels per Note or per schedule time, per-channel text and images, limits, and when cross-posts are sent.
+description: How to cross-post Substack Notes from WriteStack to X, LinkedIn, Instagram, Threads, Facebook, Bluesky and more through Buffer, with channels per Note or per schedule time, per-channel text and images, limits, when cross-posts are sent, and that an Instagram MP4 is published as a Reel shared to the feed.
 ---
 
 WriteStack can send each Note to your social channels (X, LinkedIn, Instagram, Threads, Facebook, Bluesky and others) through your Buffer account. You pick the channels per Note or per time in your schedule, and WriteStack sends the cross-posts a few minutes after the Note goes live on Substack.
@@ -73,13 +73,36 @@ WriteStack checks your Note against each platform's rules before you schedule.
 
 - **Over the character limit**: you get a warning and can still schedule. Shorten the channel's text with a per-channel post.
 - **Missing required media or an unsupported video**: that channel can't take the post. WriteStack offers to remove those channels and schedule the rest.
-- Videos are also checked against each platform's size, length and format rules. The warning links to Buffer's video requirements.
+- Videos are also checked against each platform's size, length and format rules. The message links to Buffer's video requirements.
 
 ## Instagram rules
 
 - Every Instagram post needs an image or video.
-- Feed images must have an aspect ratio between 4:5 (portrait) and 1.91:1 (landscape). Outside that range you can still schedule, but Buffer uses **Notify Me**: it sends you a reminder and you finish the post in the Instagram app. See [Buffer's aspect ratio guide](https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges).
-- Videos go out as Reels: 3 seconds to 15 minutes, up to 300 MB, MP4 or MOV.
+- Feed images must have an aspect ratio between 4:5 (portrait) and 1.91:1 (landscape). Outside that range you can still schedule, but Buffer uses **Notify Me**: it sends you a reminder and you finish the post in the Instagram app. See [Buffer's aspect ratio guide](https://support.buffer.com/article/622-instagrams-accepted-aspect-ratio-ranges). That range is a warning for feed images. It does not apply to videos.
+- For an MP4 or other video, see [Instagram video](#instagram-video).
+
+## Instagram video
+
+An MP4 on a Note is cross-posted to Instagram as a video. When that channel still says "Same as your note", WriteStack sends the file to Buffer as a Reel that is also shared to your feed, in the same grid an image post uses. WriteStack does not turn the file into a still image.
+
+If the Note also has images, those images are left off this cross-post. The video is what goes out.
+
+{/* TODO(orel): A customized channel post uses that channel's attachments only (resolve-channel-post-content.ts). Confirm whether a text-only customize still includes the Note's video, or only the images the channel editor allows. */}
+
+If the video has no shareable link, the cross-post fails. It is not sent as a caption or as a still. The reason is "The video attached to this note has no shareable URL, so it cannot be cross-posted. Re-upload the video to this note and retry."
+
+WriteStack blocks the Instagram channel before you schedule when the video is outside these limits:
+
+| Rule | Limit |
+| --- | --- |
+| Format | MP4 or MOV |
+| Length | 3 seconds to 15 minutes |
+| File size | 300 MB |
+| Aspect ratio | 0.01:1 to 10:1 |
+
+Buffer or Instagram can still reject a file that passed these checks. WriteStack does not then swap in a still image.
+
+{/* TODO(orel): Direct Instagram (Post, Reel, Story) is not in OPEN_NATIVE_PLATFORMS. It needs the nativeSocial flag, so this page documents Buffer only. */}
 
 ## Disconnect Buffer
 
@@ -95,4 +118,5 @@ To stop using one channel, deactivate it instead.
 - **"No channels found"**: add social channels in Buffer first, then click **Refresh**.
 - **A channel is missing in the editor**: activate it under **Settings → Buffer**.
 - **"You can cross-post to at most 20 Buffer channels."**: remove some channels from the Note.
-- **Instagram post didn't publish**: check the image ratio and the Notify Me reminder in the Buffer app.
+- **Instagram post didn't publish**: for an image, check the ratio and the Notify Me reminder in the Buffer app. For an MP4, the post is a Reel shared to the feed. See [Instagram video](#instagram-video).
+- **"The video attached to this note has no shareable URL, so it cannot be cross-posted. Re-upload the video to this note and retry."**: upload the video on the Note again, then retry the cross-post.
