@@ -40,6 +40,8 @@ export const agentTasks: { task: string; href: string }[] = [
 
   // Other features
   { task: 'Cross-post Notes to LinkedIn, X, Threads… (Buffer)', href: '/docs/using/cross-posting' },
+  { task: 'Switch to dark mode', href: '/docs/using/appearance' },
+  { task: 'Instagram MP4 cross-post publishes as a Reel shared to the feed', href: '/docs/using/cross-posting#instagram-video' },
   { task: 'Use the Coach (Quill)', href: '/docs/using/coach/what-it-does' },
   { task: 'Coach usage limits / allowance ran out', href: '/docs/using/coach/limits' },
   { task: 'Write an article and push it to Substack', href: '/docs/using/articles/substack-sync' },
