@@ -1,15 +1,15 @@
 ---
 title: Evergreen Notes
-description: How to make a WriteStack Note evergreen so it reposts every 1 to 4 weeks, how the reposts are scheduled up to 90 days ahead and refilled, and how to edit or remove an evergreen Note.
+description: How to make a WriteStack Note evergreen so it reposts every 1 to 12 weeks or every 1 to 3 months, how the reposts are scheduled up to 90 days ahead and refilled, and how to edit or remove an evergreen Note.
 ---
 
-An evergreen Note reposts on a repeating schedule, every 1, 2, 3 or 4 weeks. WriteStack schedules the reposts for the next 90 days and adds new ones as time moves on.
+An evergreen Note reposts on a repeating schedule, anywhere from every week to every 3 months. WriteStack schedules the reposts for the next 90 days and adds new ones as time moves on.
 
 ## Steps
 
 1. Open a Note from **Drafts** or **Ready**. Only draft and ready Notes can be made evergreen.
 2. Open the **When:** menu next to the schedule button and click **Make Evergreen** ("Automatically repost on a recurring schedule").
-3. Pick how often it reposts.
+3. Pick how often it reposts: a quick pick, or **Custom** to choose "Every [number] [weeks or months]".
 4. Pick the first post: **Next available** (the next free time in your queue for this Note's tags) or **Pick a date**.
 5. Optional: open **Cross-post to Buffer** to pick channels for every repost, and **Automations** to turn on [auto-restack](/docs/using/notes/auto-restack).
 6. Read the summary under the buttons, for example "Posts every 3 weeks starting Mon, Dec 1 at 9:00 AM. Does not restack."
@@ -17,18 +17,22 @@ An evergreen Note reposts on a repeating schedule, every 1, 2, 3 or 4 weeks. Wri
 
 ### Frequency options
 
-| Option | Label in the app |
+| Option | Notes |
 | --- | --- |
-| 1 week | High cadence |
-| 2 weeks | Balanced |
+| 1 week | |
+| 2 weeks | |
 | 3 weeks | Suggested (default) |
-| 4 weeks | Low cadence |
+| 1 month | Same day each month |
+| 3 months | Quarterly |
+| Custom | Every 1 to 12 weeks, or every 1, 2 or 3 months |
+
+Weekly cadences repost on the same weekday. Monthly cadences repost on the same day of the month; a Note set for the 31st posts on the last day of shorter months.
 
 ## How reposts work
 
 - The Note you made evergreen is the source. It moves to the **Evergreen** tab in **My Notes**. That tab shows only when you have at least one evergreen Note.
-- Each repost is a copy of the source, scheduled at the first date plus every N weeks.
-- WriteStack schedules every repost that falls within the next 90 days, because Substack allows scheduling up to 3 months ahead.
+- Each repost is a copy of the source, scheduled at the first date plus every N weeks or months.
+- WriteStack schedules every repost that falls within the next 90 days, because Substack allows scheduling up to 3 months ahead. With a 2- or 3-month cadence that is usually one repost at a time; the dialog says so.
 - As reposts go out, WriteStack adds the next ones so the 90-day window stays filled. This happens through the [browser extension](/docs/using/setup/browser-extension) when WriteStack is open.
 - Reposts show in the queue with "Managed by evergreen schedule". You can't drag them to another time ("Evergreen notes can't be rescheduled").
 
@@ -55,7 +59,7 @@ This cancels the scheduled reposts on Substack and removes the evergreen schedul
 
 | Rule | Value |
 | --- | --- |
-| Frequency | Every 1, 2, 3 or 4 weeks |
+| Frequency | Every 1 to 12 weeks, or every 1 to 3 months |
 | How far ahead reposts are scheduled | 90 days |
 | Which Notes | Draft or Ready only. A Note can have one evergreen schedule. |
 
